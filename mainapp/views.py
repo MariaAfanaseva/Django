@@ -1,7 +1,5 @@
-
 from django.shortcuts import render
-
-# Create your views here.
+from .models import Product
 
 
 def main(request):
@@ -9,7 +7,9 @@ def main(request):
 
 
 def products(request):
+    # product_list = Product.objects.all()
     return render(request, 'mainapp/products.html', context={'title': 'products'})
+                                                             # 'products': product_list})
 
 
 def contacts(request):

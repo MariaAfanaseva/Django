@@ -1,4 +1,5 @@
 {% extends 'mainapp/base.html' %}
+{% load static %}
 {#<!DOCTYPE html>#}
 {#{% load static %}#}
 {#<html lang="en">#}
@@ -39,7 +40,9 @@
             </div>
             <div class="interior-contact padding-site">
                 <div class="interior-contact-city">
-                    <a href="#"><img class="placeholder" src="/static/img/placeholder-filled-point.svg" alt="placeholder"></a>
+                    <a href="#"><img class="placeholder"
+                                     src="{% static 'img/placeholder-filled-point.svg' %}"
+                                     alt="placeholder"></a>
                     <h3 class="contact-h3">California</h3>
                     <h5 class="contact-h5">Phone:</h5>
                     <p class="contact-p">1900&nbsp;-&nbsp;1234&nbsp;-&nbsp;5678</p>
@@ -49,7 +52,7 @@
                     <p class="contact-p contact-p-address">12&nbsp;W 1st St, 90001 Los Angeles, California</p>
                 </div>
                 <div class="interior-contact-city">
-                    <a href="#"><img class="placeholder" src="/static/img/placeholder-filled-point.svg" alt="placeholder"></a>
+                    <a href="#"><img class="placeholder" src="{% static 'img/placeholder-filled-point.svg' %}" alt="placeholder"></a>
                     <h3 class="contact-h3">California</h3>
                     <h5 class="contact-h5">Phone:</h5>
                     <p class="contact-p">1900&nbsp;-&nbsp;1234&nbsp;-&nbsp;5678</p>
@@ -59,7 +62,7 @@
                     <p class="contact-p contact-p-address">12&nbsp;W 1st St, 90001 Los Angeles, California</p>
                 </div>
                 <div class="interior-contact-city">
-                    <a href="#"><img class="placeholder" src="/static/img/placeholder-filled-point.svg" alt="placeholder"></a>
+                    <a href="#"><img class="placeholder" src="{% static 'img/placeholder-filled-point.svg' %}" alt="placeholder"></a>
                     <h3 class="contact-h3">California</h3>
                     <h5 class="contact-h5">Phone:</h5>
                     <p class="contact-p">1900&nbsp;-&nbsp;1234&nbsp;-&nbsp;5678</p>

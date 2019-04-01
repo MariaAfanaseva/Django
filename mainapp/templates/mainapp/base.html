@@ -27,11 +27,32 @@
                     <a class="logo" href="{% url 'index' %}"><img src="/static/img/logo.svg" alt="logo"></a>
                     <nav>
                         <ul class="menu">
-                            <li><a href="{% url 'index' %}" class="menu-link-active menu-link">HOME </a></li>
-                            <li><a href="{% url 'products' %}" class="menu-link">PRODUCTS </a></li>
-                            <li><a href="#" class="menu-link">HISTORY </a></li>
-                            <li><a href="#" class="menu-link">SHOWROOM</a></li>
-                            <li><a href="{% url 'contacts' %}" class="menu-link">CONTACT</a></li>
+                            <li><a href="{% url 'index' %}"
+                                   class="{% if request.resolver_match.url_name == 'index' %}
+                                   menu-link-active menu-link
+                                   {% else %}menu-link
+                                   {% endif %}"
+                                    >HOME </a></li>
+                            <li><a href="{% url 'products' %}"
+                                   class="{% if request.resolver_match.url_name == 'products' %}
+                                   menu-link-active menu-link
+                                   {% elif request.resolver_match.url_name == 'product' %}
+                                   menu-link-active menu-link
+                                   {% else %}menu-link
+                                   {% endif %}">PRODUCTS </a></li>
+                            <li><a href="#" class="{% if request.resolver_match.url_name == 'history' %}
+                            menu-link-active menu-link
+                                   {% else %}menu-link
+                                   {% endif %}">HISTORY </a></li>
+                            <li><a href="#" class="{% if request.resolver_match.url_name == 'showroom' %}
+                            menu-link-active menu-link
+                                   {% else %}menu-link
+                                   {% endif %}">SHOWROOM</a></li>
+                            <li><a href="{% url 'contacts' %}"
+                                   class="{% if request.resolver_match.url_name == 'contacts' %}
+                            menu-link-active menu-link
+                                   {% else %}menu-link
+                                   {% endif %}">CONTACT</a></li>
                             <li><a href="#" class="menu-link"><img src="/static/img/search.svg" alt="search"></a></li>
                         </ul>
                         <img class="menu-mini" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"

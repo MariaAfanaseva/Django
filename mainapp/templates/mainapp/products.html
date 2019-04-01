@@ -1,4 +1,5 @@
 {% extends 'mainapp/base.html' %}
+{% load static %}
 {#<!DOCTYPE html>#}
 {#{% load static %}#}
 {#<html lang="en">#}
@@ -53,21 +54,21 @@
             </nav>
 
             <div class="trending-products padding-site ">
-                <a href="#" class="trending-products-img"><img src="/static/img/product-11.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-21.jpg" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-31.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-41.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-5.jpg" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-6.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-11.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-21.jpg" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-31.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-41.jpg" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-5.jpg" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="/static/img/product-6.jpg" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-41.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-5.jpg' %}" alt="chair"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-6.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-41.jpg' %}" alt="lamp"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-5.jpg' %}" alt="chair"></a>
+                <a href="#" class="trending-products-img"><img src="{% static 'img/product-6.jpg' %}" alt="lamp"></a>
             </div>
             <div class="products-reload">
-                <a href="#" class="products-reload-img"><img src="/static/img/refresh.svg" alt="reload"></a>
+                <a href="#" class="products-reload-img"><img src="{% static 'img/refresh.svg' %}"></a>
             </div>
             <div class="promo">
                 <div class="promo-img-1">
@@ -79,7 +80,7 @@
                             Steel frame, available in&nbsp;matt powder-coated black
                             or&nbsp;highly polished chrome.
                         </p>
-                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="/static/img/arrow.svg" alt="arrow"></a>
+                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
                     </div>
                 </div>
                 <div class="promo-img-2">
@@ -91,10 +92,15 @@
                             Steel frame, available in&nbsp;matt powder-coated black
                             or&nbsp;highly polished chrome.
                         </p>
-                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="/static/img/arrow.svg" alt="arrow"></a>
+                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>
                     </div>
                 </div>
             </div>
+
+
+    {#    <ul>{% for product in products %}#}
+{#        <li> {{ product.name }} ({{ product.category }})</li>{% endfor %}#}
+{#    </ul>#}
 {% endblock %}
 {#        </div>#}
 {#        <footer class="footer padding-site">#}
