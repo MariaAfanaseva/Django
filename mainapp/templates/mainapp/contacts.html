@@ -1,5 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
+{% load tz %}
 {#<!DOCTYPE html>#}
 {#{% load static %}#}
 {#<html lang="en">#}
@@ -43,7 +44,10 @@
                     <a href="#"><img class="placeholder"
                                      src="{% static 'img/placeholder-filled-point.svg' %}"
                                      alt="placeholder"></a>
-                    <h3 class="contact-h3">California</h3>
+                    <h3 class="contact-h3">London</h3>
+                    {% timezone "Europe/London" %}
+                        <h5 class="contact-p"> Time: {% now "H:i" %}</h5>
+                    {% endtimezone %}
                     <h5 class="contact-h5">Phone:</h5>
                     <p class="contact-p">1900&nbsp;-&nbsp;1234&nbsp;-&nbsp;5678</p>
                     <h5 class="contact-h5">Email:</h5>
@@ -53,7 +57,10 @@
                 </div>
                 <div class="interior-contact-city">
                     <a href="#"><img class="placeholder" src="{% static 'img/placeholder-filled-point.svg' %}" alt="placeholder"></a>
-                    <h3 class="contact-h3">California</h3>
+                    <h3 class="contact-h3">Moscow</h3>
+                    {% timezone "Europe/Moscow" %}
+                        <h5 class="contact-p"> Time: {% now "H:i" %}</h5>
+                    {% endtimezone %}
                     <h5 class="contact-h5">Phone:</h5>
                     <p class="contact-p">1900&nbsp;-&nbsp;1234&nbsp;-&nbsp;5678</p>
                     <h5 class="contact-h5">Email:</h5>
@@ -63,7 +70,10 @@
                 </div>
                 <div class="interior-contact-city">
                     <a href="#"><img class="placeholder" src="{% static 'img/placeholder-filled-point.svg' %}" alt="placeholder"></a>
-                    <h3 class="contact-h3">California</h3>
+                    <h3 class="contact-h3">Berlin</h3>
+                    {% timezone "Europe/Berlin" %}
+                        <h5 class="contact-p"> Time: {% now "H:i" %}</h5>
+                    {% endtimezone %}
                     <h5 class="contact-h5">Phone:</h5>
                     <p class="contact-p">1900&nbsp;-&nbsp;1234&nbsp;-&nbsp;5678</p>
                     <h5 class="contact-h5">Email:</h5>

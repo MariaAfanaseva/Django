@@ -1,6 +1,6 @@
 <ul class="all-menu">
-    <li><a href="{% url 'products' %}"
-           class="{% if request.resolver_match.url_name == 'products' %}
+    <li><a href="{% url 'products:index' %}"
+           class="{% if request.resolver_match.namespace == 'products' %}
            all-menu-link all-menu-bottom all-menu-link-active
            {% else %}all-menu-link all-menu-bottom
            {% endif %}">ALL</a>
@@ -26,3 +26,14 @@
            {% else %}all-menu-link all-menu-bottom
            {% endif %}">CLASSIC</a></li>
 </ul>
+{#<ul class="all-menu">{% for category in categories%}#}
+{#    <li><a href="{% url 'products:index' %}"#}
+{#           class="{% if request.resolver_match.namespace == 'products' %}#}
+{#           all-menu-link all-menu-bottom all-menu-link-active#}
+{#           {% else %}all-menu-link all-menu-bottom#}
+{#           {% endif %}">{{ category.name }}</a>#}
+{#    </li>#}
+{#{% endfor %}#}
+{#</ul>#}
+
+
