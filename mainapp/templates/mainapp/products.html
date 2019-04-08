@@ -42,7 +42,8 @@
                 <h2 class="products-range-h2 padding-site">Our Products Range</h2>
             </div>
             <nav class="products-menu padding-site">
-            {% include 'mainapp/includes/inc_menu.html' %}
+{#            {% include 'mainapp/includes/inc_menu.html' %}#}
+                {% include 'mainapp/includes/inc_categories_menu.html' %}
 {#                <ul class="all-menu">#}
 {#                    <li><a href="{% url 'products' %}" class="all-menu-link all-menu-link-active all-menu-bottom all-menu-bottom-active">ALL</a></li>#}
 {#                    <li><a href="#" class="all-menu-link all-menu-bottom">HOME</a></li>#}
@@ -53,23 +54,23 @@
 {#                </ul>#}
             </nav>
 
-            <div class="trending-products padding-site ">
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-41.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-5.jpg' %}" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-6.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-41.jpg' %}" alt="lamp"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-5.jpg' %}" alt="chair"></a>
-                <a href="#" class="trending-products-img"><img src="{% static 'img/product-6.jpg' %}" alt="lamp"></a>
-            </div>
-            <div class="products-reload">
-                <a href="#" class="products-reload-img"><img src="{% static 'img/refresh.svg' %}"></a>
-            </div>
+{#            <div class="trending-products padding-site ">#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-41.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-5.jpg' %}" alt="chair"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-6.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-41.jpg' %}" alt="lamp"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-5.jpg' %}" alt="chair"></a>#}
+{#                <a href="#" class="trending-products-img"><img src="{% static 'img/product-6.jpg' %}" alt="lamp"></a>#}
+{#            </div>#}
+{#            <div class="products-reload">#}
+{#                <a href="#" class="products-reload-img"><img src="{% static 'img/refresh.svg' %}"></a>#}
+{#            </div>#}
             <div class="promo">
                 <div class="promo-img-1">
                     <div class="promo-text">

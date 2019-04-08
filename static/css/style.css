@@ -30,6 +30,8 @@ body {
 .header {
   display: flex;
   justify-content: space-between;
+  height: 50px;
+;
 }
 .padding-site {
   padding-left: 6%;
@@ -60,6 +62,19 @@ body {
   font-weight: 700;
   border-bottom: 3px solid #212121;
 }
+
+.menu-in{
+  list-style-type: none;
+  display: none;
+
+
+}
+.menu-list:hover .menu-in{
+  display: block;
+
+
+
+}
 .logo {
   margin-top: 64px;
 }
@@ -69,7 +84,7 @@ body {
   align-items: center;
   min-height: 70px;
   background-color: #f4f4f4;
-  margin-top: 29px;
+  margin-top: 120px;
 }
 .all-menu {
   display: flex;

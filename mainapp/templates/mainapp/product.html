@@ -1,53 +1,14 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
-{#<!DOCTYPE html>#}
-{#{% load static %}#}
-{#<html lang="en">#}
-{##}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
-{#    <title>{{ title }}</title>#}
-{#    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700" rel="stylesheet">#}
-{#    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">#}
-{#    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"#}
-{#        crossorigin="anonymous">#}
-{#</head>#}
-{##}
-{#<body>#}
-{#    <div class="container">#}
-{#        <div class="top">#}
+
 {% block div %}
         <div class="padding-site">
 {% endblock %}
-{#            <header class="header">#}
-{#                <a class="logo" href="{% url 'index' %}"><img src="/static/img/logo.svg" alt="logo"></a>#}
-{#                <nav>#}
-{#                    <ul class="menu">#}
-{#                        <li><a href="{% url 'index' %}" class="menu-link">HOME </a></li>#}
-{#                        <li><a href="{% url 'products' %}" class="menu-link-active menu-link">PRODUCTS </a></li>#}
-{#                        <li><a href="#" class="menu-link">HISTORY </a></li>#}
-{#                        <li><a href="#" class="menu-link">SHOWROOM</a></li>#}
-{#                        <li><a href="{% url 'contacts' %}" class="menu-link">CONTACT</a></li>#}
-{#                        <li><a href="#" class="menu-link"><img src="/static/img/search.svg" alt="search"></a></li>#}
-{#                    </ul>#}
-{#                    <img class="menu-mini" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"#}
-{#                        alt="menu-mini">#}
-{#                </nav>#}
-{#            </header>#}
 
 {% block content %}
         </div>
             <nav class="product-details-menu">
-            {% include 'mainapp/includes/inc_menu.html' %}
-{#                <ul class="all-menu">#}
-{#                    <li><a href="{% url 'products' %}" class="all-menu-link">ALL</a></li>#}
-{#                    <li><a href="#" class="all-menu-link">HOME</a></li>#}
-{#                    <li><a href="#" class="all-menu-link">OFFICE</a></li>#}
-{#                    <li><a href="#" class="all-menu-link all-menu-link-active">FURNITURE</a></li>#}
-{#                    <li><a href="#" class="all-menu-link">MODERN</a></li>#}
-{#                    <li><a href="#" class="all-menu-link">CLASSIC</a></li>#}
-{#                </ul>#}
+            {% include 'mainapp/includes/inc_categories_menu.html' %}
             </nav>
             <div class="product-details">
                 <div class="product-slider">
@@ -68,8 +29,11 @@
                         <p class="product-cost-num">36.7</p>
                         <p class="product-cost-sq">/&nbsp;sq</p>
                     </div>
-                    <a href="#" class="product-details-button">order&nbsp;us <img class="product-arrow-in-button" src="{% static 'img/arrow_product.svg' %}"
-                            alt="arrow"></a>
+                    <a href="{% url 'basket:add' product.pk %}" class="product-details-button">
+                        order&nbsp;us
+                        <img class="product-arrow-in-button" src="{% static 'img/arrow_product.svg' %}"
+                            alt="arrow">
+                    </a>
                     <div>
                         <p class="product-slider-text-p">The majesty of&nbsp;Mountains&nbsp;&mdash; Ugmonk style.</p>
                         <p class="product-slider-text-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
@@ -84,13 +48,7 @@
                             velit esse cillum dolore eu&nbsp;fugiat nulla
                             pariatur. Excepteur sint occaecat cupidatat non proident.
                         </p>
-                        <!-- <p class="product-slider-text-p">sunt in&nbsp;culpa qui officia deserunt mollit anim
-                            id&nbsp;est laborum. Sed ut&nbsp;perspiciatis unde omnis
-                            iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque
-                            ipsa quae ab&nbsp;illo inventore veritatis et&nbsp;quasi architecto beatae vitae dicta sunt
-                            explicabo.
-                            
-                        </p> -->
+
                     </div>
                 </div>
             </div>
@@ -106,63 +64,3 @@
                 </div>
             </div>
 {% endblock %}
-{#        </div>#}
-{#        <footer class="footer padding-site">#}
-{#            <div class="footer-text-1">#}
-{#                <div class="contacts">#}
-{#                    <h4 class="footer-h4">Contact Us</h4>#}
-{#                    <p class="footer-p">132A Bridge Road Richmond VIC&nbsp;Australia.</p>#}
-{#                    <p class="footer-p">Talk to&nbsp;us on&nbsp;1300&nbsp;132 info@interior.com</p>#}
-{#                </div>#}
-{#                <div class="information">#}
-{#                    <h4 class="footer-h4">Useful Information</h4>#}
-{#                    <div class="information-text">#}
-{#                        <div>#}
-{#                            <a href="#" class="footer-link">#}
-{#                                <h3 class="footer-h3">Sales terms</h3>#}
-{#                            </a>#}
-{#                            <a href="#" class="footer-link">#}
-{#                                <h3 class="footer-h3">Customer care</h3>#}
-{#                            </a>#}
-{#                            <a href="#" class="footer-link">#}
-{#                                <h3 class="footer-h3">Delivery</h3>#}
-{#                            </a>#}
-{#                        </div>#}
-{#                        <div>#}
-{#                            <a href="#" class="footer-link">#}
-{#                                <h3 class="footer-h3">Architect accounts</h3>#}
-{#                            </a>#}
-{#                            <a href="#" class="footer-link">#}
-{#                                <h3 class="footer-h3">Careers</h3>#}
-{#                            </a>#}
-{#                            <a href="#" class="footer-link">#}
-{#                                <h3 class="footer-h3">Exchanges &amp;&nbsp;returns</h3>#}
-{#                            </a>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="in-touch">#}
-{#                    <h4 class="footer-h4">Let&rsquo;s Stay in&nbsp;Touch!</h4>#}
-{#                    <p class="footer-p">Suscribe to&nbsp;know about our latest news, products and special offers#}
-{#                        just for suscribers.</p>#}
-{#                    <div class="footer-email">#}
-{#                        <input class="footer-input-email" type="email" placeholder="your email address">#}
-{#                        <input class="footer-input-submit" type="submit" value="">#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#            <div class="footer-text-2">#}
-{#                <p class="footer-text-2-p">&copy;&nbsp;Copyright&nbsp;&mdash; INTERIOR 2016. All Rights Reserved.</p>#}
-{#                <div class="social-links">#}
-{#                    <a class="social" href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>#}
-{#                    <a class="social" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>#}
-{#                    <a class="social" href="https://plus.google.com/" target="_blank"><i class="fab fa-google-plus-g"></i></a>#}
-{#                    <a class="social" href="https://www.pinterest.com/" target="_blank"><i class="fab fa-pinterest-p"></i></a>#}
-{#                </div>#}
-{#                <p class="footer-text-2-p">Terms &amp;&nbsp;Conditions&nbsp;/ Privacy policy &amp;&nbsp;Cookies</p>#}
-{#            </div>#}
-{#        </footer>#}
-{#    </div>#}
-{#</body>#}
-{##}
-{#</html>#}
