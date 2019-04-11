@@ -11,38 +11,13 @@
             </nav>
             <div class="trending-products padding-site ">
                 {% for product in products %}
-                <a href="{% url 'products:product' product.pk %}" class="trending-products-img"><img src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+                <a href="{% url 'products:product' product.pk %}" class="trending-products-img">
+                    <img src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
                 {% endfor %}
             </div>
             <div class="products-reload">
-                <a href="#" class="products-reload-img"><img src="{% static 'img/refresh.svg' %}"></a>
+                <a href="#" class="products-reload-img">
+                    <img src="{% static 'img/refresh.svg' %}"></a>
             </div>
-{#            <div class="promo">#}
-{#                <div class="promo-img-1">#}
-{#                    <div class="promo-text">#}
-{#                        <h4 class="promo-h4">exclusive</h4>#}
-{#                        <h2 class="promo-h2">Fishnet Chair</h2>#}
-{#                        <p class="promo-p">#}
-{#                            Seat and back with upholstery made of&nbsp;cold cure foam.#}
-{#                            Steel frame, available in&nbsp;matt powder-coated black#}
-{#                            or&nbsp;highly polished chrome.#}
-{#                        </p>#}
-{#                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="promo-img-2">#}
-{#                    <div class="promo-text">#}
-{#                        <h4 class="promo-h4">exclusive</h4>#}
-{#                        <h2 class="promo-h2">Fishnet Chair</h2>#}
-{#                        <p class="promo-p">#}
-{#                            Seat and back with upholstery made of&nbsp;cold cure foam.#}
-{#                            Steel frame, available in&nbsp;matt powder-coated black#}
-{#                            or&nbsp;highly polished chrome.#}
-{#                        </p>#}
-{#                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-
 {% endblock %}
 

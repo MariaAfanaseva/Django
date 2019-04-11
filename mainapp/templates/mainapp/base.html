@@ -23,56 +23,7 @@
         {% block div %}
         {% endblock %}
         {% block header %}
-            <header class="header">
-                <a class="logo" href="{% url 'index' %}"><img src="/static/img/logo.svg" alt="logo"></a>
-                <nav>
-                    <ul class="menu">
-                        <li><a href="{% url 'index' %}"
-                               class="{% if request.resolver_match.view_name == 'index' %}
-                                   menu-link-active menu-link
-                                   {% else %}menu-link
-                                   {% endif %}"
-                        >HOME </a></li>
-                        <li><a href="{% url 'products:index' %}"
-                               class="{% if request.resolver_match.namespace == 'products' %}
-                                   menu-link-active menu-link
-                                   {% elif request.resolver_match.view_name == 'product' %}
-                                   menu-link-active menu-link
-                                   {% else %}menu-link
-                                   {% endif %}">PRODUCTS </a></li>
-                        <li><a href="#" class="{% if request.resolver_match.url_name == 'history' %}
-                            menu-link-active menu-link
-                                   {% else %}menu-link
-                                   {% endif %}">HISTORY </a></li>
-                        {#                            <li><a href="#" class="{% if request.resolver_match.url_name == 'showroom' %}#}
-                        {#                            menu-link-active menu-link#}
-                        {#                                   {% else %}menu-link#}
-                        {#                                   {% endif %}">SHOWROOM</a></li>#}
-                        <li><a href="{% url 'contacts' %}"
-                               class="{% if request.resolver_match.view_name == 'contacts' %}
-                            menu-link-active menu-link
-                                   {% else %}menu-link
-                                   {% endif %}">CONTACT</a></li>
-                        {% if user.is_authenticated %}
-                            <li class="menu-list"><a class="menu-link">Hello {{ user.username|title}}!</a>
-                            <ul class="menu-in">
-                            <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
-                            <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
-                            </ul>
-                            </li>
-                        {%  else %}
-                            <li ><a class="menu-link" href="{% url 'auth:login' %}">Login</a></li>
-                            <li><a class="menu-link" href="{% url 'auth:register' %}">Register</a></li>
-
-                        {% endif %}
-                        <li><a href="#" class="menu-link"><img src="/static/img/search.svg" alt="search"></a></li>
-
-                    </ul>
-                    <img class="menu-mini" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
-                         alt="menu-mini">
-
-                </nav>
-            </header>
+            {% include 'mainapp/includes/inc_menu.html' %}
         {% endblock %}
         {% block content %}
         {% endblock %}
