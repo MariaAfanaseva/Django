@@ -4,7 +4,11 @@ from basketapp.models import Basket
 
 
 def get_hot_product():
-    return Product.objects.order_by("?").first()
+    return Product.objects.filter(exclusive=False).order_by("?").first()
+
+
+def get_exclusive_product():
+    return Product.objects.filter(exclusive=True)[:2]
 
 
 def get_same_products(hot_product):
@@ -18,10 +22,13 @@ def main(request):
     if not request.user.is_anonymous:
         basket = Basket.objects.filter(user=request.user)
 
+    exclusive_product = get_exclusive_product()
+
     context = {
         'user': request.user,
         'title': 'interior',
         'basket': basket,
+        'exclusive_product': exclusive_product,
     }
     return render(request, 'mainapp/index.html', context=context)
 
@@ -53,12 +60,14 @@ def products(request, pk=None):
 
     products_category = ProductCategory.objects.all()
     hot_product = get_hot_product()
+    exclusive_product = get_exclusive_product()
     same_product = get_same_products(hot_product)
     context = {
         'title': 'products',
         'links_menu': products_category,
         'hot_product': hot_product,
         'same_product': same_product,
+        'exclusive_product': exclusive_product,
         'basket': basket,
     }
     return render(request, 'mainapp/products.html', context=context)

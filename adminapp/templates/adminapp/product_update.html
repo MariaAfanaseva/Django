@@ -1,0 +1,36 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+  {% if request.resolver_match.url_name == 'product_delete' %}
+
+      <div class="user_delete">
+           Уверены, что хотите удалить {{ object.name }}/ {{ object.category }}?
+
+          <form action="{% url 'admin_custom:product_delete' object.pk %}"
+                   method="post">
+               {% csrf_token %}
+               <input class="btn btn-danger" type="submit" value="удалить">
+                  </form>
+
+
+          <button class="btn btn-success">
+               <a href="{% url 'admin_custom:products' object.category.pk %}">
+               Отмена
+                    </a>
+                  </button>
+            </div>
+  {% else %}
+      <form class="form-horizontal padding-site" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input class="form-control" type="submit" value="сохранить">
+      </form>
+      <button class="btn btn-round form-control last">
+        <a href="{% url 'admin_custom:products' object.category.pk %}">
+          к списку продуктов
+        </a>
+      </button>
+   {% endif %}
+{% endblock %}

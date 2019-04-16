@@ -4,11 +4,11 @@
        alt="{{ item.product.short_desc }}">
   <span>{{ item.product.category.name }}</span>
   <span>{{ item.product.name }}</span>
-  <span>{{ item.product.price }}&nbspeuro</span>
+  <span>{{ item.product.price }}&nbspUSD</span>
   <input type="number" name="{{ item.pk }}"
-                       min="0"
+                       min="1"
                        value="{{ item.quantity }}">
-  <span>{{ item.cost }}&nbspeuro</span>
+  <span>{{ item.cost }}</span>
   <button>
     <a href="{% url 'basket:remove' item.pk %}" class="">
       remove
@@ -18,8 +18,7 @@
 {% endfor %}
 
 {% if basket_items %}
-<div>
-  In your basket {{ basket_items.0.total_quantity }} total cost
-            {{ basket_items.0.total_cost }} euro
+<div class="basket_total">
+  {% include 'basketapp/includes/inc_basket_total.html' %}
 </div>
 {% endif %}

@@ -28,6 +28,10 @@
                 menu-link-active menu-link
                        {% else %}menu-link
                        {% endif %}">CONTACT</a></li>
+        {% if request.user.is_superuser %}
+            <li><a href="{% url 'admin_custom:categories' %}"
+                   class="menu-link menu-link">Adminka</a></li>
+        {% endif %}
             {% if user.is_authenticated %}
                 <li class="menu-list"><a class="menu-link">Hello {{ user.username|title}}!</a>
                 <ul class="menu-in">

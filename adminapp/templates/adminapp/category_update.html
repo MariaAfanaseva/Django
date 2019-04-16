@@ -1,0 +1,21 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+  <form class="form-horizontal" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if request.resolver_match.url_name == 'category_delete' %}
+        <h2>Are you sure to remove?</h2>
+        <input class="form-control" type="submit" value="delete">
+    {% else %}
+        <input class="form-control" type="submit" value="save">
+
+    {% endif %}
+      <button class="btn btn-round form-control last">
+            <a href="{% url 'admin_custom:categories' %}">return</a>
+      </button>
+  </form>
+
+
+{% endblock %}
