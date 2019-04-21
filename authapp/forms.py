@@ -14,12 +14,12 @@ class ShopUserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
-    def clean_age(self):
-        data = self.cleaned_data['age']
-        if data < 14:
-            raise forms.ValidationError("You are too young")
+    # def clean_age(self):
+    #     data = self.cleaned_data['age']
+    #     if data < 14:
+    #         raise forms.ValidationError("You are too young")
 
-        return data
+        # return data
 
 
 class ShopUserEditForm(UserChangeForm):

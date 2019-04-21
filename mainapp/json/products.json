@@ -2,56 +2,93 @@
   {
     "category" : "Home",
     "name": "Lamp",
+    "type": "Trending",
     "price": 200,
-    "image": "product-11.jpg"
+    "image": "product-11.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+
   },
   {
     "category" : "Modern",
     "name": "Chair",
+    "type": "Trending",
     "price": 300,
-    "image": "product-21.jpg"
+    "image": "product-21.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
   },
   {
     "category" : "Classic",
     "name": "Lamp",
     "price": 100,
-    "image": "product-31.jpg"
+    "type": "Trending",
+    "image": "product-31.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
   },
    {
     "category" : "Office",
     "name": "Lamp",
     "price": 100,
-    "image": "product-41.jpg"
-  },
+    "type": "Trending",
+    "image": "product-41.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+   },
    {
     "category" : "Modern",
     "name": "Chair",
     "price": 170,
-    "image": "product-4.jpg"
-  },
+    "type": "Hot deal",
+    "image": "product-4.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+   },
     {
     "category" : "Modern",
     "name": "Clock",
+    "type": "Hot deal",
     "price": 170,
-    "image": "product-4-sm.jpg"
-  },
+    "image": "product-4-sm.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+    },
 
     {
     "category" : "Home",
     "name": "Fishnet Chair",
     "price": 500,
+    "type": "Exclusive",
+    "image": "promo-img1.jpg",
     "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
-    "exclusive": "True",
-    "image": "promo-img1.jpg"
-
-  },
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+    },
       {
     "category" : "Office",
     "name": "Fishnet Chair",
     "price": 500,
+    "type": "Exclusive",
+    "image": "promo-img.jpg",
     "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
-    "exclusive": "True",
-    "image": "promo-img.jpg"
-
-  }
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+      },
+  {
+    "category" : "Modern",
+    "name": "Mortar",
+    "type": "Trending",
+    "price": 70,
+    "image": "product-5.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+    },
+  {
+    "category" : "Modern",
+    "name": "Lamp",
+    "type": "Trending",
+    "price": 70,
+    "image": "product-6.jpg",
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "description": "The majesty of Mountains — Ugmonk style. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
+    }
 ]

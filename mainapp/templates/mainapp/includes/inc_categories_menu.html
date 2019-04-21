@@ -7,13 +7,14 @@
            {% endif %}">ALL
         </a>
     </li>
-{% for link in links_menu %}
-    <li>
-        <a href="{% url 'products:category' link.pk %}"
-           class="{% if request.resolver_match.kwargs.pk|add:'0' == link.pk %}
+        {% for link in links_menu %}
+            <li>
+                <a href="{% url 'products:category' link.pk %}"
+                   class="{% if link.pk == product.category.pk %}
            all-menu-link all-menu-bottom all-menu-link-active
            {% else %}all-menu-link all-menu-bottom
            {% endif %}">{{ link.name }}
-        </a>
-    </li>
-    {% endfor %}
+                </a>
+            </li>
+        {% endfor %}
+</ul>

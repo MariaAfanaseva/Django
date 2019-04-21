@@ -4,30 +4,26 @@
             <div class="products-range padding-site">
         {% endblock %}
 {% block content %}
-                <h2 class="products-range-h2 padding-site">Our Products Range</h2>
+                <h2 class="products-range-h2 padding-site">{{ products.0.type }}</h2>
             </div>
             <nav class="products-menu padding-site">
                 {% include 'mainapp/includes/inc_categories_menu.html' %}
             </nav>
-
-             <div class="trending-products padding-site ">
-                    <a href="{% url 'products:product' hot_product.pk %}" >
-                    <img class="trending-products-img" src="/media/products_images/{{ hot_product.image }}"
-                         alt="{{ hot_product.name }}"></a>
-                {% for product in same_product %}
-            <a href="{% url 'products:product' product.pk %}" >
+  <div class="trending-products padding-site ">
+  {% for product in products %}
+                    <a href="{% url 'products:product' product.pk%}" >
                     <img class="trending-products-img" src="/media/products_images/{{ product.image }}"
                          alt="{{ product.name }}"></a>
-        {% endfor %}
-            </div>
-
+  {% endfor %}
+  </div>
+    {% if request.resolver_match.kwargs.num != '2' %}
             <div class="promo">
                 {% for exclusive in exclusive_product %}
                 <div class="promo-img-1">
                 <img src="/media/products_images/{{ exclusive.image }}"
                          alt="{{ exclusive.name }}">
                     <div class="promo-text">
-                        <h4 class="promo-h4">exclusive</h4>
+                        <h4 class="promo-h4">{{ exclusive.type }}</h4>
                         <h2 class="promo-h2">{{ exclusive.name }}</h2>
                         <p class="promo-p">
                             {{ exclusive.short_desc }}
@@ -35,20 +31,8 @@
                        <a href="{% url 'products:product' exclusive.pk %}" class="button">order&nbsp;us
                         <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
                     </div>
+                {% endfor %}
                 </div>
-{#                <div class="promo-img-2">#}
-{#                    <div class="promo-text">#}
-{#                        <h4 class="promo-h4">exclusive</h4>#}
-{#                        <h2 class="promo-h2">Fishnet Chair</h2>#}
-{#                        <p class="promo-p">#}
-{#                            Seat and back with upholstery made of&nbsp;cold cure foam.#}
-{#                            Steel frame, available in&nbsp;matt powder-coated black#}
-{#                            or&nbsp;highly polished chrome.#}
-{#                        </p>#}
-{#                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>#}
-{#                    </div>#}
-{#                </div>#}
-             {% endfor %}
             </div>
-
+    {% endif %}
 {% endblock %}

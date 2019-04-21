@@ -12,8 +12,8 @@
             </nav>
             <div class="product-details">
                 <div class="product-slider">
-                    <a href="#"><img class="product-slider-img"
-                                     src="{% static 'img/slider1.jpg' %}"></a>
+                    <a href="/media/products_images/{{ product.image }}"><img class="product-slider-img"
+                                     src="/media/products_images/{{ product.image }}"></a>
                     <div class="product-slider-pix">
                         <a href="#"><img class="product-slider-pix-img" src="{% static 'img/controll.jpg' %}"></a>
                         <a href="#"><img class="product-slider-pix-img" src="{% static 'img/controll11.jpg' %}" alt="foto_chair_black"></a>
@@ -22,11 +22,11 @@
                     </div>
                 </div>
                 <div class="product-slider-text">
-                    <h2 class="product-slider-text-h2">Fishnet Chair</h2>
-                    <h4 class="slider-1-h4">Hot deal</h4>
+                    <h2 class="product-slider-text-h2">{{ product.name }}</h2>
+                    <h4 class="slider-1-h4">{{ product.type_product }}</h4>
                     <div class="product-cost">
                         <p class="product-cost-currency">$ </p>
-                        <p class="product-cost-num">36.7</p>
+                        <p class="product-cost-num">{{ product.price }}</p>
                         <p class="product-cost-sq">/&nbsp;sq</p>
                     </div>
                     <a href="{% url 'basket:add' product.pk %}" class="product-details-button">
@@ -35,19 +35,19 @@
                             alt="arrow">
                     </a>
                     <div>
-                        <p class="product-slider-text-p">The majesty of&nbsp;Mountains&nbsp;&mdash; Ugmonk style.</p>
-                        <p class="product-slider-text-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                            do&nbsp;eiusmod tempor incididunt ut
-                            labore
-                        </p>
-                        <p class="product-slider-text-p">et&nbsp;dolore magna aliqua. Ut&nbsp;enim ad&nbsp;minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi
-                            ut&nbsp;aliquip ex&nbsp;ea&nbsp;commodo consequat.
-                        </p>
-                        <p class="product-slider-text-p">Duis aute irure dolor in&nbsp;reprehenderit in&nbsp;voluptate
-                            velit esse cillum dolore eu&nbsp;fugiat nulla
-                            pariatur. Excepteur sint occaecat cupidatat non proident.
-                        </p>
+                        <p class="product-slider-text-p">{{ product.description }}</p>
+{#                        <p class="product-slider-text-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed#}
+{#                            do&nbsp;eiusmod tempor incididunt ut#}
+{#                            labore#}
+{#                        </p>#}
+{#                        <p class="product-slider-text-p">et&nbsp;dolore magna aliqua. Ut&nbsp;enim ad&nbsp;minim#}
+{#                            veniam, quis nostrud exercitation ullamco laboris nisi#}
+{#                            ut&nbsp;aliquip ex&nbsp;ea&nbsp;commodo consequat.#}
+{#                        </p>#}
+{#                        <p class="product-slider-text-p">Duis aute irure dolor in&nbsp;reprehenderit in&nbsp;voluptate#}
+{#                            velit esse cillum dolore eu&nbsp;fugiat nulla#}
+{#                            pariatur. Excepteur sint occaecat cupidatat non proident.#}
+{#                        </p>#}
 
                     </div>
                 </div>
@@ -55,12 +55,12 @@
             <div class="related-products padding-site">
                 <div class="trending-text">
                     <h2 class="trending-h2">Related Products</h2>
-                    <a href="#" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}"></a>
+                    <a href="{% url 'products:category' product.category.pk %}" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}"></a>
                 </div>
                 <div class="trending-products">
-                    <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}"></a>
-                    <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>
-                    <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>
+                    {% for product in same_product %}
+                    <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="/media/products_images/{{ product.image }}" alt="{{ product.name }}"></a>
+                    {% endfor %}
                 </div>
             </div>
 {% endblock %}

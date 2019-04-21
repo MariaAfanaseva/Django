@@ -3,11 +3,11 @@
 
 {% block content %}
   <div class="products_list">
-{#    <button class="new_product">#}
-{#      <a href={% url 'admin_custom:product_create' category.pk %}>#}
-{#        новый продукт#}
-{#      </a>#}
-{#    </button>#}
+    <button class="new_product">
+      <a href={% url 'admin_custom:product_create' object_list.0.category.pk %}>
+        новый продукт
+      </a>
+    </button>
 
     {% for object in object_list %}
       <div class="product_record">

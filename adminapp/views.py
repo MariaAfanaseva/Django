@@ -8,9 +8,15 @@ from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 from authapp.models import ShopUser
 from django.shortcuts import HttpResponseRedirect
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
-class ProductCategoryListView(ListView):
+class IsSuperUserView(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class ProductCategoryListView(IsSuperUserView, ListView):
     model = ProductCategory
     template_name = 'adminapp/categories.html'
 
@@ -19,12 +25,12 @@ class ProductCategoryListView(ListView):
         context['title'] = 'Categories'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    # @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    # def dispatch(self, *args, **kwargs):
+    #     return super().dispatch(*args, **kwargs)
 
 
-class ProductCategoryCreateView(CreateView):
+class ProductCategoryCreateView(IsSuperUserView, CreateView):
     model = ProductCategory
     template_name = 'adminapp/category_update.html'
     fields = '__all__'
@@ -35,12 +41,8 @@ class ProductCategoryCreateView(CreateView):
         context['title'] = 'Create category'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductCategoryUpdateView(UpdateView):
+class ProductCategoryUpdateView(IsSuperUserView, UpdateView):
     model = ProductCategory
     template_name = 'adminapp/category_update.html'
     fields = '__all__'
@@ -51,12 +53,8 @@ class ProductCategoryUpdateView(UpdateView):
         context['title'] = 'Update category'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductCategoryDeleteView(DeleteView):
+class ProductCategoryDeleteView(IsSuperUserView, DeleteView):
     model = ProductCategory
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('admin_custom:categories')
@@ -67,17 +65,13 @@ class ProductCategoryDeleteView(DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.object = get_object_or_404(ShopUser, pk=kwargs['pk'])
         self.object.is_active = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class UsersListView(ListView):
+class UsersListView(IsSuperUserView, ListView):
     model = ShopUser
     template_name = 'adminapp/users.html'
 
@@ -86,15 +80,11 @@ class UsersListView(ListView):
         context['title'] = 'Users'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class UsersCreateView(CreateView):
+class UsersCreateView(IsSuperUserView, CreateView):
     model = ShopUser
     template_name = 'adminapp/user_update.html'
-    fields = '__all__'
+    fields = 'username', 'first_name', 'last_name', 'email', 'password', 'is_active', 'age', 'avatar'
     success_url = reverse_lazy('admin_custom:users')
 
     def get_context_data(self, **kwargs):
@@ -102,12 +92,8 @@ class UsersCreateView(CreateView):
         context['title'] = 'Users create'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class UsersUpdateView(UpdateView):
+class UsersUpdateView(IsSuperUserView, UpdateView):
     model = ShopUser
     template_name = 'adminapp/user_update.html'
     fields = 'username','first_name', 'last_name', 'email', 'password', 'is_active','avatar'
@@ -118,12 +104,8 @@ class UsersUpdateView(UpdateView):
         context['title'] = 'Users update'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class UsersDeleteView(DeleteView):
+class UsersDeleteView(IsSuperUserView, DeleteView):
     model = ShopUser
     template_name = 'adminapp/user_update.html'
     success_url = reverse_lazy('admin_custom:users')
@@ -134,17 +116,13 @@ class UsersDeleteView(DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.object = get_object_or_404(ShopUser, pk=kwargs['pk'])
         self.object.is_active = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductDetailView(DetailView):
+class ProductDetailView(IsSuperUserView, DetailView):
     model = Product
     template_name = 'adminapp/product_read.html'
 
@@ -153,47 +131,51 @@ class ProductDetailView(DetailView):
         context['title'] = 'Product'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductCreateView(CreateView):
+class ProductCreateView(IsSuperUserView, CreateView):
     model = Product
-    template_name = 'adminapp/product_update.html'
+    template_name = 'adminapp/product_create.html'
     fields = '__all__'
-    success_url = reverse_lazy('admin_custom:products')
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('admin_custom:products', kwargs={'pk': pk})
+
+    def get_initial(self):
+        initial_data = super(ProductCreateView, self).get_initial()
+        initial_data['category'] = self.kwargs['pk']
+        return initial_data
 
     def get_context_data(self, **kwargs):
         context = super(ProductCreateView, self).get_context_data(**kwargs)
+        context['category'] = self.kwargs['pk']
         context['title'] = 'Product create'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(IsSuperUserView, UpdateView):
     model = Product
     template_name = 'adminapp/product_update.html'
     fields = '__all__'
-    success_url = reverse_lazy('admin_custom:product_read')
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('admin_custom:product_read', kwargs={'pk': pk})
 
     def get_context_data(self, **kwargs):
         context = super(ProductUpdateView, self).get_context_data(**kwargs)
         context['title'] = 'Product update'
         return context
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(IsSuperUserView, DeleteView):
     model = Product
     template_name = 'adminapp/product_update.html'
-    success_url = reverse_lazy('admin_custom:products')
+
+    def get_success_url(self):
+        self.object = self.get_object()
+        pk = self.object.category.pk
+        return reverse_lazy('admin_custom:products', kwargs={'pk': pk})
 
     def get_context_data(self, **kwargs):
         context = super(ProductDeleteView, self).get_context_data(**kwargs)
@@ -201,17 +183,13 @@ class ProductDeleteView(DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.object = get_object_or_404(ShopUser, pk=kwargs['pk'])
         self.object.is_active = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
-
-class ProductListView(ListView):
+class ProductListView(IsSuperUserView, ListView):
     model = Product
     template_name = 'adminapp/products.html'
 
@@ -224,8 +202,8 @@ class ProductListView(ListView):
         pk =self.kwargs['pk']
         return Product.objects.all().filter(category__pk=pk)
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+
+
+
 
 

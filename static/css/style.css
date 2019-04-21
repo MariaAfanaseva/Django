@@ -89,7 +89,9 @@ body {
 .all-menu {
   display: flex;
   list-style-type: none;
+  flex-wrap: wrap;
 }
+
 .all-menu-mini{
   display: none;
 }
@@ -103,9 +105,11 @@ body {
   text-transform: uppercase;
   letter-spacing: 1.8px;
 }
+
 .all-menu-link-active {
   color: #212121;
 }
+
 .all-menu-link:hover {
   color: #212121;
 }
@@ -297,10 +301,10 @@ body {
 }
 
 /*.promo-img-2 {*/
-  /*width: 50%;*/
-  /*height: 683px;*/
-  /*display: flex;*/
-  /*align-items: center;*/
+/*width: 50%;*/
+/*height: 683px;*/
+/*display: flex;*/
+/*align-items: center;*/
 /*}*/
 .promo-text {
   position: absolute;
@@ -346,6 +350,7 @@ body {
 }
 .trending-products-img {
   width: 350px;
+  height: auto;
   margin-bottom: 30px;
 }
 .trending-products-img:hover {
@@ -381,14 +386,15 @@ body {
   flex-wrap: wrap;
 }
 .exclusive-product-lg {
-  background-image: url(/static/img/product-1-lg.jpg);
-  width: 540px;
-  height: 570px;
   display: flex;
   align-items: center;
   padding-left: 30px;
   margin-right: 30px;
   margin-bottom: 30px;
+}
+.exclusive-product-lg-img{
+  width: 540px;
+  height: 570px;
 }
 .exclusive-text {
   width: 340px;
@@ -802,10 +808,7 @@ body {
     background-position: center;
     width: 100%;
   }
-  .trending-products{
-    justify-content: center;
-  }
-  
+
   .product-text{
     flex-wrap: wrap;
     align-items: center;
@@ -859,7 +862,7 @@ body {
   }
   .products-range{
     text-align: center;
-  
+
   }
   .products-range-h2{
     font-size: 47px;
@@ -867,18 +870,7 @@ body {
   .interior-contact{
     justify-content: center;
   }
-  .products-menu{
-    justify-content: center;
-  }
-  .all-menu{
-    flex-wrap: wrap;
-  }
-  .all-menu-link{
-    font-size: 14px;
-  }
-  .product-details{
-    /* flex-wrap: wrap; */
-  }
+
   .product-slider-text{
     width: 70%;
     margin-top: 70px;
@@ -912,4 +904,17 @@ body {
   }
 }
 
+.paginator{
+  color: #212121;
+  text-transform: uppercase;
 
+}
+.paginator-link{
+  text-decoration: none;
+  font-size: 20px;
+  color: #212121;
+
+}
+.paginator-span{
+  font-size: 20px;
+}
