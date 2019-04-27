@@ -2,25 +2,56 @@
   {
     "category" : "Home",
     "name": "Lamp",
-    "price": 2000,
+    "price": 200,
     "image": "product-11.jpg"
   },
   {
     "category" : "Modern",
     "name": "Chair",
-    "price": 3000,
+    "price": 300,
     "image": "product-21.jpg"
   },
   {
     "category" : "Classic",
     "name": "Lamp",
-    "price": 1000,
+    "price": 100,
     "image": "product-31.jpg"
   },
    {
     "category" : "Office",
     "name": "Lamp",
-    "price": 1000,
+    "price": 100,
     "image": "product-41.jpg"
+  },
+   {
+    "category" : "Modern",
+    "name": "Chair",
+    "price": 170,
+    "image": "product-4.jpg"
+  },
+    {
+    "category" : "Modern",
+    "name": "Clock",
+    "price": 170,
+    "image": "product-4-sm.jpg"
+  },
+
+    {
+    "category" : "Home",
+    "name": "Fishnet Chair",
+    "price": 500,
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "exclusive": "True",
+    "image": "promo-img1.jpg"
+
+  },
+      {
+    "category" : "Office",
+    "name": "Fishnet Chair",
+    "price": 500,
+    "short_desc": "Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated blackor highly polished chrome.",
+    "exclusive": "True",
+    "image": "promo-img.jpg"
+
   }
 ]

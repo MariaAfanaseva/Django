@@ -2,13 +2,15 @@ window.onload = function () {
     $('.basket_list').on('click', 'input[type="number"]', function () {
         var t_href = event.target;
 
-        $.ajax({
-            url: "/basket/edit/" + t_href.name + "/?quantity=" + t_href.value,
+        if (t_href.value > 0) {
+            $.ajax({
+                url: "/basket/edit/" + t_href.name + "/?quantity=" + t_href.value,
 
-            success: function (data) {
-                $('.basket_list').html(data.result);
-            },
-        });
+                success: function (data) {
+                    $('.basket_total').html(data.result);
+                },
+            });
+        }
 
         event.preventDefault();
     });

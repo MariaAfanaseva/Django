@@ -11,40 +11,44 @@
             </nav>
 
              <div class="trending-products padding-site ">
-                    <a href="{% url 'products:product' hot_product.pk %}" class="trending-products-img">
-                    <img src="/media/{{ hot_product.image }}"
+                    <a href="{% url 'products:product' hot_product.pk %}" >
+                    <img class="trending-products-img" src="/media/products_images/{{ hot_product.image }}"
                          alt="{{ hot_product.name }}"></a>
-                {% for product in same_products %}
-            <a href="{% url 'products:product' product.pk %}" class="trending-products-img">
-                    <img src="/media/{{ product.image }}"
+                {% for product in same_product %}
+            <a href="{% url 'products:product' product.pk %}" >
+                    <img class="trending-products-img" src="/media/products_images/{{ product.image }}"
                          alt="{{ product.name }}"></a>
         {% endfor %}
             </div>
 
             <div class="promo">
+                {% for exclusive in exclusive_product %}
                 <div class="promo-img-1">
+                <img src="/media/products_images/{{ exclusive.image }}"
+                         alt="{{ exclusive.name }}">
                     <div class="promo-text">
                         <h4 class="promo-h4">exclusive</h4>
-                        <h2 class="promo-h2">Fishnet Chair</h2>
+                        <h2 class="promo-h2">{{ exclusive.name }}</h2>
                         <p class="promo-p">
-                            Seat and back with upholstery made of&nbsp;cold cure foam.
-                            Steel frame, available in&nbsp;matt powder-coated black
-                            or&nbsp;highly polished chrome.
+                            {{ exclusive.short_desc }}
                         </p>
-                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
+                       <a href="{% url 'products:product' exclusive.pk %}" class="button">order&nbsp;us
+                        <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
                     </div>
                 </div>
-                <div class="promo-img-2">
-                    <div class="promo-text">
-                        <h4 class="promo-h4">exclusive</h4>
-                        <h2 class="promo-h2">Fishnet Chair</h2>
-                        <p class="promo-p">
-                            Seat and back with upholstery made of&nbsp;cold cure foam.
-                            Steel frame, available in&nbsp;matt powder-coated black
-                            or&nbsp;highly polished chrome.
-                        </p>
-                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>
-                    </div>
-                </div>
+{#                <div class="promo-img-2">#}
+{#                    <div class="promo-text">#}
+{#                        <h4 class="promo-h4">exclusive</h4>#}
+{#                        <h2 class="promo-h2">Fishnet Chair</h2>#}
+{#                        <p class="promo-p">#}
+{#                            Seat and back with upholstery made of&nbsp;cold cure foam.#}
+{#                            Steel frame, available in&nbsp;matt powder-coated black#}
+{#                            or&nbsp;highly polished chrome.#}
+{#                        </p>#}
+{#                        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>#}
+{#                    </div>#}
+{#                </div>#}
+             {% endfor %}
             </div>
+
 {% endblock %}
