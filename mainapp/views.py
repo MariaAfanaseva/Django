@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from .models import Product
+from .models import ProductCategory
 
 
 def main(request):
-    return render(request, 'mainapp/index.html', context={'title': 'interior'})
+    return render(request, 'mainapp/index.html', context={'user':request.user,'title': 'interior'})
 
 
-def products(request):
-    # product_list = Product.objects.all()
-    return render(request, 'mainapp/products.html', context={'title': 'products'})
-                                                             # 'products': product_list})
+def products(request, pk=None):
+    products_category = ProductCategory.objects.all()
+    return render(request, 'mainapp/products.html',
+                  context={'title': 'products','categories': products_category})
 
 
 def contacts(request):

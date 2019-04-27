@@ -1,0 +1,18 @@
+[
+  {
+    "category" : "OFFICE",
+    "name": "Chair",
+    "price": 2000
+  },
+  {
+    "category" : "CLASSIC",
+    "name": "Table",
+    "price": 3000
+  },
+  {
+    "category" : "MODERN",
+    "name": "Lamp",
+    "price": 1000
+  }
+
+]
