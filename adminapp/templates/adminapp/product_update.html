@@ -1,31 +1,45 @@
-{% extends 'adminapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
-
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-    {% if request.resolver_match.url_name == 'product_delete' %}
-        <div class="user_delete">
-            Уверены, что хотите удалить {{ object.name }}/ {{ object.category }}?
-            <form action="{% url 'admin_custom:product_delete' object.pk %}"
-                  method="post">
+    <h2 class="products-range-h2 padding-site">
+        {% if request.resolver_match.url_name == 'product_delete' %}
+            Delete product
+        {% else %}
+            Update product
+        {% endif %}
+    </h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
+    <div class="form-box padding-site">
+        {% if request.resolver_match.url_name == 'product_delete' %}
+            <p class="admin-block-p">Sure, you want to remove {{ object.name }}/ {{ object.category }}?</p>
+                <form action="{% url 'admin_custom:product_delete' object.pk %}"
+                      method="post">
+                    {% csrf_token %}
+                    <input class="admin-button-input" type="submit" value="delete">
+                </form>
+        {% else %}
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input class="btn btn-danger" type="submit" value="удалить">
+                <p class="form-select"><label>Category</label>{{ form.category }}</p>
+                <p class="form"><label>Product name</label>{{ form.name }}</p>
+                <p class="form-img-update"><label>Product image</label>{{ form.image }}</p>
+                <p class="form"><label>Product short description</label>{{ form.short_desc }}</p>
+                <p class="form-description"><label>Product description</label>{{ form.description}}</p>
+                <p class="form"><label>Product price</label>{{ form.price }}</p>
+                <p class="form"><label>Products quantity</label>{{ form.quantity }}</p>
+                <p class="form-checkbox"><label>Product is active</label>{{ form.is_active}}</p>
+                <p class="form-select"><label>Product type</label>{{ form.type }}</p>
+                <input class="admin-button-input" type="submit" value="save">
             </form>
-            <button class="btn btn-success">
-                <a href="{% url 'admin_custom:products' object.category.pk %}">
-                    Отмена
-                </a>
-            </button>
-        </div>
-    {% else %}
-        <form class="form-horizontal padding-site" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input class="form-control" type="submit" value="сохранить">
-        </form>
-        <button class="btn btn-round form-control last">
-            <a href="{% url 'admin_custom:products' object.category.pk %}">
-                к списку продуктов
-            </a>
-        </button>
-    {% endif %}
+        {% endif %}
+        <a class="admin-button" href="{% url 'admin_custom:products' object.category.pk %}">
+            cancel
+        </a>
+    </div>
 {% endblock %}

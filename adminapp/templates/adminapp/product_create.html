@@ -1,15 +1,30 @@
-{% extends 'adminapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
-
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-    <form class="form-horizontal padding-site" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input class="form-control" type="submit" value="сохранить">
-    </form>
-    <button class="btn btn-round form-control last">
-        <a href="{% url 'admin_custom:products' category %}">
-            к списку продуктов
+    <h2 class="products-range-h2 padding-site">Create product</h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
+    <div class="form-box padding-site">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p class="form-select"><label>Category</label>{{ form.category }}</p>
+            <p class="form"><label>Product name</label>{{ form.name }}</p>
+            <p class="form-file"><label>Product image</label>{{ form.image }}</p>
+            <p class="form"><label>Product short description</label>{{ form.short_desc }}</p>
+            <p class="form-description"><label>Product description</label>{{ form.description}}</p>
+            <p class="form"><label>Product price</label>{{ form.price }}</p>
+            <p class="form"><label>Products quantity</label>{{ form.quantity }}</p>
+            <p class="form-checkbox"><label>Product is active</label>{{ form.is_active}}</p>
+            <p class="form-select"><label>Product type</label>{{ form.type }}</p>
+            <input class="admin-button-input" type="submit" value="save">
+        </form>
+        <a class="admin-button" href="{% url 'admin_custom:products' category %}">
+            cancel
         </a>
-    </button>
+    </div>
 {% endblock %}

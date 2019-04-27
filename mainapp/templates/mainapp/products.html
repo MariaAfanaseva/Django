@@ -1,26 +1,26 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
-        {% block div %}
-            <div class="products-range padding-site">
-        {% endblock %}
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-                <h2 class="products-range-h2 padding-site">{{ products.0.type }}</h2>
-            </div>
-            <nav class="products-menu padding-site">
-                {% include 'mainapp/includes/inc_categories_menu.html' %}
-            </nav>
-  <div class="trending-products padding-site ">
-  {% for product in products %}
-                    <a href="{% url 'products:product' product.pk%}" >
-                    <img class="trending-products-img" src="/media/products_images/{{ product.image }}"
-                         alt="{{ product.name }}"></a>
-  {% endfor %}
-  </div>
+    <h2 class="products-range-h2 padding-site">{{ products.0.type }}</h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'mainapp/includes/inc_categories_menu.html' %}
+    </nav>
+    <div class="trending-products padding-site ">
+        {% for product in products %}
+            <a href="{% url 'products:product' product.pk%}" >
+                <img class="trending-products-img" src="/media/{{ product.image }}"
+                     alt="{{ product.name }}"></a>
+        {% endfor %}
+    </div>
     {% if request.resolver_match.kwargs.num != '2' %}
-            <div class="promo">
-                {% for exclusive in exclusive_product %}
+        <div class="promo">
+            {% for exclusive in exclusive_product %}
                 <div class="promo-img-1">
-                <img src="/media/products_images/{{ exclusive.image }}"
+                    <img class="promo-exclusive-img" src="/media/{{ exclusive.image }}"
                          alt="{{ exclusive.name }}">
                     <div class="promo-text">
                         <h4 class="promo-h4">{{ exclusive.type }}</h4>
@@ -28,11 +28,11 @@
                         <p class="promo-p">
                             {{ exclusive.short_desc }}
                         </p>
-                       <a href="{% url 'products:product' exclusive.pk %}" class="button">order&nbsp;us
-                        <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
+                        <a href="{% url 'products:product' exclusive.pk %}" class="button">order&nbsp;us
+                            <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="{{ exclusive.name }}"></a>
                     </div>
-                {% endfor %}
                 </div>
-            </div>
+            {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}

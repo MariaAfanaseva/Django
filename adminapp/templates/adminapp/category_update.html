@@ -1,21 +1,35 @@
-{% extends 'adminapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
-
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-  <form class="form-horizontal" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if request.resolver_match.url_name == 'category_delete' %}
-        <h2>Are you sure to remove?</h2>
-        <input class="form-control" type="submit" value="delete">
-    {% else %}
-        <input class="form-control" type="submit" value="save">
-
-    {% endif %}
-      <button class="btn btn-round form-control last">
-            <a href="{% url 'admin_custom:categories' %}">return</a>
-      </button>
-  </form>
-
-
+    <h2 class="products-range-h2 padding-site">
+        {% if request.resolver_match.url_name == 'category_delete' %}
+            Delete category
+        {% elif request.resolver_match.url_name == 'category_update' %}
+            Update category
+        {% else %}
+            Create category
+        {% endif %}
+    </h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
+    <div class="form-box padding-site">
+        {% if request.resolver_match.url_name == 'category_delete' %}
+            <p class="admin-block-p">Are you sure to remove category - {{ object.name }}?</p>
+            <input class="admin-button-input" type="submit" value="delete">
+        {% else %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p class="form"><label>Category name</label>{{ form.name }}</p>
+                <p class="form-description"><label>Category description</label>{{ form.description }}</p>
+                <p class="form-checkbox"><label>Category is active</label>{{ form.is_active }}</p>
+                <input class="admin-button-input" type="submit" value="save">
+            </form>
+        {% endif %}
+        <a class="admin-button" href="{% url 'admin_custom:categories' %}">cancel</a>
+    </div>
 {% endblock %}

@@ -1,144 +1,118 @@
 {% extends 'mainapp/base.html' %}
 {% load static %}
-        {% block div %}
-            <div class="slider padding-site">
-        {% endblock %}
-                {% block content %}
-                <div class="slider-text">
-                    <h4 class="slider-h4">TRENDING</h4>
-                    <h2 class="slider-h2">Fishnet Chair</h2>
-                    <p class="slider-p">
-                        Seat and back with upholstery made of&nbsp;cold cure foam. Steel frame, available in&nbsp;matt
-                        powder-coated black
+{% block div %}
+    <div class="slider padding-site">
+{% endblock %}
+{% block content %}
+    <div class="slider-text">
+        <h4 class="slider-h4">TRENDING</h4>
+        <h2 class="slider-h2">Fishnet Chair</h2>
+        <p class="slider-p">
+            Seat and back with upholstery made of&nbsp;cold cure foam. Steel frame, available in&nbsp;matt
+            powder-coated black
+        </p>
+        <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>
+    </div>
+    <div class="slider-pagination">
+        <a href="" class="circle"></a>
+        <a href="" class="circle circle-active"></a>
+        <a href="" class="circle"></a>
+    </div>
+    </div>
+    <div class="product padding-site">
+        <div class="product-text">
+            <div><a href="#" class="type-product type-product-active">Featured</a><a href="#" class="type-product">New</a></div>
+            <a href="#" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}" alt="search"></a>
+        </div>
+        <div class="product-box">
+            {% for product in featured_products %}
+            <div class="product-img" style="background-image: url('/media/{{ product.image }}')">
+                <div class="img-text">
+                    <a href={% url 'products:product' product.pk %}>
+                        <div class="button-arrow"></div>
+                    </a>
+                    <h4 class="img-text-h4">{{ product.name }}</h4>
+                    <p class="img-text-p">{{ product.short_desc }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="promo">
+        {% for exclusive in exclusive_product %}
+            <div class="promo-img-1">
+                <img class="promo-exclusive-img" src="/media/{{ exclusive.image }}"
+                     alt="{{ exclusive.name }}">
+                <div class="promo-text">
+                    <h4 class="promo-h4">{{ exclusive.type }}</h4>
+                    <h2 class="promo-h2">{{ exclusive.name }}</h2>
+                    <p class="promo-p">
+                        {{ exclusive.short_desc }}
                     </p>
-                    <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>
-                </div>
-                <div class="slider-pagination">
-                    <a href="" class="circle"></a>
-                    <a href="" class="circle circle-active"></a>
-                    <a href="" class="circle"></a>
-                </div>
-            </div>
-            <div class="product padding-site">
-                <div class="product-text">
-                    <div><a href="#" class="type-product type-product-active">Featured</a><a href="#" class="type-product">New</a></div>
-                    <a href="#" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}" alt="search"></a>
-                </div>
-                <div class="product-box">
-                    <div class="product-img" style="background-image: url(/static/img/product-1.jpg)">
-                        <div class="img-text">
-                            <a href="#">
-                                <div class="button-arrow"></div>
-                            </a>
-                            <h4 class="img-text-h4">Fishnet Chair</h4>
-                            <p class="img-text-p">Seat and back with upholstery made of&nbsp;cold cure foam.</p>
-                        </div>
-                    </div>
-                    <div class="product-img" style="background-image: url(/static/img/product-2.jpg)">
-                        <div class="img-text">
-                            <a href="#">
-                                <div class="button-arrow"></div>
-                            </a>
-                            <h4 class="img-text-h4">Fishnet Chair</h4>
-                            <p class="img-text-p">Seat and back with upholstery made of&nbsp;cold cure foam.</p>
-                        </div>
-                    </div>
-                    <div class="product-img" style="background-image: url(/static/img/product-3.jpg)">
-                        <div class="img-text">
-                            <a href="#">
-                                <div class="button-arrow"></div>
-                            </a>
-                            <h4 class="img-text-h4">Fishnet Chair</h4>
-                            <p class="img-text-p">Seat and back with upholstery made of&nbsp;cold cure foam.</p>
-                        </div>
-                    </div>
-                    <div class="product-img" style="background-image: url(/static/img/product-4.jpg)">
-                        <div class="img-text">
-                            <a href="#">
-                                <div class="button-arrow"></div>
-                            </a>
-                            <h4 class="img-text-h4">Fishnet Chair</h4>
-                            <p class="img-text-p">Seat and back with upholstery made of&nbsp;cold cure foam.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="promo">
-                {% for exclusive in exclusive_product %}
-                <div class="promo-img-1">
-                <img src="/media/products_images/{{ exclusive.image }}"
-                         alt="{{ exclusive.name }}">
-                    <div class="promo-text">
-                        <h4 class="promo-h4">{{ exclusive.type }}</h4>
-                        <h2 class="promo-h2">{{ exclusive.name }}</h2>
-                        <p class="promo-p">
-                            {{ exclusive.short_desc }}
-                        </p>
-                       <a href="{% url 'products:product' exclusive.pk %}" class="button">order&nbsp;us
+                    <a href="{% url 'products:product' exclusive.pk %}" class="button">order&nbsp;us
                         <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
-                    </div>
                 </div>
+            </div>
         {% endfor %}
+    </div>
+    <div class="trending padding-site">
+        <div class="trending-text">
+            <h2 class="trending-h2">Trending Products</h2>
+            <a href="{% url 'products:index' trending_products.0.type.pk %}" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}" alt="search"></a>
+        </div>
+        <div class="trending-products">
+            {% for product in trending_products %}
+                <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="slider-1 padding-site">
+        <div class="slider-1-text">
+            <h4 class="slider-1-h4">Hot deal</h4>
+            <h2 class="slider-h2">Fishnet Chair</h2>
+            <p class="slider-p">
+                Seat and back with upholstery made of&nbsp;cold cure foam. Steel frame, available in&nbsp;matt
+                powder-coated black
+            </p>
+            <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>
+        </div>
+        <div class="slider-1-pagination">
+            <a href="" class="circle"></a>
+            <a href="" class="circle circle-active"></a>
+            <a href="" class="circle"></a>
+        </div>
+    </div>
+    <div class="exclusive padding-site">
+        <div class="exclusive-product-lg">
+            <img class="exclusive-product-lg-img" src="/media/{{ exclusive_product.0.image }}"
+                 alt="{{ exclusive_product.0.name }}">
+            <div class="promo-text">
+                <h4 class="promo-h4">{{ exclusive_product.0.type }}</h4>
+                <h2 class="promo-h2">{{ exclusive_product.0.name }}</h2>
+                <p class="promo-p">
+                    {{ exclusive_product.0.short_desc }}
+                </p>
+                <a href="{% url 'products:product' exclusive_product.0.pk %}" class="button">order&nbsp;us
+                    <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="{{ exclusive_product.0.name }}"></a>
             </div>
-            <div class="trending padding-site">
-                <div class="trending-text">
-                    <h2 class="trending-h2">Trending Products</h2>
-                    <a href="{% url 'products:index' trending_products.0.type.pk %}" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}" alt="search"></a>
-                </div>
-                <div class="trending-products">
-                    {% for product in trending_products %}
-                    <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="/media/products_images/{{ product.image }}" alt="{{ product.name }}"></a>
-                    {% endfor %}
-                </div>
+        </div>
+        <div class="exclusive-product-sm">
+            {% for product in same_products %}
+                <a href="{% url 'products:product' product.pk %}" ><img class="exclusive-product" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="mobile-app padding-site">
+        <div class="mobile-app-text">
+            <h4 class="mobile-app-h4">mobile app</h4>
+            <h2 class="mobile-app-h2">Find. Follow. Favorite.</h2>
+            <p class="mobile-app-p">
+                Save your favorites and share your style.
+            </p>
+            <div class="download-app">
+                <a href="#" class="download-app-img"><img src="{% static 'img/app-store.jpg' %}" alt="app-store"></a>
+                <a href="#" class="download-app-img"><img src="{% static 'img/google-play.jpg' %}" alt="google-play"></a>
             </div>
-            <div class="slider-1 padding-site">
-                <div class="slider-1-text">
-                    <h4 class="slider-1-h4">Hot deal</h4>
-                    <h2 class="slider-h2">Fishnet Chair</h2>
-                    <p class="slider-p">
-                        Seat and back with upholstery made of&nbsp;cold cure foam. Steel frame, available in&nbsp;matt
-                        powder-coated black
-                    </p>
-                    <a href="#" class="button">order&nbsp;us <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}" alt="arrow"></a>
-                </div>
-                <div class="slider-1-pagination">
-                    <a href="" class="circle"></a>
-                    <a href="" class="circle circle-active"></a>
-                    <a href="" class="circle"></a>
-                </div>
-            </div>
-            <div class="exclusive padding-site">
-                <div class="exclusive-product-lg">
-                    <img class="exclusive-product-lg-img" src="/media/products_images/{{ exclusive_product.0.image }}"
-                         alt="{{ exclusive_product.0.name }}">
-                    <div class="promo-text">
-                        <h4 class="promo-h4">{{ exclusive_product.0.type }}</h4>
-                        <h2 class="promo-h2">{{ exclusive_product.0.name }}</h2>
-                        <p class="promo-p">
-                            {{ exclusive_product.0.short_desc }}
-                        </p>
-                       <a href="{% url 'products:product' exclusive_product.0.pk %}" class="button">order&nbsp;us
-                        <img class="arrow-in-button" src="{% static 'img/arrow.svg' %}"></a>
-                    </div>
-                </div>
-                <div class="exclusive-product-sm">
-                    <a href="#" class="exclusive-product"><img src="{% static 'img/product-2-sm.jpg' %}" alt="lamp"></a>
-                    <a href="#" class="exclusive-product"><img src="{% static 'img/product-3-sm.jpg' %}" alt="sofa"></a>
-                    <a href="#" class="exclusive-product"><img src="{% static 'img/product-4-sm.jpg' %}" alt="clock"></a>
-                    <a href="#" class="exclusive-product"><img src="{% static 'img/product-5-sm.jpg' %}" alt="chandelier"></a>
-                </div>
-            </div>
-            <div class="mobile-app padding-site">
-                <div class="mobile-app-text">
-                    <h4 class="mobile-app-h4">mobile app</h4>
-                    <h2 class="mobile-app-h2">Find. Follow. Favorite.</h2>
-                    <p class="mobile-app-p">
-                        Save your favorites and share your style.
-                    </p>
-                    <div class="download-app">
-                        <a href="#" class="download-app-img"><img src="{% static 'img/app-store.jpg' %}" alt="app-store"></a>
-                        <a href="#" class="download-app-img"><img src="{% static 'img/google-play.jpg' %}" alt="google-play"></a>
-                    </div>
-                </div>
-            </div>
-        {% endblock %}
+        </div>
+    </div>
+{% endblock %}

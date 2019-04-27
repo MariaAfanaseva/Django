@@ -1,5 +1,5 @@
 window.onload = function () {
-    $('.basket_list').on('click', 'input[type="number"]', function () {
+    $('.basket-list').on('click', 'input[type="number"]', function () {
         var t_href = event.target;
 
         if (t_href.value > 0) {
@@ -7,7 +7,7 @@ window.onload = function () {
                 url: "/basket/edit/" + t_href.name + "/?quantity=" + t_href.value,
 
                 success: function (data) {
-                    $('.basket_total').html(data.result);
+                    $('.basket-total').html(data.result);
                 },
             });
         }

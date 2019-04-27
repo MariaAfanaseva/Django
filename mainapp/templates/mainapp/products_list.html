@@ -16,7 +16,7 @@
     <div class="trending-products padding-site ">
         {% for product in products %}
             <a href="{% url 'products:product' product.pk %}" >
-                <img class="trending-products-img" src="/media/products_images/{{ product.image }}" alt="{{ product.name }}"></a>
+                <img class="trending-products-img" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
         {% endfor %}
     </div>
     <div class="products-reload">
@@ -40,8 +40,5 @@
             {% endif %}
         </div>
     </div>
-
-
-
 {% endblock %}
 

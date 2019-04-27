@@ -1,45 +1,59 @@
-{% extends 'adminapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
-
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-{% if request.resolver_match.url_name == 'user_delete' %}
-    {% if object.is_superuser %}
-        You are root!
+    <h2 class="products-range-h2 padding-site">
+        {% if request.resolver_match.url_name == 'user_create' %}
+            Create user
+        {% elif request.resolver_match.url_name == 'user_delete' %}
+            Delete user
         {% else %}
-      <div class="user_delete">
-        Уверены, что хотите удалить {{ object.username }}
-        {% if object.first_name %}
-          <b>({{ object.first_name|title }}</b>
-          {% if object.last_name %}
-            {{ object.last_name|title }}
-          {% endif %})
+            Update user
         {% endif %}
-        ?
-
-        <form action="{% url 'admin_custom:user_delete' object.pk %}"
-              method="post">
-          {% csrf_token %}
-          <input class="btn btn-danger" type="submit" value="удалить">
-        </form>
-      {% endif %}
-        <button class="btn btn-success">
-          <a href="{% url 'admin_custom:users' %}">
-            Отмена
-          </a>
-        </button>
-      </div>
-
-{%  else %}
-
-  <form class="form-horizontal" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input class="form-control" type="submit" value="сохранить">
-  </form>
-  <button class="btn btn-round form-control last">
-    <a href="{% url 'admin_custom:users' %}">
-      к списку пользователей
-    </a>
-  </button>
-{% endif %}
+    </h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
+    <div class="form-box padding-site">
+        {% if request.resolver_match.url_name == 'user_delete' %}
+            {% if object.is_superuser %}
+                <h2 class="admin-block-p">You are root!</h2>
+            {% else %}
+                <p class="admin-block-p">Sure, you want to remove {{ object.username }}?
+                    {% if object.first_name %}
+                        <b>({{ object.first_name|title }}</b>
+                        {% if object.last_name %}
+                            {{ object.last_name|title }}
+                        {% endif %})
+                    {% endif %}
+                    ?</p>
+                <form action="{% url 'admin_custom:user_delete' object.pk %}"
+                      method="post">
+                    {% csrf_token %}
+                    <input class="admin-button-input" type="submit" value="delete">
+                </form>
+            {% endif %}
+        {%  else %}
+            <div>
+                <form  method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <p class="form"><label>User name</label>{{ form.username }}</p>
+                    <p class="form"><label>User first name</label>{{ form.first_name }}</p>
+                    <p class="form"><label>User last name</label>{{ form.last_name }}</p>
+                    <p class="form"><label>User age</label>{{ form.age }}</p>
+                    <p class="form"><label>User email</label>{{ form.email }}</p>
+                    <p class="form"><label>User password</label>{{ form.password }}</p>
+                    <p class="form-checkbox"><label>User active</label>{{ form.is_active}}</p>
+                    <p class="form-file"><label>User avatar</label>{{ form.avatar }}</p>
+                    <input class="admin-button-input" type="submit" value="save">
+                </form>
+            </div>
+        {% endif %}
+        <a class="admin-button" href="{% url 'admin_custom:users' %}">
+            cancel
+        </a>
+    </div>
 {% endblock %}

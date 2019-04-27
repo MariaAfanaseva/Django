@@ -1,44 +1,36 @@
-{% extends 'adminapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
-
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-  <div class="padding-site categories_list">
-    <button class="new_category">
-      <a href={% url 'admin_custom:category_create' %}>
-        Создать новую категорию
-      </a>
-    </button>
-    <br><br>
-    {% for object in object_list %}
-      <div class="category_record
+    <h2 class="products-range-h2 padding-site">Categories</h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
+    <div class="padding-site">
+        <a class="admin-button" href={% url 'admin_custom:category_create' %}>
+            Create new category
+        </a>
+        <div class="admin-box">
+            {% for object in object_list %}
+                <div class="admin-block
         {% if not object.is_active %}
-            not_active
+            admin-not-active
         {% endif %}">
-        <b class="category_name">
-          {{ object.name|title }}
-        </b>
-        <div class="category_desc">
-          {{ object.description|title }}
+                    <h2 class="admin-block-h2">{{ object.name|title }}</h2>
+                    <a class="admin-button" href={% url 'admin_custom:products' object.pk %}>
+                        products category
+                    </a>
+                    <a class="admin-button" href={% url 'admin_custom:category_update' object.pk %}>
+                        update
+                    </a>
+                    <a class="admin-button" href={% url 'admin_custom:category_delete' object.pk %}>
+                        delete
+                    </a>
+                </div>
+            {% endfor%}
         </div>
-        <div class="category_actions">
-          <button>
-            <a href={% url 'admin_custom:products' object.pk %}>
-              товары категории
-            </a>
-          </button>
-          <button>
-            <a href={% url 'admin_custom:category_update' object.pk %}>
-              редактировать
-            </a>
-          </button>
-          <button>
-            <a href={% url 'admin_custom:category_delete' object.pk %}>
-              удалить
-            </a>
-          </button>
-        </div>
-      <br>
-      </div>
-    {% endfor%}
-  </div>
+    </div>
 {% endblock %}
