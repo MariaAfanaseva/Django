@@ -1,50 +1,37 @@
-{% extends 'adminapp/base.html' %}
-{% load staticfiles %}
-
-{% block content %}
-  <div class="product_read">
-    <div class="product_name">
-      Продукт
-        <br><strong>{{ object.category.name|title }} /
-                     {{ object.name|title }}</strong> 
-    </div>
-    <img src="/media/products_images/{{ object.image|default:'products_images/default.jpg' }}"
-         alt="{{ object.name }}">
-    <div class="summary">
-      <b>цена</b>
-      <p>{{ object.price }} руб</p>
-      <b>количество</b>
-      <p>{{ object.quantity }}</p>
-      <b>в каталоге</b>
-      <p>{% if object.is_active %}да{% else %}нет{% endif %}</p>
-      <p>
-        <button>
-          <a href={% url 'admin_custom:product_update' object.pk %}>
-            редактировать
-          </a>
-        </button>
-      </p>
-      <p>
-        <button>
-          <a href={% url 'admin_custom:product_delete' object.pk %}>
-            удалить
-          </a>
-        </button>
-      </p>
-      <p>
-        <button>
-          <a href={% url 'admin_custom:products' object.category.pk %}>
-            назад
-          </a>
-        </button>
-      </p>
-    </div>
-    <div class="product_desc">
-      <b>краткая информация</b>
-      <p>{{ object.short_desc }}</p>
-      <br><br>
-      <b>подробная информация</b>
-      <p>{{ object.description }}</p>
-    </div>
-  </div>
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block div %}
+    <div class="products-range padding-site">
 {% endblock %}
+{% block content %}
+    <h2 class="products-range-h2 padding-site">Product</h2>
+    </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
+    <div class="form-box padding-site">
+        <div class="admin-block-p">{{ object.category.name|title }} /
+            {{ object.name|title }}</div>
+        <img class="admin-img" src="/media/{{ object.image|default:'products_images/default.jpg' }}"
+             alt="{{ object.name }}">
+    <div class="admin-detail-text">
+            <p class="admin-detail-text-p"><b>Price: </b>{{ object.price }} &#36</p>
+            <p class="admin-detail-text-p"><b>Count: </b>{{ object.quantity }}</p>
+            <p class="admin-detail-text-p"><b>Is active: </b>{% if object.is_active %}yes{% else %}no{% endif %}</p>
+            <p class="admin-detail-text-p"><b>Short description</b><br>
+            {{ object.short_desc }}</p>
+            <p class="admin-detail-text-p"><b>Description</b><br>
+            {{ object.description }}</p>
+    </div>
+        <a class="admin-button" href={% url 'admin_custom:product_update' object.pk %}>
+            update
+        </a>
+        <a class="admin-button" href={% url 'admin_custom:product_delete' object.pk %}>
+            delete
+        </a>
+        <a class="admin-button" href={% url 'admin_custom:products' object.category.pk %}>
+            back
+        </a>
+    </div>
+{% endblock %}
+

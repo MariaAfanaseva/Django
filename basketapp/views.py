@@ -40,7 +40,8 @@ def basket_remove(request, pk):
         if basket_record.quantity > 1:
             basket_record.quantity -= 1
             basket_record.save()
-        else: basket_record.delete()
+        else:
+            basket_record.delete()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -54,12 +55,12 @@ def basket_edit(request, pk):
         if quantity > 0:
             basket_record.quantity = quantity
             basket_record.save()
-        else:
-            basket_record.delete()
+        # else:
+        #     basket_record.delete()
 
         # return HttpResponse('ok')
 
         basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
         context = {'basket_items': basket_items, }
-        result = render_to_string('basketapp/includes/inc_basket_total.html', context)
+        result = render_to_string('basketapp/includes/inc_basket_total.html', context, request)
         return JsonResponse({'result': result})

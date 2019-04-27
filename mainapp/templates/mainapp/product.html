@@ -12,18 +12,18 @@
             </nav>
             <div class="product-details">
                 <div class="product-slider">
-                    <a href="/media/products_images/{{ product.image }}"><img class="product-slider-img"
-                                     src="/media/products_images/{{ product.image }}"></a>
+                    <a href="/media/{{ product.image }}"><img class="product-slider-img"
+                                     src="/media/{{ product.image }}"></a>
                     <div class="product-slider-pix">
-                        <a href="#"><img class="product-slider-pix-img" src="{% static 'img/controll.jpg' %}"></a>
-                        <a href="#"><img class="product-slider-pix-img" src="{% static 'img/controll11.jpg' %}" alt="foto_chair_black"></a>
-                        <a href="#"><img class="product-slider-pix-img product-slider-pix-img-active"
-                                         src="{% static 'img/slider1.jpg' %}" alt="foto_chair_red"></a>
+                        <a href="{% url 'products:product' product.pk%}"><img class="product-slider-pix-img" src="/media/{{ product.image }}"></a>
+                        <a href="{% url 'products:product' product.pk%}"><img class="product-slider-pix-img" src="/media/{{ product.image }}" alt="foto_chair_black"></a>
+                        <a href="{% url 'products:product' product.pk%}"><img class="product-slider-pix-img product-slider-pix-img-active"
+                                        src="/media/{{ product.image }}" alt="foto_chair_red"></a>
                     </div>
                 </div>
                 <div class="product-slider-text">
                     <h2 class="product-slider-text-h2">{{ product.name }}</h2>
-                    <h4 class="slider-1-h4">{{ product.type_product }}</h4>
+                    <h4 class="slider-1-h4">{{ product.type }}</h4>
                     <div class="product-cost">
                         <p class="product-cost-currency">$ </p>
                         <p class="product-cost-num">{{ product.price }}</p>
@@ -35,20 +35,9 @@
                             alt="arrow">
                     </a>
                     <div>
-                        <p class="product-slider-text-p">{{ product.description }}</p>
-{#                        <p class="product-slider-text-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed#}
-{#                            do&nbsp;eiusmod tempor incididunt ut#}
-{#                            labore#}
-{#                        </p>#}
-{#                        <p class="product-slider-text-p">et&nbsp;dolore magna aliqua. Ut&nbsp;enim ad&nbsp;minim#}
-{#                            veniam, quis nostrud exercitation ullamco laboris nisi#}
-{#                            ut&nbsp;aliquip ex&nbsp;ea&nbsp;commodo consequat.#}
-{#                        </p>#}
-{#                        <p class="product-slider-text-p">Duis aute irure dolor in&nbsp;reprehenderit in&nbsp;voluptate#}
-{#                            velit esse cillum dolore eu&nbsp;fugiat nulla#}
-{#                            pariatur. Excepteur sint occaecat cupidatat non proident.#}
-{#                        </p>#}
-
+                        <p class="product-slider-text-p">
+                            {{ product.description|linebreaksbr}}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -59,7 +48,7 @@
                 </div>
                 <div class="trending-products">
                     {% for product in same_product %}
-                    <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="/media/products_images/{{ product.image }}" alt="{{ product.name }}"></a>
+                    <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
                     {% endfor %}
                 </div>
             </div>

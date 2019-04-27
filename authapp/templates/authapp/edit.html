@@ -1,12 +1,18 @@
-{% extends 'authapp/base.html' %}
+{% extends 'mainapp/base.html' %}
 {% load static %}
-
-
+{% load tz %}
+{% block div %}
+<div class="products-range padding-site">
+{% endblock %}
 {% block content %}
-    <form class="'form-horizontal" method="post">
+    <h2 class="products-range-h2 padding-site">Editing</h2>
+</div>
+<div class="input-box padding-site">
+    <form class="input-form" method="post">
         {% csrf_token %}
         {{ edit_form.as_p }}
         <br>
-        <input class="form-control" type="submit" value="Editing">
-        </form>
+        <input class="input-button" type="submit" value="Editing">
+    </form>
+</div>
 {% endblock %}

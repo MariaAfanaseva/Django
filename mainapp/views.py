@@ -21,6 +21,8 @@ def main(request):
     exclusive_product = get_product('Exclusive')[:2]
     trending_products = get_product('Trending')[:6]
     types = ProductType.objects.all()
+    same_products = get_same_products(exclusive_product.first())[:4]
+    featured_products = get_product('Trending')[:4]
 
     context = {
         'user': request.user,
@@ -29,6 +31,8 @@ def main(request):
         'exclusive_product': exclusive_product,
         'trending_products': trending_products,
         'types': types,
+        'same_products': same_products,
+        'featured_products': featured_products,
     }
     return render(request, 'mainapp/index.html', context=context)
 
@@ -86,14 +90,10 @@ def products(request, pk=None, num=None, page=1):
 
 
 def contacts(request):
-    # basket = {}
-    # if not request.user.is_anonymous:
-    #     basket = Basket.objects.filter(user=request.user)
-
     types = ProductType.objects.all()
     context = {
         'title': 'contacts',
-        # 'basket': basket,
+
         'types': types,
     }
     return render(request, 'mainapp/contacts.html', context=context)

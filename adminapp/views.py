@@ -65,7 +65,7 @@ class ProductCategoryDeleteView(IsSuperUserView, DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        self.object = get_object_or_404(ShopUser, pk=kwargs['pk'])
+        self.object = get_object_or_404(ProductCategory, pk=kwargs['pk'])
         self.object.is_active = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
@@ -96,7 +96,7 @@ class UsersCreateView(IsSuperUserView, CreateView):
 class UsersUpdateView(IsSuperUserView, UpdateView):
     model = ShopUser
     template_name = 'adminapp/user_update.html'
-    fields = 'username','first_name', 'last_name', 'email', 'password', 'is_active','avatar'
+    fields = 'username', 'first_name', 'last_name', 'age', 'email', 'password', 'is_active', 'avatar'
     success_url = reverse_lazy('admin_custom:users')
 
     def get_context_data(self, **kwargs):
@@ -183,7 +183,7 @@ class ProductDeleteView(IsSuperUserView, DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        self.object = get_object_or_404(ShopUser, pk=kwargs['pk'])
+        self.object = get_object_or_404(Product, pk=kwargs['pk'])
         self.object.is_active = False
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
@@ -196,6 +196,8 @@ class ProductListView(IsSuperUserView, ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context['title'] = 'Products'
+        pk = self.kwargs['pk']
+        context['category'] = ProductCategory.objects.filter(pk=pk).first()
         return context
 
     def get_queryset(self):

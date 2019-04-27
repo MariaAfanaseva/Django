@@ -11,9 +11,9 @@ class ShopUserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(ShopUserRegisterForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = 'input-form-control'
             field.help_text = ''
-
+        self.fields['avatar'].widget.attrs['class'] = 'input-form-file'
     # def clean_age(self):
     #     data = self.cleaned_data['age']
     #     if data < 14:
@@ -30,15 +30,16 @@ class ShopUserEditForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super(ShopUserEditForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['class'] = 'input-form-control'
             field.help_text = ''
+        self.fields['avatar'].widget.attrs['class'] = 'input-form-file'
 
-    def clean_age(self):
-        data = self.cleaned_data['age']
-        if data < 14:
-            raise forms.ValidationError("You are too young")
-
-        return data
+    # def clean_age(self):
+    #     data = self.cleaned_data['age']
+    #     if data < 14:
+    #         raise forms.ValidationError("You are too young")
+    #
+    #     return data
 
 
 class ShopUserLoginForm(AuthenticationForm):
@@ -49,6 +50,6 @@ class ShopUserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(ShopUserLoginForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'from-control'
+            field.widget.attrs['class'] = 'input-form-control'
 
 

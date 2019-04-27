@@ -146,14 +146,16 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 AUTH_USER_MODEL = 'authapp.ShopUser'
 LOGIN_URL = '/auth/login/'
 
-
+# OAUTH2
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = config.get('OAUTH2', 'SOCIAL_AUTH_VK_OAUTH2_KEY')
 SOCIAL_AUTH_VK_OAUTH2_SECRET = config.get('OAUTH2', 'SOCIAL_AUTH_VK_OAUTH2_SECRET')
 
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = [
-    'notify',
-    'friends',
     'email',
 ]
 

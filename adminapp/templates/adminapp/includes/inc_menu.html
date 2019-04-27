@@ -1,28 +1,20 @@
-<div class="padding-site">
-<ul>
-  <li>
-    <a href="{% url 'index' %}">
-      на сайт
-    </a>
-  </li>
+<ul class="all-menu">
   <li>
     <a href="{% url 'admin_custom:users' %}"
        class="{% if request.resolver_match.url_name == 'users' %}
-                active
+                all-menu-link all-menu-bottom all-menu-link-active
+                {% else %}all-menu-link all-menu-bottom
               {% endif %}">
-      пользователи
+      users
     </a>
   </li>
   <li>
     <a href="{% url 'admin_custom:categories' %}"
        class="{% if request.resolver_match.url_name == 'categories' or category.name %}
-                active
+                all-menu-link all-menu-bottom all-menu-link-active
+                {% else %}all-menu-link all-menu-bottom
               {% endif %}">
-      категории
-      {% if category %}
-        :<span>{{ category.name }}</span>
-      {% endif %}
+      categories
     </a>
   </li>
 </ul>
-</div>
