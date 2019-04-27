@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^logout/', authapp.logout, name='logout'),
     url(r'^register/', authapp.register, name='register'),
     url(r'^edit/', authapp.edit, name='edit'),
+
 ]

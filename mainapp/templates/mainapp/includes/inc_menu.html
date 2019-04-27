@@ -1,3 +1,4 @@
+{% load custom_tags %}
 <header class="header">
     <a class="logo" href="{% url 'index' %}"><img src="/static/img/logo.svg" alt="logo"></a>
     <nav>
@@ -8,36 +9,45 @@
                        {% else %}menu-link
                        {% endif %}"
             >HOME </a></li>
-            <li><a href="{% url 'products:index' %}"
-                   class="{% if request.resolver_match.namespace == 'products' %}
+            <li class="menu-list"><a href="{% url 'products:category' 0 %}"
+                                     class="{% if request.resolver_match.namespace == 'products' %}
                        menu-link-active menu-link
                        {% elif request.resolver_match.view_name == 'product' %}
                        menu-link-active menu-link
                        {% else %}menu-link
-                       {% endif %}">PRODUCTS </a></li>
-            <li><a href="#" class="{% if request.resolver_match.view_name == 'history' %}
-                menu-link-active menu-link
-                       {% else %}menu-link
-                       {% endif %}">HISTORY </a></li>
-{#                                                    <li><a href="#" class="{% if request.resolver_match.url_name == 'showroom' %}#}
-{#                                                    menu-link-active menu-link#}
-{#                                                           {% else %}menu-link#}
-{#                                                           {% endif %}">SHOWROOM</a></li>#}
+                       {% endif %}">PRODUCTS </a>
+                <ul class="menu-in">
+                    {% for type in types%}
+                        <li>
+                            <a href="{% url 'products:index' type.pk %}"
+                               class="{% if request.resolver_match.kwargs.num == type.pk %}
+                                       menu-link all-menu-link-active
+                                       {% else %}menu-link
+                                       {% endif %}">{{ type.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+{#            <li><a href="#" class="{% if request.resolver_match.view_name == 'history' %}#}
+{#                menu-link-active menu-link#}
+{#                       {% else %}menu-link#}
+{#                       {% endif %}">HISTORY </a></li>#}
             <li><a href="{% url 'contacts' %}"
                    class="{% if request.resolver_match.view_name == 'contacts' %}
                 menu-link-active menu-link
                        {% else %}menu-link
                        {% endif %}">CONTACT</a></li>
-        {% if request.user.is_superuser %}
-            <li><a href="{% url 'admin_custom:categories' %}"
-                   class="menu-link menu-link">Adminka</a></li>
-        {% endif %}
+            {% if request.user.is_superuser %}
+                <li><a href="{% url 'admin_custom:categories' %}"
+                       class="menu-link menu-link">Adminka</a></li>
+            {% endif %}
             {% if user.is_authenticated %}
                 <li class="menu-list"><a class="menu-link">Hello {{ user.username|title}}!</a>
-                <ul class="menu-in">
-                <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
-                <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
-                </ul>
+                    <ul class="menu-in">
+                        <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
+                        <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
+                    </ul>
                 </li>
             {%  else %}
                 <li ><a class="menu-link" href="{% url 'auth:login' %}">Login</a></li>
@@ -47,10 +57,11 @@
 
             <li>
                 <a href="{% url 'basket:view' %}" class="basket menu-link">
-                    {% if basket %}
-                        {{ basket.0.total_cost|floatformat:0 }} euro
-                        {{ basket.0.total_quantity }} count
-                    {% endif %}
+                    {{ request.user|basket_total_cost}} ({{ request.user|basket_total_quantity}})
+{#                    {% if basket %}#}
+{#                        {{ basket.0.total_cost|floatformat:0 }} euro#}
+{#                        {{ basket.0.total_quantity }} count#}
+{#                    {% endif %}#}
                 </a>
             </li>
 
