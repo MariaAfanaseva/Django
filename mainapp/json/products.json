@@ -1,18 +1,26 @@
 [
   {
-    "category" : "OFFICE",
-    "name": "Chair",
-    "price": 2000
-  },
-  {
-    "category" : "CLASSIC",
-    "name": "Table",
-    "price": 3000
-  },
-  {
-    "category" : "MODERN",
+    "category" : "Home",
     "name": "Lamp",
-    "price": 1000
+    "price": 2000,
+    "image": "product-11.jpg"
+  },
+  {
+    "category" : "Modern",
+    "name": "Chair",
+    "price": 3000,
+    "image": "product-21.jpg"
+  },
+  {
+    "category" : "Classic",
+    "name": "Lamp",
+    "price": 1000,
+    "image": "product-31.jpg"
+  },
+   {
+    "category" : "Office",
+    "name": "Lamp",
+    "price": 1000,
+    "image": "product-41.jpg"
   }
-
 ]

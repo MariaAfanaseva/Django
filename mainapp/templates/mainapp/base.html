@@ -54,9 +54,12 @@
                                    {% else %}menu-link
                                    {% endif %}">CONTACT</a></li>
                         {% if user.is_authenticated %}
-                            <li><a class="menu-link">Hello {{ user.username|title}}!</a></li>
+                            <li class="menu-list"><a class="menu-link">Hello {{ user.username|title}}!</a>
+                            <ul class="menu-in">
                             <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
                             <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
+                            </ul>
+                            </li>
                         {%  else %}
                             <li ><a class="menu-link" href="{% url 'auth:login' %}">Login</a></li>
                             <li><a class="menu-link" href="{% url 'auth:register' %}">Register</a></li>

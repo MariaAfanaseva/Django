@@ -1,8 +1,7 @@
 [
-  {"name": "ALL"},
-  {"name": "HOME"},
-  {"name": "OFFICE"},
-  {"name": "FURNITURE"},
-  {"name": "MODERN"},
-  {"name": "CLASSIC"}
+  {"name": "Home"},
+  {"name": "Office"},
+  {"name": "Furniture"},
+  {"name": "Modern"},
+  {"name": "Classic"}
 ]
