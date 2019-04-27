@@ -1,4 +1,5 @@
 {% extends 'mainapp/base.html' %}
+{% load static %}
 {#<!DOCTYPE html>#}
 {#{% load static %}#}
 {#<html lang="en">#}
@@ -50,12 +51,13 @@
             </nav>
             <div class="product-details">
                 <div class="product-slider">
-                    <a href="#"><img class="product-slider-img" src="/static/img/slider1.jpg" alt="foto_chair"></a>
+                    <a href="#"><img class="product-slider-img"
+                                     src="{% static 'img/slider1.jpg' %}"></a>
                     <div class="product-slider-pix">
-                        <a href="#"><img class="product-slider-pix-img" src="/static/img/controll.jpg" alt="foto_chair_blue"></a>
-                        <a href="#"><img class="product-slider-pix-img" src="/static/img/controll11.jpg" alt="foto_chair_black"></a>
-                        <a href="#"><img class="product-slider-pix-img product-slider-pix-img-active" src="/static/img/slider1.jpg"
-                                alt="foto_chair_red"></a>
+                        <a href="#"><img class="product-slider-pix-img" src="{% static 'img/controll.jpg' %}"></a>
+                        <a href="#"><img class="product-slider-pix-img" src="{% static 'img/controll11.jpg' %}" alt="foto_chair_black"></a>
+                        <a href="#"><img class="product-slider-pix-img product-slider-pix-img-active"
+                                         src="{% static 'img/slider1.jpg' %}" alt="foto_chair_red"></a>
                     </div>
                 </div>
                 <div class="product-slider-text">
@@ -66,7 +68,7 @@
                         <p class="product-cost-num">36.7</p>
                         <p class="product-cost-sq">/&nbsp;sq</p>
                     </div>
-                    <a href="#" class="product-details-button">order&nbsp;us <img class="product-arrow-in-button" src="/static/img/arrow_product.svg"
+                    <a href="#" class="product-details-button">order&nbsp;us <img class="product-arrow-in-button" src="{% static 'img/arrow_product.svg' %}"
                             alt="arrow"></a>
                     <div>
                         <p class="product-slider-text-p">The majesty of&nbsp;Mountains&nbsp;&mdash; Ugmonk style.</p>
@@ -95,12 +97,12 @@
             <div class="related-products padding-site">
                 <div class="trending-text">
                     <h2 class="trending-h2">Related Products</h2>
-                    <a href="#" class="explore-all">explore all<img class="arrow" src="/static/img/arrow.svg" alt="search"></a>
+                    <a href="#" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}"></a>
                 </div>
                 <div class="trending-products">
-                    <a href="#" class="trending-products-img"><img src="/static/img/product-11.jpg" alt="lamp"></a>
-                    <a href="#" class="trending-products-img"><img src="/static/img/product-21.jpg" alt="chair"></a>
-                    <a href="#" class="trending-products-img"><img src="/static/img/product-31.jpg" alt="lamp"></a>
+                    <a href="#" class="trending-products-img"><img src="{% static 'img/product-11.jpg' %}"></a>
+                    <a href="#" class="trending-products-img"><img src="{% static 'img/product-21.jpg' %}" alt="chair"></a>
+                    <a href="#" class="trending-products-img"><img src="{% static 'img/product-31.jpg' %}" alt="lamp"></a>
                 </div>
             </div>
 {% endblock %}

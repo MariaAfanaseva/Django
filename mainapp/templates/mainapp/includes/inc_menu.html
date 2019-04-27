@@ -1,8 +1,28 @@
 <ul class="all-menu">
-    <li><a href="{% url 'products' %}" class="all-menu-link all-menu-bottom">ALL</a></li>
-    <li><a href="#" class="all-menu-link all-menu-bottom">HOME</a></li>
-    <li><a href="#" class="all-menu-link all-menu-bottom">OFFICE</a></li>
-    <li><a href="{% url 'product' %}" class="all-menu-link all-menu-bottom all-menu-link-active">FURNITURE</a></li>
-    <li><a href="#" class="all-menu-link all-menu-bottom">MODERN</a></li>
-    <li><a href="#" class="all-menu-link all-menu-bottom">CLASSIC</a></li>
+    <li><a href="{% url 'products' %}"
+           class="{% if request.resolver_match.url_name == 'products' %}
+           all-menu-link all-menu-bottom all-menu-link-active
+           {% else %}all-menu-link all-menu-bottom
+           {% endif %}">ALL</a>
+    </li>
+    <li><a href="#" class="{% if request.resolver_match.url_name == 'home' %}
+           all-menu-link all-menu-bottom all-menu-link-active
+           {% else %}all-menu-link all-menu-bottom
+           {% endif %}">HOME</a></li>
+    <li><a href="{% url 'product' %}" class="{% if request.resolver_match.url_name == 'product' %}
+           all-menu-link all-menu-bottom all-menu-link-active
+           {% else %}all-menu-link all-menu-bottom
+           {% endif %}">OFFICE</a></li>
+    <li><a href="#" class="{% if request.resolver_match.url_name == 'furniture' %}
+           all-menu-link all-menu-bottom all-menu-link-active
+           {% else %}all-menu-link all-menu-bottom
+           {% endif %}">FURNITURE</a></li>
+    <li><a href="#" class="{% if request.resolver_match.url_name == 'modern' %}
+           all-menu-link all-menu-bottom all-menu-link-active
+           {% else %}all-menu-link all-menu-bottom
+           {% endif %}">MODERN</a></li>
+    <li><a href="#" class="{% if request.resolver_match.url_name == 'classic' %}
+           all-menu-link all-menu-bottom all-menu-link-active
+           {% else %}all-menu-link all-menu-bottom
+           {% endif %}">CLASSIC</a></li>
 </ul>
