@@ -1,0 +1,25 @@
+{% for item in basket_items %}
+<div>
+  <img src="/media/{{ item.product.image }}"
+       alt="{{ item.product.short_desc }}">
+  <span>{{ item.product.category.name }}</span>
+  <span>{{ item.product.name }}</span>
+  <span>{{ item.product.price }}&nbspeuro</span>
+  <input type="number" name="{{ item.pk }}"
+                       min="0"
+                       value="{{ item.quantity }}">
+  <span>{{ item.cost }}&nbspeuro</span>
+  <button>
+    <a href="{% url 'basket:remove' item.pk %}" class="">
+      remove
+    </a>
+  </button>
+</div>
+{% endfor %}
+
+{% if basket_items %}
+<div>
+  In your basket {{ basket_items.0.total_quantity }} total cost
+            {{ basket_items.0.total_cost }} euro
+</div>
+{% endif %}

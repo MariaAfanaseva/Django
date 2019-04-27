@@ -1,14 +1,37 @@
 from django.shortcuts import render, get_object_or_404
 from .models import ProductCategory, Product
+from basketapp.models import Basket
+
+
+def get_hot_product():
+    return Product.objects.order_by("?").first()
+
+
+def get_same_products(hot_product):
+    same_products = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+
+    return same_products
 
 
 def main(request):
-    return render(request, 'mainapp/index.html', context={'user':request.user, 'title': 'interior'})
+    basket = {}
+    if not request.user.is_anonymous:
+        basket = Basket.objects.filter(user=request.user)
+
+    context = {
+        'user': request.user,
+        'title': 'interior',
+        'basket': basket,
+    }
+    return render(request, 'mainapp/index.html', context=context)
 
 
 def products(request, pk=None):
     title = 'Products'
     links_menu = ProductCategory.objects.all()
+    basket = {}
+    if not request.user.is_anonymous:
+        basket = Basket.objects.filter(user=request.user)
 
     if pk:
         if pk == '0':
@@ -22,23 +45,42 @@ def products(request, pk=None):
             'title': title,
             'links_menu': links_menu,
             'category': category,
-            'products': products_list
+            'products': products_list,
+            'basket': basket,
         }
 
         return render(request, 'mainapp/products_list.html', context=context)
 
     products_category = ProductCategory.objects.all()
-    return render(request, 'mainapp/products.html',
-                  context={'title': 'products', 'links_menu': products_category})
+    hot_product = get_hot_product()
+    same_product = get_same_products(hot_product)
+    context = {
+        'title': 'products',
+        'links_menu': products_category,
+        'hot_product': hot_product,
+        'same_product': same_product,
+        'basket': basket,
+    }
+    return render(request, 'mainapp/products.html', context=context)
 
 
 def contacts(request):
-    return render(request, 'mainapp/contacts.html', context={'title': 'contacts'})
+    basket = {}
+    if not request.user.is_anonymous:
+        basket = Basket.objects.filter(user=request.user)
+    context = {
+        'title': 'contacts',
+        'basket': basket,
+    }
+    return render(request, 'mainapp/contacts.html', context=context)
 
 
 def product(request, pk=None):
     links_menu = ProductCategory.objects.all()
     title = 'Product'
+    basket = {}
+    if not request.user.is_anonymous:
+        basket = Basket.objects.filter(user=request.user)
 
     product_entry = get_object_or_404(Product, pk=pk)
 
@@ -46,6 +88,7 @@ def product(request, pk=None):
         'title': title,
         'links_menu': links_menu,
         'category': product_entry.category,
-        'product': product_entry
+        'product': product_entry,
+        'basket': basket,
     }
     return render(request, 'mainapp/product.html', context=context)

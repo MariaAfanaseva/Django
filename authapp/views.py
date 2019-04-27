@@ -39,6 +39,7 @@ def edit(request):
 
 def login(request):
     title = 'login'
+    next = request.GET['next'] if 'next' in request.GET.keys() else ''
 
     login_from = ShopUserLoginForm(data=request.POST)
     if request.method == 'POST' and login_from.is_valid():
@@ -48,9 +49,16 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            if 'next' in request.POST.keys():
+                return HttpResponseRedirect(request.POST['next'])
+            else:
+                return HttpResponseRedirect(reverse('index'))
 
-    context = {'title': title, 'login_form':login_from}
+    context = {
+        'title': title,
+        'login_form': login_from,
+        'next': next
+    }
     return render(request, 'authapp/login.html', context)
 
 

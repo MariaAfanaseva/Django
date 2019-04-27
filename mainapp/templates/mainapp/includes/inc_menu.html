@@ -1,46 +1,60 @@
-{#<ul class="all-menu">#}
-{#    <li><a href="{% url 'products:index' %}"#}
-{#           class="{% if request.resolver_match.namespace == 'products' %}#}
-{#           all-menu-link all-menu-bottom all-menu-link-active#}
-{#           {% else %}all-menu-link all-menu-bottom#}
-{#           {% endif %}">ALL</a>#}
-{#    </li>#}
-{#    <li><a href="#" class="{% if request.resolver_match.url_name == 'home' %}#}
-{#           all-menu-link all-menu-bottom all-menu-link-active#}
-{#           {% else %}all-menu-link all-menu-bottom#}
-{#           {% endif %}">HOME</a></li>#}
-{#    <li><a href="{% url 'product' %}" class="{% if request.resolver_match.url_name == 'product' %}#}
-{#           all-menu-link all-menu-bottom all-menu-link-active#}
-{#           {% else %}all-menu-link all-menu-bottom#}
-{#           {% endif %}">OFFICE</a></li>#}
-{#    <li><a href="#" class="{% if request.resolver_match.url_name == 'furniture' %}#}
-{#           all-menu-link all-menu-bottom all-menu-link-active#}
-{#           {% else %}all-menu-link all-menu-bottom#}
-{#           {% endif %}">FURNITURE</a></li>#}
-{#    <li><a href="#" class="{% if request.resolver_match.url_name == 'modern' %}#}
-{#           all-menu-link all-menu-bottom all-menu-link-active#}
-{#           {% else %}all-menu-link all-menu-bottom#}
-{#           {% endif %}">MODERN</a></li>#}
-{#    <li><a href="#" class="{% if request.resolver_match.url_name == 'classic' %}#}
-{#           all-menu-link all-menu-bottom all-menu-link-active#}
-{#           {% else %}all-menu-link all-menu-bottom#}
-{#           {% endif %}">CLASSIC</a></li>#}
-{#</ul>#}
-<ul class="all-menu">
-    <li><a href="{% url 'products:index' %}"
-           class="{% if request.resolver_match.namespace == 'index' %}
-           all-menu-link all-menu-bottom all-menu-link-active
-           {% else %}all-menu-link all-menu-bottom
-           {% endif %}">ALL</a>
-    </li>
-    {% for category in categories %}
-    <li><a href="{% url 'products:index' %}"
-           class="{% if request.resolver_match.namespace == 'index' %}
-           all-menu-link all-menu-bottom all-menu-link-active
-           {% else %}all-menu-link all-menu-bottom
-           {% endif %}">{{ category.name }}</a>
-    </li>
-{% endfor %}
-</ul>
+<header class="header">
+    <a class="logo" href="{% url 'index' %}"><img src="/static/img/logo.svg" alt="logo"></a>
+    <nav>
+        <ul class="menu">
+            <li><a href="{% url 'index' %}"
+                   class="{% if request.resolver_match.view_name == 'index' %}
+                       menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}"
+            >HOME </a></li>
+            <li><a href="{% url 'products:index' %}"
+                   class="{% if request.resolver_match.namespace == 'products' %}
+                       menu-link-active menu-link
+                       {% elif request.resolver_match.view_name == 'product' %}
+                       menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}">PRODUCTS </a></li>
+            <li><a href="#" class="{% if request.resolver_match.view_name == 'history' %}
+                menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}">HISTORY </a></li>
+{#                                                    <li><a href="#" class="{% if request.resolver_match.url_name == 'showroom' %}#}
+{#                                                    menu-link-active menu-link#}
+{#                                                           {% else %}menu-link#}
+{#                                                           {% endif %}">SHOWROOM</a></li>#}
+            <li><a href="{% url 'contacts' %}"
+                   class="{% if request.resolver_match.view_name == 'contacts' %}
+                menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}">CONTACT</a></li>
+            {% if user.is_authenticated %}
+                <li class="menu-list"><a class="menu-link">Hello {{ user.username|title}}!</a>
+                <ul class="menu-in">
+                <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
+                <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
+                </ul>
+                </li>
+            {%  else %}
+                <li ><a class="menu-link" href="{% url 'auth:login' %}">Login</a></li>
+                <li><a class="menu-link" href="{% url 'auth:register' %}">Register</a></li>
 
+            {% endif %}
+
+            <li>
+                <a href="{% url 'basket:view' %}" class="basket menu-link">
+                    {% if basket %}
+                        {{ basket.0.total_cost|floatformat:0 }} euro
+                        {{ basket.0.total_quantity }} count
+                    {% endif %}
+                </a>
+            </li>
+
+            <li><a href="#" class="menu-link"><img src="/static/img/search.svg" alt="search"></a></li>
+
+        </ul>
+        <img class="menu-mini" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
+             alt="menu-mini">
+    </nav>
+</header>
 
