@@ -22,7 +22,7 @@ def main(request):
     trending_products = get_product('Trending')[:6]
     types = ProductType.objects.all()
     same_products = get_same_products(exclusive_product.first())[:4]
-    featured_products = get_product('Trending')[:4]
+    featured_products = get_product('Hot deal')[:4]
 
     context = {
         'user': request.user,

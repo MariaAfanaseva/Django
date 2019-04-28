@@ -172,3 +172,14 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 LOGIN_REDIRECT_URL = '/'
+
+DOMAIN_NAME = 'http://localhost:8000'
+
+# EMAIL_HOST = config.get('smtp', 'EMAIL_HOST')
+# # EMAIL_PORT = config.get('smtp', 'EMAIL_PORT')
+# # EMAIL_HOST_USER = config.get('smtp', 'EMAIL_HOST_USER')
+# # EMAIL_HOST_PASSWORD = config.get('smtp', 'EMAIL_HOST_PASSWORD')
+# # EMAIL_USE_SSL = config.getboolean('smtp', 'DEBUG')
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'tmp/email-messages/'
