@@ -52,7 +52,7 @@
             {%  else %}
                 <li class="menu-list"><a class="menu-link" href="{% url 'auth:login' %}">Login</a>
                     <ul class="menu-in">
-                        <li><a class="menu-link" href="{% url 'social:begin' 'vk-oauth2' %}">VK</a></li>
+                        <li><a class="menu-link" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">VK</a></li>
                     </ul>
                 </li>
                 <li><a class="menu-link" href="{% url 'auth:register' %}">Register</a></li>

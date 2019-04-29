@@ -1,7 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
 from django.contrib import auth
 from django.urls import reverse
+from django.core.mail import send_mail
+from django.conf import settings
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
+from authapp.models import ShopUser
 
 
 def register(request):
@@ -9,11 +12,14 @@ def register(request):
 
     if request.method == 'POST':
         register_form = ShopUserRegisterForm(request.POST, request.FILES)
-
         if register_form.is_valid():
             new_user = register_form.save()
-            auth.login(request, new_user)
-            return HttpResponseRedirect(reverse('index'))
+            if send_verify_mail(new_user):
+                print('confirmation message sent')
+                return render(request, 'authapp/verification.html')
+            else:
+                print('error sending message')
+                return HttpResponseRedirect(reverse('auth:login'))
     else:
         register_form = ShopUserRegisterForm()
 
@@ -65,3 +71,27 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+def send_verify_mail(user):
+    verify_link = reverse('auth:verify', kwargs={'email': user.email, 'activation_key': user.activation_key,})
+    title = f'Account Verification {user.username}'
+    message = f'To confirm your account {user.username} on the portal {settings.DOMAIN_NAME} follow the link: {settings.DOMAIN_NAME}{verify_link}'
+    return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+
+def verify(request, email, activation_key):
+    try:
+        user = ShopUser.objects.get(email=email)
+        print(user)
+        if user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.is_active = True
+            user.save()
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            return render(request, 'authapp/verification.html')
+        else:
+            print(f'error activation user: {user}')
+            return render(request, 'authapp/verification.html')
+    except Exception as e:
+        print(f'error activation user : {e.args}')
+        return HttpResponseRedirect(reverse('auth:login'))

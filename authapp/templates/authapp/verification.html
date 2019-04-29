@@ -1,0 +1,21 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% load tz %}
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
+{% block content %}
+    <h2 class="products-range-h2 padding-site">Login</h2>
+    </div>
+    <div class="input-box padding-site">
+        {% if request.resolver_match.url_name == 'verify' %}
+            {% if user %}
+                <h4 class="admin-block-p">Congratulations! You are registered.</h4>
+            {% else %}
+                <h4 class="admin-block-p">Something went wrong</h4>
+            {% endif %}
+        {% else %}
+            <h4 class="admin-block-p">Follow the link in the message</h4>
+        {% endif %}
+    </div>
+{% endblock %}
