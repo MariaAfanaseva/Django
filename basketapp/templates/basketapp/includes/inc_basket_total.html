@@ -1,4 +1,4 @@
 {% load custom_tags %}
 {% if basket_items %}
-  There are {{ request.user|basket_total_quantity}} products in your basket. Total cost: {{ request.user|basket_total_cost|floatformat}} &#36
+  There are {{ basket|basket_total_quantity}} products in your basket. Total cost: {{ basket|basket_total_cost|floatformat}} &#36
 {% endif %}
