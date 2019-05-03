@@ -18,6 +18,9 @@ class ShopUser(AbstractUser):
     is_active = models.BooleanField(verbose_name='Active', default=True)
     email = models.EmailField(verbose_name='Email', unique=True)
 
+
+class UserActivation(models.Model):
+    user = models.OneToOneField(ShopUser, on_delete=models.CASCADE, primary_key=True)
     activation_key = models.CharField(max_length=128, blank=True)
     activation_key_expires = models.DateTimeField(default=get_activation_key_time)
 

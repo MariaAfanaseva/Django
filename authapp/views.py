@@ -74,7 +74,7 @@ def logout(request):
 
 
 def send_verify_mail(user):
-    verify_link = reverse('auth:verify', kwargs={'email': user.email, 'activation_key': user.activation_key,})
+    verify_link = reverse('auth:verify', kwargs={'email': user.email, 'activation_key': user.useractivation.activation_key,})
     title = f'Account Verification {user.username}'
     message = f'To confirm your account {user.username} on the portal {settings.DOMAIN_NAME} follow the link: {settings.DOMAIN_NAME}{verify_link}'
     return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
@@ -83,8 +83,8 @@ def send_verify_mail(user):
 def verify(request, email, activation_key):
     try:
         user = ShopUser.objects.get(email=email)
-        print(user)
-        if user.activation_key == activation_key and not user.is_activation_key_expired():
+        # print(user)
+        if user.useractivation.activation_key == activation_key and not user.useractivation.is_activation_key_expired():
             user.is_active = True
             user.save()
             auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
