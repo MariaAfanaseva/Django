@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from .models import ProductCategory, Product, ProductType
-from basketapp.models import Basket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -14,20 +13,15 @@ def get_same_products(same_product):
 
 
 def main(request):
-    # basket = {}
-    # if not request.user.is_anonymous:
-    #     basket = Basket.objects.filter(user=request.user)
-
     exclusive_product = get_product('Exclusive')[:2]
     trending_products = get_product('Trending')[:6]
     types = ProductType.objects.all()
     same_products = get_same_products(exclusive_product.first())[:4]
-    featured_products = get_product('Trending')[:4]
+    featured_products = get_product('Hot deal')[:4]
 
     context = {
         'user': request.user,
         'title': 'interior',
-        # 'basket': basket,
         'exclusive_product': exclusive_product,
         'trending_products': trending_products,
         'types': types,
@@ -42,9 +36,6 @@ def products(request, pk=None, num=None, page=1):
     links_menu = ProductCategory.objects.filter(is_active=True)
     types = ProductType.objects.all()
     exclusive_product = get_product('Exclusive')[:2]
-    # basket = {}
-    # if not request.user.is_anonymous:
-    #     basket = Basket.objects.filter(user=request.user)
 
     if pk:
         if pk == '0':
@@ -67,7 +58,6 @@ def products(request, pk=None, num=None, page=1):
             'links_menu': links_menu,
             'category': category,
             'products': products_paginator,
-            # 'basket': basket,
             'types': types,
         }
 
@@ -82,7 +72,6 @@ def products(request, pk=None, num=None, page=1):
             'links_menu': links_menu,
             'products': products_list,
             'exclusive_product': exclusive_product,
-            # 'basket': basket,
             'types': types,
         }
 
@@ -102,9 +91,6 @@ def contacts(request):
 def product(request, pk=None):
     links_menu = ProductCategory.objects.filter(is_active=True)
     title = 'Product'
-    # basket = {}
-    # if not request.user.is_anonymous:
-    #     basket = Basket.objects.filter(user=request.user)
 
     product_entry = get_object_or_404(Product, pk=pk)
     same_product = get_same_products(product_entry)[:3]
@@ -114,7 +100,6 @@ def product(request, pk=None):
         'links_menu': links_menu,
         'category': product_entry.category,
         'product': product_entry,
-        # 'basket': basket,
         'same_product': same_product,
     }
     return render(request, 'mainapp/product.html', context=context)

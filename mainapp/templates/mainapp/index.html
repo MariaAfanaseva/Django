@@ -22,7 +22,7 @@
     <div class="product padding-site">
         <div class="product-text">
             <div><a href="#" class="type-product type-product-active">Featured</a><a href="#" class="type-product">New</a></div>
-            <a href="#" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}" alt="search"></a>
+            <a href="{% url 'products:index' featured_products.0.type.pk %}" class="explore-all">explore all<img class="arrow" src="{% static 'img/arrow.svg' %}" alt="search"></a>
         </div>
         <div class="product-box">
             {% for product in featured_products %}

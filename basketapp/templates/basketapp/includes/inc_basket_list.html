@@ -1,6 +1,6 @@
 {% for item in basket_items %}
 <div class="basket-product">
-    <img src="/media/products_images/{{ item.product.image }}"
+    <img src="/media/{{ item.product.image }}"
          alt="{{ item.product.short_desc }}"
          class="basket-product-img">
     <div class="basket-product-info">

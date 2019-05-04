@@ -29,10 +29,6 @@
                     {% endfor %}
                 </ul>
             </li>
-            {#            <li><a href="#" class="{% if request.resolver_match.view_name == 'history' %}#}
-            {#                menu-link-active menu-link#}
-            {#                       {% else %}menu-link#}
-            {#                       {% endif %}">HISTORY </a></li>#}
             <li><a href="{% url 'contacts' %}"
                    class="{% if request.resolver_match.view_name == 'contacts' %}
                 menu-link-active menu-link
@@ -52,7 +48,7 @@
             {%  else %}
                 <li class="menu-list"><a class="menu-link" href="{% url 'auth:login' %}">Login</a>
                     <ul class="menu-in">
-                        <li><a class="menu-link" href="{% url 'social:begin' 'vk-oauth2' %}">VK</a></li>
+                        <li><a class="menu-link" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">VK</a></li>
                     </ul>
                 </li>
                 <li><a class="menu-link" href="{% url 'auth:register' %}">Register</a></li>
@@ -61,7 +57,7 @@
 
             <li>
                 <a href="{% url 'basket:view' %}" class="basket menu-link">
-                    {{ request.user|basket_total_cost|floatformat}} ({{ request.user|basket_total_quantity}})
+                    {{ basket|basket_total_cost|floatformat}} ({{ basket|basket_total_quantity}})
                     {#                    {% if basket %}#}
                     {#                        {{ basket.0.total_cost|floatformat:0 }} euro#}
                     {#                        {{ basket.0.total_quantity }} count#}

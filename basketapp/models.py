@@ -17,16 +17,16 @@ class Basket(models.Model):
     def product_cost(self):
         return self.product.price * self.quantity
 
-    @property
-    def total_quantity(self):
-        _items = Basket.objects.filter(user=self.user)
-        _totalquantity = sum(list(map(lambda x: x.quantity, _items)))
-        return _totalquantity
-
-    def total_cost(self):
-        _items = Basket.objects.filter(user=self.user)
-        _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
-        return _totalcost
+    # @property
+    # def total_quantity(self):
+    #     _items = Basket.objects.filter(user=self.user)
+    #     _totalquantity = sum(list(map(lambda x: x.quantity, _items)))
+    #     return _totalquantity
+    #
+    # def total_cost(self):
+    #     _items = Basket.objects.filter(user=self.user)
+    #     _totalcost = sum(list(map(lambda x: x.product_cost, _items)))
+    #     return _totalcost
 
     def __str__(self):
         return self.user.username + ' ' + self.product.name
