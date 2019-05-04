@@ -3,12 +3,12 @@ from django.db import models
 
 class ProductCategory(models.Model):
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
-    name = models.CharField(verbose_name='имя категории', max_length=128, unique=True)
-    description = models.TextField(verbose_name='описание категории', blank=True)
-    is_active = models.BooleanField(verbose_name='активна', default=True)
+    name = models.CharField(verbose_name='category name', max_length=128, unique=True)
+    description = models.TextField(verbose_name='category description', blank=True)
+    is_active = models.BooleanField(verbose_name='active', default=True)
 
     def __str__(self):
         return self.name
@@ -25,18 +25,18 @@ class ProductType(models.Model):
 
 
 class Product(models.Model):
-    class Meta:
-        verbose_name = 'Продукт'
-        verbose_name_plural = 'Продукты'
-        
+    # class Meta:
+    #     verbose_name = 'Продукт'
+    #     verbose_name_plural = 'Продукты'  # for admin in Russia
+
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-    name = models.CharField(verbose_name='имя продукта', max_length=128)
+    name = models.CharField(verbose_name='product name', max_length=128)
     image = models.ImageField(upload_to='products_images', blank=True)
-    short_desc = models.CharField(verbose_name='краткое описание продукта', max_length=60, blank=True)
-    description = models.TextField(verbose_name='описание продукта', blank=True)
-    price = models.DecimalField(verbose_name='цена продукта', max_digits=8, decimal_places=2, default=0)
-    quantity = models.PositiveIntegerField(verbose_name='количество на складе', default=0)
-    is_active = models.BooleanField(verbose_name='активен', default=True)
+    short_desc = models.CharField(verbose_name='product short description', max_length=60, blank=True)
+    description = models.TextField(verbose_name='product description', blank=True)
+    price = models.DecimalField(verbose_name='product price', max_digits=8, decimal_places=2, default=0)
+    quantity = models.PositiveIntegerField(verbose_name='quantity in stock', default=0)
+    is_active = models.BooleanField(verbose_name='active', default=True)
     type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
 
     def __str__(self):
