@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from authapp.models import ShopUser
+from django.db import transaction
 
 
 def register(request):
@@ -27,6 +28,7 @@ def register(request):
     return render(request, 'authapp/register.html', context)
 
 
+@transaction.atomic  # for save two forms at the same time
 def edit(request):
     title = 'editing'
 
@@ -36,7 +38,7 @@ def edit(request):
 
         if edit_form.is_valid()and profile_form.is_valid():
             edit_form.save()
-            # signal save profile_form
+            # signal save profile_form (@receiver(post_save, sender=ShopUser).)
             return HttpResponseRedirect(reverse('index'))
     else:
         edit_form = ShopUserEditForm(instance=request.user)
