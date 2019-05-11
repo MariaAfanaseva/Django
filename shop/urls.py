@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^admin_custom/', include('adminapp.urls', namespace='admin_custom')),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'^social/', include('social_django.urls', namespace='social')),
+    url(r'^order/', include('ordersapp.urls', namespace='order')),
 ]
 
 
