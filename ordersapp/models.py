@@ -31,6 +31,30 @@ class Order(models.Model):
     class Meta:
         ordering = ('-created',)
 
+    def __str__(self):
+        return 'Current order: {}'.format(self.id)
+
+    def get_total_quantity(self):
+        items = self.orderitems.select_related()
+        return sum(list(map(lambda x: x.quantity, items)))
+
+    def get_product_type_quantity(self):
+        items = self.orderitems.select_related()
+        return len(items)
+
+    def get_total_cost(self):
+        items = self.orderitems.select_related()
+        return sum(list(map(lambda x: x.quantity * x.product.price, items)))
+
+    # переопределяем метод, удаляющий объект
+    def delete(self):
+        for item in self.orderitems.select_related():
+            item.product.quantity += item.quantity
+            item.product.save()
+
+        self.is_active = False
+        self.save()
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name="orderitems", on_delete=models.CASCADE)

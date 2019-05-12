@@ -3,24 +3,26 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from ordersapp.models import Order, OrderItem
 from django.urls import reverse, reverse_lazy
 from django.forms import inlineformset_factory
-from ordersapp.forms import OrderItemForm
+from ordersapp.forms import OrderItemForm, OrderForm
+from django.db import transaction
 
 
 class OrderList(ListView):
-   model = Order
+    model = Order
 
-   def get_queryset(self):
-       return Order.objects.filter(user=self.request.user)
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
-   def get_context_data(self, **kwargs):
-       context = super().get_context_data(**kwargs)
-       context['title'] = 'Orders'
-       return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Orders'
+        return context
 
 
 class OrderItemsCreate(CreateView):
     model = Order
-    fields = []
+    # fields = []
+    form_class = OrderForm
     success_url = reverse_lazy('ordersapp:orders_list')
 
     def get_context_data(self, **kwargs):
@@ -45,21 +47,22 @@ class OrderItemsCreate(CreateView):
                 formset = OrderFormSet()
 
         data['orderitems'] = formset
+        data['title'] = 'Order products'
         return data
 
-   # def form_valid(self, form):
-   #     context = self.get_context_data()
-   #     orderitems = context['orderitems']
-   #
-   #     with transaction.atomic():
-   #         form.instance.user = self.request.user
-   #         self.object = form.save()
-   #         if orderitems.is_valid():
-   #             orderitems.instance = self.object
-   #             orderitems.save()
-   #
-   #     # удаляем пустой заказ
-   #     if self.object.get_total_cost() == 0:
-   #         self.object.delete()
-   #
-   #     return super(OrderItemsCreate, self).form_valid(form)
+    def form_valid(self, form):
+        context = self.get_context_data()
+        orderitems = context['orderitems']
+
+        with transaction.atomic():
+            form.instance.user = self.request.user
+            self.object = form.save()
+            if orderitems.is_valid():
+                orderitems.instance = self.object
+                orderitems.save()
+                self.request.user.basket.all().delete()
+
+        if self.object.get_total_cost() == 0:
+            self.object.delete()
+
+        return super().form_valid(form)

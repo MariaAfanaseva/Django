@@ -6,8 +6,8 @@
 {% block content %}
     <h2 class="products-range-h2 padding-site">Orders</h2>
     </div>
-    <div class="order-box">
-        <table class="table orders_list">
+    <div class="order-box padding-site">
+        <table class="orders-list">
             <thead>
             <tr>
                 <th>ID</th>
@@ -20,27 +20,25 @@
             {% for item in object_list %}
                 {% if item.is_active %}
                     <tr>
-                        <td class="td1 orders_list">{{ item.pk }}</td>
+                        <td>{{ item.pk }}</td>
                         <td>{{ item.created|date:"Y-m-d H:i:s" }}</td>
                         <td>{{ item.updated|date:"Y-m-d H:i:s" }}</td>
                         <td>{{ item.get_status_display }}</td>
                         <td>
-                            {#                       <a href="{% url 'ordersapp:order_read' item.pk %}">#}
-                            {#                           посмотреть#}
-                            {#                       </a>#}
+                            <a class="order-button" href="{#% url 'ordersapp:order_read' item.pk %#}">
+                                look
+                            </a>
                         </td>
                         <td>
                             {% if item.status == 'FM' %}
-                                {#                         <a href="{% url 'ordersapp:order_update' item.pk %}">#}
-                                {#                           редактировать#}
-                                {#                         </a>#}
+                                <a class="order-button" href="{#% url 'ordersapp:order_update' item.pk %#}">edit</a>
                             {% endif %}
                         </td>
                         <td>
                             {% if item.status == 'FM' %}
-                                {#                         <a href="{% url 'ordersapp:order_delete' item.pk %}">#}
-                                {#                             удалить#}
-                                {#                         </a>#}
+                                <a class="order-button" href="{#% url 'ordersapp:order_delete' item.pk %#}">
+                                    delete
+                                </a>
                             {% endif %}
                         </td>
                     </tr>
@@ -48,7 +46,7 @@
             {% endfor %}
             </tbody>
         </table>
-        <a class="admin-button" href="{% url 'index' %}">To main</a>
+        <a class="admin-button" href="{% url 'index' %}">Main</a>
 
         <a class="admin-button" href="{% url 'ordersapp:order_create' %}">new</a>
     </div>
