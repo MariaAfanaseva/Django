@@ -7,10 +7,28 @@
     <h2 class="products-range-h2 padding-site">{{ title }}</h2>
     </div>
     <div class="order-box padding-site">
-        {% include 'ordersapp/includes/inc_order_summary.html' %}
+        {% include 'adminapp/includes/inc_order_info.html' %}
         <div>
             <form action="" method="post">
                 {% csrf_token %}
+                <table class="order-table">
+                    <thead>
+                    <tr>
+                        {% for field in form %}
+                            <th class="{% cycle 'order-header' 'order-header' 'order-header' %}">
+                                {{ field.label|capfirst }}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tr>
+                        {% for field in form %}
+                            <td class="{% cycle 'td1' 'form-checkbox' %}">
+                                {{ field }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </table>
                 <table>
                     {{ orderitems.management_form }}
                     {% for form in orderitems.forms %}
@@ -41,7 +59,18 @@
                     {% endfor %}
                 </table>
                 <input type="submit" value="save" class="admin-button-input">
-                {% include 'ordersapp/includes/inc_order_actions.html' %}
+                <a href="{#% url 'order:order_delete' object.pk %#}"
+                   class="admin-button">
+                    Delete
+                </a>
+                <a href="{% url 'admin_custom:orders' %}"
+                   class="admin-button">
+                    Orders
+                </a>
+                <a href="{% url 'index' %}"
+                   class="admin-button">
+                    Main
+                </a>
             </form>
         </div>
     </div>

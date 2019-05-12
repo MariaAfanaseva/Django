@@ -9,6 +9,9 @@ from django.utils.decorators import method_decorator
 from authapp.models import ShopUser
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin
+from ordersapp.models import Order, OrderItem
+from ordersapp.forms import OrderItemForm, OrderForm
+from django.forms import inlineformset_factory
 
 
 class IsSuperUserView(UserPassesTestMixin):
@@ -205,7 +208,35 @@ class ProductListView(IsSuperUserView, ListView):
         return Product.objects.all().filter(category__pk=pk)
 
 
+class OrdersListView(ListView):
+    model = Order
+    template_name = 'adminapp/orders.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Orders'
+        return context
 
 
+class OrderCreateView(IsSuperUserView, CreateView):
+    model = Order
+    # fields = []
+    form_class = OrderForm
+    success_url = reverse_lazy('adminapp:order_create')
+    template_name = 'adminapp/orders_create.html'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm,
+                                             extra=5)
+
+        if self.request.POST:
+            formset = OrderFormSet(self.request.POST, self.request.FILES)
+        else:
+            formset = OrderFormSet()
+
+        data['orderitems'] = formset
+        data['title'] = 'Order products'
+        return data
 
 

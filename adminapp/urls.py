@@ -17,5 +17,10 @@ urlpatterns = [
     url(r'^products/read/(?P<pk>\d+)/$', adminapp.ProductDetailView.as_view(), name='product_read'),
     url(r'^products/update/(?P<pk>\d+)/$', adminapp.ProductUpdateView.as_view(), name='product_update'),
     url(r'^products/delete/(?P<pk>\d+)/$', adminapp.ProductDeleteView.as_view(), name='product_delete'),
+
+    url(r'^orders/create/$', adminapp.OrderCreateView.as_view(), name='order_create'),
+    url(r'^orders/read/$', adminapp.OrdersListView.as_view(), name='orders'),
+    # url(r'^orders/update/(?P<pk>\d+)/$', adminapp.UsersUpdateView.as_view(), name='order_update'),
+    # url(r'^orders/delete/(?P<pk>\d+)/$', adminapp.UsersDeleteView.as_view(), name='order_delete'),
 ]
 
