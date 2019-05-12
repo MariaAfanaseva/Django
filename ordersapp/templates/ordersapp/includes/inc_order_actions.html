@@ -3,12 +3,11 @@
        class="admin-button">
         Delete
     </a>
-    <a href="{#% url 'orders:order_forming_complete' object.pk %#}"
+    <a href="{% url 'order:order_forming_complete' object.pk %}"
        class="admin-button">
         Buy
     </a>
 {% endif %}
-
 <a href="{% url 'order:orders_list' %}"
    class="admin-button">
     Orders

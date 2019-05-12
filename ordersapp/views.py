@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from ordersapp.models import Order, OrderItem
 from django.urls import reverse, reverse_lazy
 from django.forms import inlineformset_factory
 from ordersapp.forms import OrderItemForm, OrderForm
 from django.db import transaction
+from django.shortcuts import get_object_or_404, HttpResponseRedirect
 
 
 class OrderList(ListView):
@@ -68,6 +69,15 @@ class OrderItemsCreate(CreateView):
         return super().form_valid(form)
 
 
+class OrderRead(DetailView):
+    model = Order
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderRead, self).get_context_data(**kwargs)
+        context['title'] = 'Order view'
+        return context
+
+
 class OrderItemsUpdate(UpdateView):
     model = Order
     # fields = []
@@ -111,3 +121,10 @@ class OrderDelete(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Order delete'
         return context
+
+
+def order_forming_complete(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    order.status = Order.SENT_TO_PROCEED
+    order.save()
+    return HttpResponseRedirect(reverse('ordersapp:orders_list'))
