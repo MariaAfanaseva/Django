@@ -1,11 +1,11 @@
 {% if object.status == 'FM' %}
+    <a href="{% url 'order:order_delete' object.pk %}"
+       class="admin-button">
+        Delete
+    </a>
     <a href="{#% url 'orders:order_forming_complete' object.pk %#}"
        class="admin-button">
         Buy
-    </a>
-    <a href="{#% url 'orders:order_delete' object.pk %#}"
-       class="admin-button">
-        Delete
     </a>
 {% endif %}
 

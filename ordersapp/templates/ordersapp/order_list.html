@@ -4,7 +4,7 @@
     <div class="products-range padding-site">
 {% endblock %}
 {% block content %}
-    <h2 class="products-range-h2 padding-site">Orders</h2>
+    <h2 class="products-range-h2 padding-site">{{ title }}</h2>
     </div>
     <div class="order-box padding-site">
         <table class="orders-list">
@@ -31,12 +31,12 @@
                         </td>
                         <td>
                             {% if item.status == 'FM' %}
-                                <a class="order-button" href="{#% url 'ordersapp:order_update' item.pk %#}">edit</a>
+                                <a class="order-button" href="{% url 'ordersapp:order_update' item.pk %}">edit</a>
                             {% endif %}
                         </td>
                         <td>
                             {% if item.status == 'FM' %}
-                                <a class="order-button" href="{#% url 'ordersapp:order_delete' item.pk %#}">
+                                <a class="order-button" href="{% url 'ordersapp:order_delete' item.pk %}">
                                     delete
                                 </a>
                             {% endif %}
@@ -47,7 +47,6 @@
             </tbody>
         </table>
         <a class="admin-button" href="{% url 'index' %}">Main</a>
-
         <a class="admin-button" href="{% url 'ordersapp:order_create' %}">new</a>
     </div>
 {% endblock %}

@@ -32,23 +32,22 @@ class Order(models.Model):
         ordering = ('-created',)
 
     def __str__(self):
-        return 'Current order: {}'.format(self.id)
+        return f'Current order: {self.id}'
 
     def get_total_quantity(self):
-        items = self.orderitems.select_related()
-        return sum(list(map(lambda x: x.quantity, items)))
+        items = self.orderitems.values_list('quantity', flat=True)
+        return sum(items)
 
     def get_product_type_quantity(self):
-        items = self.orderitems.select_related()
-        return len(items)
+        return self.orderitems.count()
 
     def get_total_cost(self):
-        items = self.orderitems.select_related()
-        return sum(list(map(lambda x: x.quantity * x.product.price, items)))
+        items = self.orderitems.select_related('product')
+        return sum([el.quantity * el.product.price for el in items])
 
     # переопределяем метод, удаляющий объект
     def delete(self):
-        for item in self.orderitems.select_related():
+        for item in self.orderitems.all():
             item.product.quantity += item.quantity
             item.product.save()
 
@@ -61,3 +60,5 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, verbose_name='product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name='quantity', default=0)
 
+    def get_product_cost(self):
+        return self.product.price * self.quantity
