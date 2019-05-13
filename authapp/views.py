@@ -3,8 +3,9 @@ from django.contrib import auth
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
-from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm
+from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from authapp.models import ShopUser
+from django.db import transaction
 
 
 def register(request):
@@ -27,18 +28,27 @@ def register(request):
     return render(request, 'authapp/register.html', context)
 
 
+@transaction.atomic  # for save two forms at the same time
 def edit(request):
     title = 'editing'
 
     if request.method == 'POST':
         edit_form = ShopUserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+
+        if edit_form.is_valid()and profile_form.is_valid():
             edit_form.save()
+            # signal save profile_form (@receiver(post_save, sender=ShopUser).)
             return HttpResponseRedirect(reverse('index'))
     else:
         edit_form = ShopUserEditForm(instance=request.user)
+        profile_form = ShopUserProfileEditForm(instance=request.user.shopuserprofile)
 
-    context = {'title': title, 'edit_form': edit_form}
+    context = {
+        'title': title,
+        'edit_form': edit_form,
+        'profile_form': profile_form,
+    }
 
     return render(request, 'authapp/edit.html', context)
 
@@ -74,7 +84,7 @@ def logout(request):
 
 
 def send_verify_mail(user):
-    verify_link = reverse('auth:verify', kwargs={'email': user.email, 'activation_key': user.activation_key,})
+    verify_link = reverse('auth:verify', kwargs={'email': user.email, 'activation_key': user.useractivation.activation_key,})
     title = f'Account Verification {user.username}'
     message = f'To confirm your account {user.username} on the portal {settings.DOMAIN_NAME} follow the link: {settings.DOMAIN_NAME}{verify_link}'
     return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
@@ -83,8 +93,8 @@ def send_verify_mail(user):
 def verify(request, email, activation_key):
     try:
         user = ShopUser.objects.get(email=email)
-        print(user)
-        if user.activation_key == activation_key and not user.is_activation_key_expired():
+        # print(user)
+        if user.useractivation.activation_key == activation_key and not user.useractivation.is_activation_key_expired():
             user.is_active = True
             user.save()
             auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')

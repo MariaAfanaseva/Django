@@ -2,20 +2,24 @@
 {% load static %}
 {% load tz %}
 {% block div %}
-<div class="products-range padding-site">
+    <div class="products-range padding-site">
 {% endblock %}
 {% block content %}
     <h2 class="products-range-h2 padding-site">Login</h2>
-</div>
-<div class="input-box padding-site">
-    <form class="input-form" action="{% url 'auth:login' %}" method="post">
-        {% csrf_token %}
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}">
-        {% endif %}
-        {{ login_form.as_p }}
-        <br>
-        <input class="input-button" type="submit" value="Login">
-    </form>
-</div>
+    </div>
+    <div class="input-box padding-site">
+        <form class="input-form" action="{% url 'auth:login' %}" method="post">
+            {% csrf_token %}
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+            {{ login_form.as_p }}
+            <br>
+            <input class="input-button" type="submit" value="Login">
+            <div class="login-social-links">
+                <a class="login-social" href="{% url 'social:begin' 'google-oauth2' %}?next=/" target="_blank"><i class="fab fa-google-plus-g"></i></a>
+                <a class="login-social" href="{% url 'social:begin' 'vk-oauth2' %}?next=/" target="_blank"><i class="fab fa-vk"></i></a>
+            </div>
+        </form>
+    </div>
 {% endblock %}

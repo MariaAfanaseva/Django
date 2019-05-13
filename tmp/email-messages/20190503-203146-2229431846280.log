@@ -1,0 +1,11 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Account Verification root
+From: 'django@geekshop.local'
+To: rootmashenkachukina@gmail.com
+Date: Fri, 03 May 2019 18:31:46 -0000
+Message-ID: <155690830606.14844.12244711604718055253@DESKTOP-51OIPSU>
+
+To confirm your account root on the portal http://localhost:8000 follow the link: http://localhost:8000/auth/verify/rootmashenkachukina@gmail.com/a0ed8c5309b0e81af5f2fb37a58d27aa2c17803c/
+-------------------------------------------------------------------------------

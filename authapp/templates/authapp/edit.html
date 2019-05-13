@@ -11,6 +11,7 @@
     <form class="input-form" method="post">
         {% csrf_token %}
         {{ edit_form.as_p }}
+        {{ profile_form.as_p }}
         <br>
         <input class="input-button" type="submit" value="Editing">
     </form>
