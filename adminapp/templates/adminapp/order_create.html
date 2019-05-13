@@ -59,17 +59,9 @@
                     {% endfor %}
                 </table>
                 <input type="submit" value="save" class="admin-button-input">
-                <a href="{#% url 'order:order_delete' object.pk %#}"
-                   class="admin-button">
-                    Delete
-                </a>
                 <a href="{% url 'admin_custom:orders' %}"
                    class="admin-button">
                     Orders
-                </a>
-                <a href="{% url 'index' %}"
-                   class="admin-button">
-                    Main
                 </a>
             </form>
         </div>

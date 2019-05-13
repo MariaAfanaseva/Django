@@ -25,9 +25,15 @@
                         <td>{{ item.updated|date:"Y-m-d H:i:s" }}</td>
                         <td>{{ item.get_status_display }}</td>
                         <td>
-                            <a class="order-button" href="{% url 'ordersapp:order_read' item.pk %}">
-                                look
-                            </a>
+                            {% if item.status == 'FM' %}
+                                <a class="order-button-buy" href="{% url 'ordersapp:order_forming_complete' item.pk %}">
+                                    buy
+                                </a>
+                            {% else %}
+                                <a class="order-button" href="{% url 'ordersapp:order_read' item.pk %}">
+                                    look
+                                </a>
+                            {%  endif %}
                         </td>
                         <td>
                             {% if item.status == 'FM' %}

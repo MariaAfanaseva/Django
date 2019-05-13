@@ -1,23 +1,31 @@
+{% load static %}
 {% for item in basket_items %}
-<div class="basket-product">
-    <img src="/media/{{ item.product.image }}"
-         alt="{{ item.product.short_desc }}"
-         class="basket-product-img">
-    <div class="basket-product-info">
-        <span>{{ item.product.category.name }}</span> /
-        <span>{{ item.product.name }}</span>
-        <span>{{ item.product.price }} $</span>
-        <input type="number" name="{{ item.pk }}"
-                            min="1"
-                            value="{{ item.quantity }}"
-               class="basket-product-quantity-input">
-        <a href="{% url 'basket:remove' item.pk %}" class="basket-product-remove-button">x</a>
+    <div class="basket-product">
+        <img src="/media/{{ item.product.image }}"
+             alt="{{ item.product.short_desc }}"
+             class="basket-product-img">
+        <div class="basket-product-info">
+            <span>{{ item.product.category.name }}</span> /
+            <span>{{ item.product.name }}</span>
+            <span>{{ item.product.price }} $</span>
+            <input type="number" name="{{ item.pk }}"
+                   min="1"
+                   value="{{ item.quantity }}"
+                   class="basket-product-quantity-input">
+            <a href="{% url 'basket:remove' item.pk %}" class="basket-product-remove-button">x</a>
+        </div>
     </div>
-</div>
 {% endfor %}
 {% if basket_items %}
-<hr class="basket-total-line">
-<div class="basket-total">
-    {% include 'basketapp/includes/inc_basket_total.html' %}
-</div>
+    <hr class="basket-total-line">
+    <div class="basket-total">
+        {% include 'basketapp/includes/inc_basket_total.html' %}
+    </div>
+    <div class="basket-order padding-site">
+        <a href="{% url 'order:order_create' %}" class="basket-button">
+            order&nbsp;us
+            <img class="product-arrow-in-button" src="{% static 'img/arrow_product.svg' %}"
+                 alt="arrow">
+        </a>
+    </div>
 {% endif %}

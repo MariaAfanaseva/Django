@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from ordersapp.models import Order, OrderItem
 from ordersapp.forms import OrderItemForm, OrderForm
 from django.forms import inlineformset_factory
+from django.db import transaction
 
 
 class IsSuperUserView(UserPassesTestMixin):
@@ -217,13 +218,16 @@ class OrdersListView(ListView):
         context['title'] = 'Orders'
         return context
 
+    def get_queryset(self):
+        return Order.objects.all().order_by('-is_active')
 
-class OrderCreateView(IsSuperUserView, CreateView):
+
+class OrdersCreateView(IsSuperUserView, CreateView):
     model = Order
     # fields = []
     form_class = OrderForm
-    success_url = reverse_lazy('adminapp:order_create')
-    template_name = 'adminapp/orders_create.html'
+    success_url = reverse_lazy('adminapp:orders')
+    template_name = 'adminapp/order_create.html'
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -239,4 +243,74 @@ class OrderCreateView(IsSuperUserView, CreateView):
         data['title'] = 'Order products'
         return data
 
+    def form_valid(self, form):
+        context = self.get_context_data()
+        orderitems = context['orderitems']
 
+        with transaction.atomic():
+            form.instance.user = self.request.user
+            self.object = form.save()
+            if orderitems.is_valid():
+                orderitems.instance = self.object
+                orderitems.save()
+
+        if self.object.get_total_cost() == 0:
+            self.object.delete()
+
+        return super().form_valid(form)
+
+
+class OrdersDeleteView(IsSuperUserView, DeleteView):
+    model = Order
+    template_name = 'adminapp/order_delete.html'
+    success_url = reverse_lazy('admin_custom:orders')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Order delete'
+        return context
+
+
+class OrdersUpdateView(IsSuperUserView, UpdateView):
+    model = Order
+    template_name = 'adminapp/order_update.html'
+    form_class = OrderForm
+    success_url = reverse_lazy('admin_custom:orders')
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm,
+                                             extra=1)
+
+        if self.request.POST:
+            data['orderitems'] = OrderFormSet(self.request.POST, self.request.FILES, instance=self.object)
+        else:
+            data['orderitems'] = OrderFormSet(instance=self.object)
+
+        data['title'] = 'Order update'
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        orderitems = context['orderitems']
+
+        with transaction.atomic():
+            self.object = form.save()
+            if orderitems.is_valid():
+                orderitems.instance = self.object
+                orderitems.save()
+
+        if self.object.get_total_cost() == 0:
+            self.object.delete()
+
+        return super().form_valid(form)
+
+
+class OrdersDetailView(IsSuperUserView, DetailView):
+    model = Order
+    template_name = 'adminapp/order_read.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Order'
+        return context

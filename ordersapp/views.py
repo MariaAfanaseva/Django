@@ -22,14 +22,13 @@ class OrderList(ListView):
 
 class OrderItemsCreate(CreateView):
     model = Order
-    # fields = []
-    form_class = OrderForm
+    fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm,
-                                             extra=1)
+                                             extra=3)
 
         if self.request.POST:
             formset = OrderFormSet(self.request.POST, self.request.FILES)

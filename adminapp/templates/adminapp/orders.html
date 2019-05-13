@@ -6,6 +6,9 @@
 {% block content %}
     <h2 class="products-range-h2 padding-site">{{ title }}</h2>
     </div>
+    <nav class="products-menu padding-site">
+        {% include 'adminapp/includes/inc_menu.html' %}
+    </nav>
     <div class="order-box padding-site">
         <table class="orders-list">
             <thead>
@@ -24,23 +27,24 @@
                     <td>{{ item.updated|date:"Y-m-d H:i:s" }}</td>
                     <td>{{ item.get_status_display }}</td>
                     <td>
-                        <a class="order-button" href="{#% url 'ordersapp:order_read' item.pk %#}">
+                        <a class="order-button" href="{% url 'adminapp:order_read' item.pk %}">
                             look
                         </a>
                     </td>
                     <td>
-                        <a class="order-button" href="{#% url 'ordersapp:order_update' item.pk %#}">edit</a>
+                        <a class="order-button" href="{% url 'adminapp:order_update' item.pk %}">edit</a>
                     </td>
                     <td>
-                        <a class="order-button" href="{#% url 'ordersapp:order_delete' item.pk %#}">
-                            delete
-                        </a>
+                        {% if item.is_active %}
+                            <a class="order-button" href="{% url 'adminapp:order_delete' item.pk %}">
+                                delete
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <a class="admin-button" href="{#% url 'index' %#}">Main</a>
         <a class="admin-button" href="{% url 'adminapp:order_create' %}">new</a>
     </div>
 {% endblock %}
