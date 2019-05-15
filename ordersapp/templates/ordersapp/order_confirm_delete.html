@@ -1,0 +1,19 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
+{% block content %}
+    <h2 class="products-range-h2 padding-site">{{ title }}</h2>
+    </div>
+    <div class="order-box padding-site">
+
+       {% include 'ordersapp/includes/inc_order_summary.html' %}
+        <div class="order-h2">Are you sure you want to delete?</div>
+       <form action="{% url 'ordersapp:order_delete' object.pk %}" method="post">
+           {% csrf_token %}
+           <input class="admin-button-input" type="submit" value="delete">
+       </form>
+           <a class="admin-button" href="{% url 'ordersapp:orders_list' %}">Cancel</a>
+   </div>
+{% endblock %}

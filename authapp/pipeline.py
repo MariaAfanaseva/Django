@@ -23,17 +23,16 @@ def save_user_profile(backend, user, response, *args, **kwargs):
 
         data = resp.json()['response'][0]
 
-        if data['sex']:
+        if 'about' in data and data['sex']:
             user.shopuserprofile.gender = ShopUserProfile.MALE if data['sex'] == 2 else ShopUserProfile.FEMALE
 
         # if 'photo' in response.keys():
         #     user.avatar = response['photo']
 
-        if data['about']:
+        if 'about' in data and data['about']:
             user.shopuserprofile.aboutMe = data['about']
 
-        if 'bdate' in data:
-            if data['bdate']:
+        if 'bdate' in data and data['bdate']:
                 bdate = datetime.strptime(data['bdate'], '%d.%m.%Y').date()
                 user.age = timezone.now().date().year - bdate.year
         user.save()

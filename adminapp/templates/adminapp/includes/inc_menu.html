@@ -17,4 +17,13 @@
       categories
     </a>
   </li>
+  <li>
+    <a href="{% url 'admin_custom:orders' %}"
+       class="{% if request.resolver_match.url_name == 'orders'%}
+                all-menu-link all-menu-bottom all-menu-link-active
+                {% else %}all-menu-link all-menu-bottom
+              {% endif %}">
+      orders
+    </a>
+  </li>
 </ul>

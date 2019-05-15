@@ -1,0 +1,48 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+{% block div %}
+    <div class="products-range padding-site">
+{% endblock %}
+{% block content %}
+    <h2 class="products-range-h2 padding-site">{{ title }}</h2>
+    </div>
+    <div class="order-box padding-site">
+        {% include 'ordersapp/includes/inc_order_summary.html' %}
+        <div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {{ orderitems.management_form }}
+                    {% for form in orderitems.forms %}
+                        {% if forloop.first %}
+                            <thead>
+                            <tr>
+                                {% for field in form.visible_fields %}
+                                    <th class="{% cycle 'order-header' 'order-header' 'order-header' %}">
+                                        {{ field.label|capfirst }}
+                                    </th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                        {% endif %}
+                        <tr>
+                            {% for field in form.visible_fields %}
+                                <td class="{% cycle 'td1' 'td2' 'form-checkbox' %}">
+                                    {% if forloop.first %}
+                                        {% for hidden in form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                    {% endif %}
+                                    {{ field.errors.as_ul }}
+                                    {{ field }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="submit" value="save" class="admin-button-input">
+                {% include 'ordersapp/includes/inc_order_actions.html' %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -36,27 +36,33 @@
                        {% endif %}">CONTACT</a></li>
             {% if request.user.is_superuser %}
                 <li><a href="{% url 'admin_custom:categories' %}"
-                       class="menu-link menu-link">Adminka</a></li>
+                       class="{% if request.resolver_match.namespace == 'admin_custom' %}
+                       menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}">Adminka</a></li>
             {% endif %}
             {% if user.is_authenticated %}
-                <li class="menu-list"><a class="menu-link">Hello {{ user.username|title}}!</a>
+                <li class="menu-list"><a class="{% if request.resolver_match.namespace == 'order' or  request.resolver_match.namespace == 'auth'%}
+                       menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}">Hello {{ user.username|title}}</a>
                     <ul class="menu-in">
                         <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
-                        <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
+                        <li><a class="menu-link" href="{% url 'order:orders_list' %}">Orders</a></li>
                     </ul>
                 </li>
+                <li><a class="menu-link" href="{% url 'auth:logout' %}">Logout</a></li>
             {%  else %}
                 <li class="menu-list"><a class="menu-link" href="{% url 'auth:login' %}">Login</a></li>
                 <li><a class="menu-link" href="{% url 'auth:register' %}">Register</a></li>
             {% endif %}
 
             <li>
-                <a href="{% url 'basket:view' %}" class="basket menu-link">
+                <a href="{% url 'basket:view' %}" class="{% if request.resolver_match.namespace == 'basket' %}
+                       menu-link-active menu-link
+                       {% else %}menu-link
+                       {% endif %}">
                     {{ basket|basket_total_cost|floatformat}} ({{ basket|basket_total_quantity}})
-                    {#                    {% if basket %}#}
-                    {#                        {{ basket.0.total_cost|floatformat:0 }} euro#}
-                    {#                        {{ basket.0.total_quantity }} count#}
-                    {#                    {% endif %}#}
                 </a>
             </li>
 

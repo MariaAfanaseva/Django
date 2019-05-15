@@ -1083,7 +1083,7 @@ body {
   text-decoration: none;
   line-height: 50px;
   width: 300px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   outline: none;
 }
 .admin-button:hover {
@@ -1228,4 +1228,112 @@ body {
 }
 .admin-detail-text-p{
   margin-bottom: 10px;
+}
+
+.order-box{
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
+.order-header{
+  padding-bottom: 15px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  line-height: 26px;
+}
+.order-table{
+  margin-bottom: 40px;
+}
+.order-h2{
+  padding: 10px;
+  font-size: 25px;
+  font-weight: 300;
+  border-bottom: 1px solid silver;
+
+}
+.order-h4{
+  color: #6c6c6c;
+  font-size: 20px;
+  font-weight: 300;
+  margin: 10px;
+}
+.order-summary{
+  margin-bottom: 40px;
+  border-bottom: 1px solid silver;
+}
+.order-button{
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 4.4px;
+  box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  line-height: 50px;
+  width: 80px;
+  margin: 10px;
+  outline: none;
+}
+.order-button-buy{
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 4.4px;
+  box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
+  background-color: #f44336;
+  border-radius: 10px;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  line-height: 50px;
+  width: 80px;
+  margin: 10px;
+  outline: none;
+}
+.orders-list {
+  width: 1200px;
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 30px;
+  font-size: 20px;
+}
+.order-block{
+  display: flex;
+}
+.order-img{
+  width: 300px;
+}
+.order-product{
+margin: 20px;
+}
+.basket-order{
+  margin-bottom: 50px;
+}
+.basket-button{
+  font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: 4.4px;
+    box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
+    border-radius: 35px;
+    background-color: #f44336;
+    display: block;
+    padding-left: 30px;
+    padding-right: 45px;
+    height: 71px;
+    text-decoration: none;
+    line-height: 71px;
+    width: 400px;
+    margin-bottom: 10px;
+    position: relative;
 }

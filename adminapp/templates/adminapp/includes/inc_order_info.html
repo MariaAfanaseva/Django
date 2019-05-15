@@ -1,0 +1,29 @@
+{% load custom_tags %}
+{% if object %}
+    <div class="order-summary">
+        <div class="order-h2">Order №{{ object.pk }} from {{ object.created|date:"Y-m-d H:i:s" }}</div>
+        <div class="order-h4">Customer: {{ user.username }} {{ user.last_name }} {{ user.first_name }} </div>
+        <div class="order-h4">Updated: {{ object.updated|date:"Y-m-d H:i:s" }}</div>
+        <div class="order-h4">Status: {{ object.get_status_display }}</div>
+        <div class="order-h4">
+            Total quantity: <span class="order_total_quantity">{{ object.get_total_quantity }}</span>
+        </div>
+        <div class="order-h4">
+            Total cost: <span class="order_total_cost">{{ object.get_total_cost }}</span> руб
+        </div>
+    </div>
+{% else %}
+    <div class="order-summary">
+        <div class="order-h2">New</div>
+        <div class="order-h4">Customer: {{ user.username|capfirst}} </div>
+        {% if basket.0 %}
+            <div class="order-h4">
+                Total quantity: <span class="order_total_quantity">{{ basket|basket_total_quantity}}</span>
+            </div>
+            <div class="order-h4">
+                Total cost: <span class="order_total_cost">{{ basket|basket_total_cost|floatformat }}</span> $
+            </div>
+        {% endif %}
+    </div>
+{% endif %}
+
