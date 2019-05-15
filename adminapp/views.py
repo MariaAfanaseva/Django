@@ -270,6 +270,14 @@ class OrdersDeleteView(IsSuperUserView, DeleteView):
         context['title'] = 'Order delete'
         return context
 
+    def delete(self):
+        for item in self.orderitems.all():
+            item.product.quantity += item.quantity
+            item.product.save()
+
+        self.is_active = False
+        self.save()
+
 
 class OrdersUpdateView(IsSuperUserView, UpdateView):
     model = Order
