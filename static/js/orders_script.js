@@ -81,8 +81,6 @@ window.onload = function () {
     $orderForm.on('change','select',function (event) {
         var target = event.target;
         console.log(target);
-
-
     });
 
 };
