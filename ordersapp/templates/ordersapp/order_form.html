@@ -11,7 +11,7 @@
         <div class="order_form">
             <form action="" method="post">
                 {% csrf_token %}
-                <table>
+                <table class="table">
                     {{ orderitems.management_form }}
                     {% for form in orderitems.forms %}
                         {% if forloop.first %}
@@ -40,10 +40,7 @@
                                         {% if field.value %}
                                             <span class = "orderitems-{{forloop.parentloop.counter0}}-price">
                                          {{ field.value }}</span> $
-                                        {% else %}
-                                            <span class = "orderitems-{{forloop.parentloop.counter0}}-price">
-                                         0 </span> $
-                                        {% endif %}
+                                    {% endif %}
                                     {% endif %}
                                 </td>
                             {% endfor %}
