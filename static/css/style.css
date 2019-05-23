@@ -1312,28 +1312,64 @@ body {
   width: 300px;
 }
 .order-product{
-margin: 20px;
+  margin: 20px;
 }
 .basket-order{
   margin-bottom: 50px;
 }
 .basket-button{
   font-size: 22px;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-    color: #ffffff;
-    letter-spacing: 4.4px;
-    box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
-    border-radius: 35px;
-    background-color: #f44336;
-    display: block;
-    padding-left: 30px;
-    padding-right: 45px;
-    height: 71px;
-    text-decoration: none;
-    line-height: 71px;
-    width: 400px;
-    margin-bottom: 10px;
-    position: relative;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: 4.4px;
+  box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
+  border-radius: 35px;
+  background-color: #f44336;
+  display: block;
+  padding-left: 30px;
+  padding-right: 45px;
+  height: 71px;
+  text-decoration: none;
+  line-height: 71px;
+  width: 400px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.delete-row{
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 4.4px;
+  box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-decoration: none;
+  line-height: 50px;
+  width: 80px;
+  margin: 15px 15px 15px 40px;
+  outline: none;
+}
+.add-row{
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+  color: black;
+  letter-spacing: 4.4px;
+  box-shadow: 0 2px 5px 1px rgba(33, 33, 33, 0.35);
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  display: block;
+  text-decoration: none;
+  line-height: 50px;
+  width: 200px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-bottom: 40px;
+  outline: none;
 }
