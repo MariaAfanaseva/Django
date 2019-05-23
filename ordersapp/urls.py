@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^update/(?P<pk>\d+)/$', ordersapp.OrderItemsUpdate.as_view(), name='order_update'),
     url(r'^delete/(?P<pk>\d+)/$', ordersapp.OrderDelete.as_view(), name='order_delete'),
     url(r'^forming/complete/(?P<pk>\d+)/$', ordersapp.order_forming_complete, name='order_forming_complete'),
-
+    url(r'^product/(?P<pk>\d+)/price/$', ordersapp.get_product_price),
 ]

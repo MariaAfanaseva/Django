@@ -25,9 +25,11 @@ window.onload = function () {
         var targetName = row[0].querySelector('input[type="number"]').name;
         orderitemNum = parseInt(targetName.replace('orderitems-', '').replace('-quantity', ''));
         deltaQuantity = -quantityArr[orderitemNum];
-        orderSummaryUpdate(priceArr[orderitemNum], deltaQuantity);
-    }
-
+        quantityArr[orderitemNum] = 0;
+        if (!isNaN(priceArr[orderitemNum]) && !isNaN(deltaQuantity)) {
+            orderSummaryUpdate(priceArr[orderitemNum], deltaQuantity);
+   }
+}
 
     for (i = 0; i < TOTAL_FORMS; i++) {
         _quantity = parseInt($('input[name="orderitems-' + i + '-quantity"]').val());
@@ -41,12 +43,19 @@ window.onload = function () {
     }
 
     if (!orderTotalQuantity) {
+        orderSummaryRecalc();
+    }
+
+    function orderSummaryRecalc() {
+        orderTotalQuantity = 0;
+        orderTotalCost = 0;
+
         for (i = 0; i < TOTAL_FORMS; i++) {
             orderTotalQuantity += quantityArr[i];
             orderTotalCost += quantityArr[i] * priceArr[i];
         }
-        $orderTotalQuantity.html(orderTotalQuantity.toString());
-        $orderTotalCost.html(Number(orderTotalCost.toFixed(2)).toString());
+        $('.order_total_quantity').html(orderTotalQuantity.toString());
+        $('.order_total_cost').html(Number(orderTotalCost.toFixed(2)).toString());
     }
 
     $orderForm.on('change', 'input[type="number"]', function (event) {
@@ -78,11 +87,32 @@ window.onload = function () {
         removed: deleteOrderItem
     });
 
-    $orderForm.on('change','select',function (event) {
-        var target = event.target;
-        console.log(target);
+    $orderForm.on('change', 'select', function (event) {
+    var target = event.target;
+    orderitemNum = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
+    var orderitemProductPk = target.value;
 
+    if (orderitemProductPk) {
+        $.ajax({
+            url: "/order/product/" + orderitemProductPk + "/price/",
+            success: function (data) {
+                if (data.price) {
+                    priceArr[orderitemNum] = parseFloat(data.price);
+                    if (isNaN(quantityArr[orderitemNum])) {
+                        quantityArr[orderitemNum] = 0;
+                    }
+                    priceHtml = '<span>' + data.price.toString() + '</span>$';
+                    currentTR = $('.order_form table').find('tr:eq(' + (orderitemNum + 1) + ')');
 
+                    currentTR.find('td:eq(2)').html(priceHtml);
+
+                    if (isNaN(currentTR.find('input[type="number"]').val())) {
+                        currentTR.find('input[type="number"]').val(0);
+                    }
+                    orderSummaryRecalc();
+                }
+            }
+        });
+    }
     });
-
 };
