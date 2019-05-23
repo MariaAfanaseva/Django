@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^basket/',  include('basketapp.urls', namespace='basket')),
     url(r'^admin/', admin.site.urls),
     url(r'^admin_custom/', include('adminapp.urls', namespace='admin_custom')),
-    url(r'^__debug__/', include(debug_toolbar.urls)),
+    # url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'^social/', include('social_django.urls', namespace='social')),
     url(r'^order/', include('ordersapp.urls', namespace='order')),
 ]
