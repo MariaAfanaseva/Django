@@ -40,10 +40,10 @@ def products(request, pk=None, num=None, page=1):
     if pk:
         if pk == '0':
             category = {'name': 'all', 'pk': 0}
-            products_list = Product.objects.select_related('type').all().order_by('price')
+            products_list = Product.objects.select_related('type').filter(is_active=True, category__is_active=True).order_by('price')
         else:
             category = get_object_or_404(ProductCategory, pk=pk)
-            products_list = Product.objects.filter(category__pk=pk).select_related('type').order_by('price')
+            products_list = Product.objects.filter(category__pk=pk).filter(is_active=True, category__is_active=True).select_related().order_by('price')
 
         paginator = Paginator(products_list, 3)
         try:
@@ -65,7 +65,7 @@ def products(request, pk=None, num=None, page=1):
 
     elif num:
         category = get_object_or_404(ProductType, pk=num)
-        products_list = Product.objects.filter(type__pk=num).select_related('type')
+        products_list = Product.objects.filter(type__pk=num).filter(is_active=True, category__is_active=True).select_related('type')
         context = {
             'title': 'products',
             'category': category,

@@ -42,15 +42,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
-    'template_profiler_panel',
     'social_django',
     'mainapp.apps.MainappConfig',
     'authapp.apps.AuthappConfig',
     'basketapp.apps.BasketappConfig',
     'adminapp.apps.AdminappConfig',
     'ordersapp.apps.OrdersappConfig',
+    # 'debug_toolbar',
+    # 'django_extensions'
+    # 'template_profiler_panel',
 ]
+
+if DEBUG:
+    INSTALLED_APPS.extend(['debug_toolbar',
+                           'template_profiler_panel',
+                           'django_extensions'
+                           ])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,9 +67,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
@@ -86,7 +96,7 @@ if DEBUG:
         'template_profiler_panel.panels.template.TemplateProfilerPanel',
     ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 INTERNAL_IPS = [
     'localhost'
