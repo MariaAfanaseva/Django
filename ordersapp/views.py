@@ -36,6 +36,10 @@ class OrderItemsCreate(CreateView):
     fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
         OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm,
@@ -84,6 +88,10 @@ class OrderItemsCreate(CreateView):
 class OrderRead(DetailView):
     model = Order
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(OrderRead, self).get_context_data(**kwargs)
         context['title'] = 'Order view'
@@ -108,7 +116,9 @@ class OrderItemsUpdate(UpdateView):
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, self.request.FILES, instance=self.object)
         else:
-            formset = OrderFormSet(instance=self.object)
+            # formset = OrderFormSet(instance=self.object)
+            queryset = self.object.orderitems.select_related()
+            formset = OrderFormSet(instance=self.object, queryset=queryset)
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
@@ -134,6 +144,10 @@ class OrderItemsUpdate(UpdateView):
 class OrderDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('ordersapp:orders_list')
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
