@@ -11,6 +11,9 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
 from django.http import JsonResponse
 from mainapp.models import Product
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 class OrderList(ListView):
     model = Order
@@ -22,6 +25,10 @@ class OrderList(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Orders'
         return context
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
 class OrderItemsCreate(CreateView):
@@ -87,6 +94,10 @@ class OrderItemsUpdate(UpdateView):
     model = Order
     fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
