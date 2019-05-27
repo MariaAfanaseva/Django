@@ -38,6 +38,18 @@ def get_category(pk):
         return get_object_or_404(ProductCategory, pk=pk)
 
 
+def get_products():
+    if settings.LOW_CACHE:
+        key = 'products'
+        products = cache.get(key)
+        if products is None:
+            products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
+            cache.set(key, products)
+        return products
+    else:
+        return Product.objects.filter(is_active=True, category__is_active=True).select_related('type').order_by('price')
+
+
 def main(request):
     exclusive_product = get_product('Exclusive')[:2]
     trending_products = get_product('Trending')[:6]
@@ -66,7 +78,7 @@ def products(request, pk=None, num=None, page=1):
     if pk:
         if pk == '0':
             category = {'name': 'all', 'pk': 0}
-            products_list = Product.objects.select_related('type').filter(is_active=True, category__is_active=True).order_by('price')
+            products_list = get_products()
         else:
             category = get_category(pk)
             products_list = Product.objects.filter(category__pk=pk).filter(is_active=True, category__is_active=True).select_related().order_by('price')
