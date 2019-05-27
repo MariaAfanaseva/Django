@@ -26,6 +26,18 @@ def get_links_menu():
         return ProductCategory.objects.filter(is_active=True)
 
 
+def get_category(pk):
+    if settings.LOW_CACHE:
+        key = f'category_{pk}'
+        category = cache.get(key)
+        if category is None:
+            category = get_object_or_404(ProductCategory, pk=pk)
+            cache.set(key, category)
+        return category
+    else:
+        return get_object_or_404(ProductCategory, pk=pk)
+
+
 def main(request):
     exclusive_product = get_product('Exclusive')[:2]
     trending_products = get_product('Trending')[:6]
@@ -56,7 +68,7 @@ def products(request, pk=None, num=None, page=1):
             category = {'name': 'all', 'pk': 0}
             products_list = Product.objects.select_related('type').filter(is_active=True, category__is_active=True).order_by('price')
         else:
-            category = get_object_or_404(ProductCategory, pk=pk)
+            category = get_category(pk)
             products_list = Product.objects.filter(category__pk=pk).filter(is_active=True, category__is_active=True).select_related().order_by('price')
 
         paginator = Paginator(products_list, 3)
