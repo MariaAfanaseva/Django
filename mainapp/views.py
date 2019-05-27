@@ -6,7 +6,15 @@ from django.core.cache import cache
 
 
 def get_products_type(type_product):
-    return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
+    if settings.LOW_CACHE:
+        key = f'products_{type_product}'
+        products_type = cache.get(key)
+        if products_type is None:
+            products_type = Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
+            cache.set(key, products_type)
+        return products_type
+    else:
+        return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
 
 
 def get_same_products(same_product):
