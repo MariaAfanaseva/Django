@@ -6,7 +6,16 @@ from django.core.cache import cache
 
 
 def get_products_type(type_product):
-    return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
+    if settings.LOW_CACHE:
+        type = type_product.split(' ')[0]
+        key = f'products_{type}'
+        products_type = cache.get(key)  # from cache
+        if products_type is None:
+            products_type = Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
+        cache.set(key, products_type)  # added in cache
+        return products_type
+    else:
+        return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
 
 
 def get_same_products(same_product):
@@ -38,12 +47,24 @@ def get_category(pk):
         return get_object_or_404(ProductCategory, pk=pk)
 
 
+def get_types():
+    if settings.LOW_CACHE:
+        key = 'types'
+        types = cache.get(key)
+        if types is None:
+            types = ProductType.objects.all()
+            cache.set(key, types)
+        return types
+    else:
+        return ProductType.objects.all()
+
+
 def get_products():
     if settings.LOW_CACHE:
         key = 'products'
         products = cache.get(key)
         if products is None:
-            products = Product.objects.filter(is_active=True, category__is_active=True).order_by('price')
+            products = Product.objects.filter(is_active=True, category__is_active=True).select_related('type').order_by('price')
             cache.set(key, products)
         return products
     else:
@@ -77,8 +98,8 @@ def get_products_in_category(pk):
 def main(request):
     exclusive_product = get_products_type('Exclusive')[:2]
     trending_products = get_products_type('Trending')[:6]
-    types = ProductType.objects.all()
-    same_products = get_same_products(exclusive_product.first())[:4]
+    types = get_types()
+    same_products = get_same_products(exclusive_product[0])[:4]
     featured_products = get_products_type('Hot deal')[:4]
 
     context = {
@@ -96,7 +117,7 @@ def main(request):
 def products(request, pk=None, num=None, page=1):
     title = 'Products'
     links_menu = get_links_menu()
-    types = ProductType.objects.all()
+    types = get_types()
     exclusive_product = get_products_type('Exclusive')[:2]
 
     if pk:
@@ -141,7 +162,7 @@ def products(request, pk=None, num=None, page=1):
 
 
 def contacts(request):
-    types = ProductType.objects.all()
+    types = get_types()
     context = {
         'title': 'contacts',
 
