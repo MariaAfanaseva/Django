@@ -5,12 +5,26 @@
         <div class="order-h4">Customer: {{ user.username|capfirst }} {{ user.last_name|capfirst }} {{ user.first_name|capfirst }} </div>
         <div class="order-h4">Updated: {{ object.updated|date:"Y-m-d H:i:s" }}</div>
         <div class="order-h4">Status: {{ object.get_status_display }}</div>
-        <div class="order-h4">
-            Total quantity: <span class="order_total_quantity">{{ object.get_total_quantity }}</span>
-        </div>
-        <div class="order-h4">
-            Total cost: <span class="order_total_cost">{{ object.get_total_cost }}</span> $
-        </div>
+
+        {% with object_summary=object.get_summary %}
+            <div class="order-h4">
+                Total quantity:
+                <span class="order_total_quantity">
+               {{ object_summary.total_quantity }}</span>
+            </div>
+            <div class="order-h4">
+                Total cost:
+                <span class="order_total_cost">
+               {{ object_summary.total_cost }}</span> $
+            </div>
+        {% endwith %}
+
+{#                <div class="order-h4">#}
+{#                    Total quantity: <span class="order_total_quantity">{{ object.get_total_quantity }}</span>#}
+{#                </div>#}
+{#                <div class="order-h4">#}
+{#                    Total cost: <span class="order_total_cost">{{ object.get_total_cost }}</span> $#}
+{#                </div>#}
     </div>
 {% else %}
     <div class="order-summary">
