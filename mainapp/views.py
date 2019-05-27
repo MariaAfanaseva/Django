@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 
-def get_product(type_product):
+def get_products_type(type_product):
     return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
 
 
@@ -50,12 +50,24 @@ def get_products():
         return Product.objects.filter(is_active=True, category__is_active=True).select_related('type').order_by('price')
 
 
+def get_product(pk):
+    if settings.LOW_CACHE:
+        key = f'product_{pk}'
+        product = cache.get(key)
+        if product is None:
+            product = get_object_or_404(Product, pk=pk)
+            cache.set(key, product)
+        return product
+    else:
+        return get_object_or_404(Product, pk=pk)
+
+
 def main(request):
-    exclusive_product = get_product('Exclusive')[:2]
-    trending_products = get_product('Trending')[:6]
+    exclusive_product = get_products_type('Exclusive')[:2]
+    trending_products = get_products_type('Trending')[:6]
     types = ProductType.objects.all()
     same_products = get_same_products(exclusive_product.first())[:4]
-    featured_products = get_product('Hot deal')[:4]
+    featured_products = get_products_type('Hot deal')[:4]
 
     context = {
         'user': request.user,
@@ -73,7 +85,7 @@ def products(request, pk=None, num=None, page=1):
     title = 'Products'
     links_menu = get_links_menu()
     types = ProductType.objects.all()
-    exclusive_product = get_product('Exclusive')[:2]
+    exclusive_product = get_products_type('Exclusive')[:2]
 
     if pk:
         if pk == '0':
@@ -130,7 +142,7 @@ def product(request, pk=None):
     links_menu = get_links_menu()
     title = 'Product'
 
-    product_entry = get_object_or_404(Product, pk=pk)
+    product_entry = get_product(pk)
     same_product = get_same_products(product_entry)[:3]
 
     context = {
