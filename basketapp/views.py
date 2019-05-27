@@ -10,7 +10,7 @@ from django.urls import reverse
 @login_required
 def basket(request):
     title = 'Basket'
-    basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+    basket_items = Basket.objects.filter(user=request.user).order_by('product__category').select_related('product__category')
     context = {'basket_items': basket_items,
                'title': title,
                }
