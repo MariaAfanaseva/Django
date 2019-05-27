@@ -6,15 +6,7 @@ from django.core.cache import cache
 
 
 def get_products_type(type_product):
-    if settings.LOW_CACHE:
-        key = f'products_{type_product}'
-        products_type = cache.get(key)
-        if products_type is None:
-            products_type = Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
-            cache.set(key, products_type)
-        return products_type
-    else:
-        return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
+    return Product.objects.filter(type__name=type_product, is_active=True, category__is_active=True).select_related('type').order_by("?")
 
 
 def get_same_products(same_product):
@@ -70,6 +62,18 @@ def get_product(pk):
         return get_object_or_404(Product, pk=pk)
 
 
+def get_products_in_category(pk):
+    if settings.LOW_CACHE:
+        key = f'products_in_category_{pk}'
+        products = cache.get(key)
+        if products is None:
+            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price').select_related()
+            cache.set(key, products)
+        return products
+    else:
+        return Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price').select_related()
+
+
 def main(request):
     exclusive_product = get_products_type('Exclusive')[:2]
     trending_products = get_products_type('Trending')[:6]
@@ -101,7 +105,7 @@ def products(request, pk=None, num=None, page=1):
             products_list = get_products()
         else:
             category = get_category(pk)
-            products_list = Product.objects.filter(category__pk=pk).filter(is_active=True, category__is_active=True).select_related().order_by('price')
+            products_list = get_products_in_category(pk)
 
         paginator = Paginator(products_list, 3)
         try:
