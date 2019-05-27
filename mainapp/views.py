@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import ProductCategory, Product, ProductType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
+from django.core.cache import cache
 
 
 def get_product(type_product):
@@ -10,6 +12,18 @@ def get_product(type_product):
 def get_same_products(same_product):
     same_products = Product.objects.filter(category=same_product.category, is_active=True, category__is_active=True).exclude(pk=same_product.pk)
     return same_products
+
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'links_menu'
+        links_menu = cache.get(key)  # from cache
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, links_menu)  # added in cache
+        return links_menu
+    else:
+        return ProductCategory.objects.filter(is_active=True)
 
 
 def main(request):
@@ -33,7 +47,7 @@ def main(request):
 
 def products(request, pk=None, num=None, page=1):
     title = 'Products'
-    links_menu = ProductCategory.objects.filter(is_active=True)
+    links_menu = get_links_menu()
     types = ProductType.objects.all()
     exclusive_product = get_product('Exclusive')[:2]
 
@@ -89,7 +103,7 @@ def contacts(request):
 
 
 def product(request, pk=None):
-    links_menu = ProductCategory.objects.filter(is_active=True)
+    links_menu = get_links_menu()
     title = 'Product'
 
     product_entry = get_object_or_404(Product, pk=pk)
