@@ -57,6 +57,7 @@ if DEBUG:
                            ])
 
 MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware', # cache sate
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,6 +70,8 @@ MIDDLEWARE = [
 
 if DEBUG:
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+# MIDDLEWARE.append('django.middleware.cache.FetchFromCacheMiddleware')  # cache sate
 
 if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
