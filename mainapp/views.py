@@ -3,6 +3,9 @@ from .models import ProductCategory, Product, ProductType
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.core.cache import cache
+# from django.views.decorators.cache import cache_page
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 
 def get_products_type(type_product):
@@ -114,6 +117,7 @@ def main(request):
     return render(request, 'mainapp/index.html', context=context)
 
 
+# @cache_page(3600)
 def products(request, pk=None, num=None, page=1):
     title = 'Products'
     links_menu = get_links_menu()
@@ -143,7 +147,6 @@ def products(request, pk=None, num=None, page=1):
             'products': products_paginator,
             'types': types,
         }
-
         return render(request, 'mainapp/products_list.html', context=context)
 
     elif num:
@@ -159,6 +162,41 @@ def products(request, pk=None, num=None, page=1):
         }
 
         return render(request, 'mainapp/products.html', context=context)
+
+
+def products_ajax(request, pk=None, page=1):
+    if request.is_ajax():
+        links_menu = get_links_menu()
+
+        if pk:
+            if pk == '0':
+                category = {'name': 'all', 'pk': 0}
+                products_list = get_products()
+            else:
+                category = get_category(pk)
+                products_list = get_products_in_category(pk)
+
+            paginator = Paginator(products_list, 3)
+            try:
+                products_paginator = paginator.page(page)
+            except PageNotAnInteger:
+                products_paginator = paginator.page(1)
+            except EmptyPage:
+                products_paginator = paginator.page(paginator.num_pages)
+
+            context = {
+                'title': 'products',
+                'links_menu': links_menu,
+                'category': category,
+                'products': products_paginator,
+            }
+
+            result = render_to_string(
+                        'mainapp/includes/inc_products_list_content.html',
+                        context=context,
+                        request=request)
+
+            return JsonResponse({'result': result})
 
 
 def contacts(request):

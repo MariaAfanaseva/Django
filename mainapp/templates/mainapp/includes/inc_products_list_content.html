@@ -1,0 +1,32 @@
+{% load static %}
+
+<nav class="products-menu padding-site">
+    {% include 'mainapp/includes/inc_categories_menu.html' %}
+</nav>
+<div class="trending-products padding-site ">
+    {% for product in products %}
+        <a href="{% url 'products:product' product.pk %}" >
+            <img class="trending-products-img" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+    {% endfor %}
+</div>
+<div class="products-reload">
+    {#                <a href="#" class="products-reload-img">#}
+    {#                    <img src="{% static 'img/refresh.svg' %}"></a>#}
+
+    <div class="paginator">
+        {% if products.has_previous %}
+            <a class="paginator-link" href="{% url 'products:page' category.pk products.previous_page_number %}">
+                <
+            </a>
+        {% endif %}
+        <span class="paginator-span">
+            page {{ products.number }} of
+            {{ products.paginator.num_pages }}
+          </span>
+        {% if products.has_next %}
+            <a class="paginator-link" href="{% url 'products:page' category.pk products.next_page_number %}">
+                >
+            </a>
+        {% endif %}
+    </div>
+</div>

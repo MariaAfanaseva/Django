@@ -22,6 +22,7 @@ http://192.168.178.30/auth/edit/
 http://192.168.178.30/order/update/1/
 http://192.168.178.30/order/update/2/
 http://192.168.178.30/order/update/3/
+http://192.168.178.30/order/update/4/
 http://192.168.178.30/order/read/1/
 http://192.168.178.30/order/read/2/
 http://192.168.178.30/order/read/3/
