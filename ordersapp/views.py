@@ -13,6 +13,7 @@ from django.http import JsonResponse
 from mainapp.models import Product
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
 
 class OrderList(ListView):
@@ -172,17 +173,17 @@ def get_product_price(request, pk):
 
 
 @receiver(pre_save, sender=OrderItem)
-@receiver(pre_save, sender=Basket)
+# @receiver(pre_save, sender=Basket)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
     if instance.pk:
         instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
     else:
-        instance.product.quantity -= instance.quantity
+        instance.product.quantity = F('quantity') - instance.quantity
     instance.product.save()
 
 
 @receiver(pre_delete, sender=OrderItem)
-@receiver(pre_delete, sender=Basket)
+# @receiver(pre_delete, sender=Basket)
 def product_quantity_update_delete(sender, instance, **kwargs):
-    instance.product.quantity += instance.quantity
+    instance.product.quantity = F('quantity') + instance.quantity
     instance.product.save()
