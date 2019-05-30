@@ -23,9 +23,8 @@ class TestUserManagement(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['user'].is_anonymous)
-        user = 'Hello ' + response.context['user'].username
         self.assertEqual(response.context['title'], 'interior')
-        self.assertNotContains(response, user, status_code=200)
+        self.assertNotContains(response, 'Hello', status_code=200)
         # self.assertNotIn('Пользователь', response.content.decode())
 
         # данные пользователя
@@ -38,8 +37,7 @@ class TestUserManagement(TestCase):
 
         # главная после логина
         response = self.client.get('/')
-        user = 'Hello ' + response.context['user'].username
-        self.assertContains(response, user, status_code=200)
+        self.assertContains(response, response.context['user'].username, status_code=200)
         self.assertEqual(response.context['user'], self.user)
         # self.assertIn('Пользователь', response.content.decode())
 
