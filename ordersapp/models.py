@@ -26,7 +26,7 @@ class Order(models.Model):
                               max_length=3,
                               choices=ORDER_STATUS_CHOICES,
                               default=FORMING)
-    is_active = models.BooleanField(verbose_name='active', default=True)
+    is_active = models.BooleanField(verbose_name='active', default=True, db_index=True)
 
     class Meta:
         ordering = ('-created',)
@@ -45,7 +45,6 @@ class Order(models.Model):
         items = self.orderitems.select_related('product')
         return sum([el.quantity * el.product.price for el in items])
 
-    # переопределяем метод, удаляющий объект
     def delete(self):
         for item in self.orderitems.all():
             item.product.quantity += item.quantity
@@ -54,17 +53,15 @@ class Order(models.Model):
         self.is_active = False
         self.save()
 
-
-# class OrderItemQuerySet(models.QuerySet):
-#     def delete(self, *args, **kwargs):
-#         for object in self:
-#             object.product.quantity += object.quantity
-#             object.product.save()
-#         super(OrderItemQuerySet, self).delete(*args, **kwargs)
+    def get_summary(self):
+        items = self.orderitems.select_related()
+        return {
+            'total_cost': sum(list(map(lambda x: x.quantity * x.product.price, items))),
+            'total_quantity': sum(list(map(lambda x: x.quantity, items)))
+        }
 
 
 class OrderItem(models.Model):
-    # objects = OrderItemQuerySet.as_manager()
     order = models.ForeignKey(Order, related_name="orderitems", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name='product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name='quantity', default=0)
@@ -76,16 +73,3 @@ class OrderItem(models.Model):
     def get_item(pk):
         return OrderItem.objects.filter(pk=pk).first()
 
-    # def delete(self):
-    #     self.product.quantity += self.quantity
-    #     self.product.save()
-    #     super(self.__class__, self).delete()
-    #
-    #
-    # def save(self, *args, **kwargs):
-    #     if self.pk:
-    #         self.product.quantity -= self.quantity - OrderItem.get_item(self.pk).quantity
-    #     else:
-    #         self.product.quantity -= self.quantity
-    #     self.product.save()
-    #     super().save(*args, **kwargs)

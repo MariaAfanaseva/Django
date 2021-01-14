@@ -29,12 +29,12 @@ class ShopUserRegisterForm(UserCreationForm):
         user_activation.save()
         return user
 
-    # def clean_age(self):
-    #     data = self.cleaned_data['age']
-    #     if data < 14:
-    #         raise forms.ValidationError("You are too young")
+    def clean_age(self):
+        data = self.cleaned_data['age']
+        if data < 14:
+            raise forms.ValidationError("You are too young")
 
-        # return data
+        return data
 
 
 class ShopUserEditForm(UserChangeForm):
@@ -60,6 +60,7 @@ class ShopUserEditForm(UserChangeForm):
 class ShopUserLoginForm(AuthenticationForm):
     class Meta:
         model = ShopUser
+
         fields = ('username', 'password')
 
     def __init__(self, *args, **kwargs):

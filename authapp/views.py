@@ -6,6 +6,7 @@ from django.conf import settings
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserEditForm, ShopUserProfileEditForm
 from authapp.models import ShopUser
 from django.db import transaction
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -16,10 +17,8 @@ def register(request):
         if register_form.is_valid():
             new_user = register_form.save()
             if send_verify_mail(new_user):
-                print('confirmation message sent')
                 return render(request, 'authapp/verification.html')
             else:
-                print('error sending message')
                 return HttpResponseRedirect(reverse('auth:login'))
     else:
         register_form = ShopUserRegisterForm()
@@ -28,6 +27,7 @@ def register(request):
     return render(request, 'authapp/register.html', context)
 
 
+@login_required
 @transaction.atomic  # for save two forms at the same time
 def edit(request):
     title = 'editing'
@@ -78,6 +78,7 @@ def login(request):
     return render(request, 'authapp/login.html', context)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('index'))
@@ -93,7 +94,6 @@ def send_verify_mail(user):
 def verify(request, email, activation_key):
     try:
         user = ShopUser.objects.get(email=email)
-        # print(user)
         if user.useractivation.activation_key == activation_key and not user.useractivation.is_activation_key_expired():
             user.is_active = True
             user.save()

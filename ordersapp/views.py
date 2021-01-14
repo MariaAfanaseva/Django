@@ -11,6 +11,10 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save, pre_delete
 from django.http import JsonResponse
 from mainapp.models import Product
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.db.models import F
+
 
 class OrderList(ListView):
     model = Order
@@ -23,11 +27,19 @@ class OrderList(ListView):
         context['title'] = 'Orders'
         return context
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 
 class OrderItemsCreate(CreateView):
     model = Order
     fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
+
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         data = super(OrderItemsCreate, self).get_context_data(**kwargs)
@@ -77,6 +89,10 @@ class OrderItemsCreate(CreateView):
 class OrderRead(DetailView):
     model = Order
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(OrderRead, self).get_context_data(**kwargs)
         context['title'] = 'Order view'
@@ -88,6 +104,10 @@ class OrderItemsUpdate(UpdateView):
     fields = []
     success_url = reverse_lazy('ordersapp:orders_list')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['title'] = 'Order update'
@@ -97,7 +117,9 @@ class OrderItemsUpdate(UpdateView):
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, self.request.FILES, instance=self.object)
         else:
-            formset = OrderFormSet(instance=self.object)
+            # formset = OrderFormSet(instance=self.object)
+            queryset = self.object.orderitems.select_related()
+            formset = OrderFormSet(instance=self.object, queryset=queryset)
             for form in formset.forms:
                 if form.instance.pk:
                     form.initial['price'] = form.instance.product.price
@@ -124,6 +146,10 @@ class OrderDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('ordersapp:orders_list')
 
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Order delete'
@@ -147,17 +173,17 @@ def get_product_price(request, pk):
 
 
 @receiver(pre_save, sender=OrderItem)
-@receiver(pre_save, sender=Basket)
+# @receiver(pre_save, sender=Basket)
 def product_quantity_update_save(sender, update_fields, instance, **kwargs):
     if instance.pk:
         instance.product.quantity -= instance.quantity - sender.get_item(instance.pk).quantity
     else:
-        instance.product.quantity -= instance.quantity
+        instance.product.quantity = F('quantity') - instance.quantity
     instance.product.save()
 
 
 @receiver(pre_delete, sender=OrderItem)
-@receiver(pre_delete, sender=Basket)
+# @receiver(pre_delete, sender=Basket)
 def product_quantity_update_delete(sender, instance, **kwargs):
-    instance.product.quantity += instance.quantity
+    instance.product.quantity = F('quantity') + instance.quantity
     instance.product.save()

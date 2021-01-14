@@ -13,6 +13,30 @@ from ordersapp.models import Order, OrderItem
 from ordersapp.forms import OrderItemForm, OrderForm
 from django.forms import inlineformset_factory
 from django.db import transaction
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.db import connection
+from django.db.models import F
+from shop import settings
+from adminapp.forms import ProductCategoryEditForm
+
+
+def db_profile_by_type(prefix, type, queries):
+    update_queries = list(filter(lambda x: type in x['sql'], queries))
+    print(f'db_profile {type} for {prefix}:')
+    [print(query['sql']) for query in update_queries]
+
+
+@receiver(pre_save, sender=ProductCategory)
+def product_is_active_update_productcategory_save(sender, instance, **kwargs):
+    if instance.pk:
+        if instance.is_active:
+            instance.product_set.update(is_active=True)
+        else:
+            instance.product_set.update(is_active=False)
+
+        if settings.DEBUG:
+            db_profile_by_type(sender, 'UPDATE', connection.queries)
 
 
 class IsSuperUserView(UserPassesTestMixin):
@@ -41,7 +65,7 @@ class ProductCategoryCreateView(IsSuperUserView, CreateView):
     success_url = reverse_lazy('admin_custom:categories')
 
     def get_context_data(self, **kwargs):
-        context = super(ProductCategoryCreateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['title'] = 'Create category'
         return context
 
@@ -49,13 +73,23 @@ class ProductCategoryCreateView(IsSuperUserView, CreateView):
 class ProductCategoryUpdateView(IsSuperUserView, UpdateView):
     model = ProductCategory
     template_name = 'adminapp/category_update.html'
-    fields = '__all__'
     success_url = reverse_lazy('admin_custom:categories')
+    form_class = ProductCategoryEditForm
 
     def get_context_data(self, **kwargs):
         context = super(ProductCategoryUpdateView, self).get_context_data(**kwargs)
         context['title'] = 'Update category'
         return context
+
+    def form_valid(self, form):
+        if 'discount' in form.cleaned_data:
+            discount = form.cleaned_data['discount']
+            if discount:
+                self.object.product_set.update(price=F('price') * (1 - discount / 100))
+                if settings.DEBUG:
+                    db_profile_by_type(self.__class__, 'UPDATE', connection.queries)
+
+        return super().form_valid(form)
 
 
 class ProductCategoryDeleteView(IsSuperUserView, DeleteView):

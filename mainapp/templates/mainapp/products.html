@@ -12,7 +12,7 @@
     <div class="trending-products padding-site ">
         {% for product in products %}
             <a href="{% url 'products:product' product.pk%}" >
-                <img class="trending-products-img" src="/media/{{ product.image }}"
+                <img class="trending-products-img" src="{{MEDIA_URL}}{{ product.image }}"
                      alt="{{ product.name }}"></a>
         {% endfor %}
     </div>
@@ -20,7 +20,7 @@
         <div class="promo">
             {% for exclusive in exclusive_product %}
                 <div class="promo-img-1">
-                    <img class="promo-exclusive-img" src="/media/{{ exclusive.image }}"
+                    <img class="promo-exclusive-img" src="{{MEDIA_URL}}{{ exclusive.image }}"
                          alt="{{ exclusive.name }}">
                     <div class="promo-text">
                         <h4 class="promo-h4">{{ exclusive.type }}</h4>
