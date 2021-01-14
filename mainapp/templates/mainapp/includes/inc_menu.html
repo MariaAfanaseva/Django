@@ -45,7 +45,7 @@
                 <li class="menu-list"><a class="{% if request.resolver_match.namespace == 'order' or  request.resolver_match.namespace == 'auth'%}
                        menu-link-active menu-link
                        {% else %}menu-link
-                       {% endif %}">Hello {{ user.username}}</a>
+                       {% endif %}">Hello {{ user.username }}</a>
                     <ul class="menu-in">
                         <li><a class="menu-link" href="{% url 'auth:edit' %}">Editing</a></li>
                         <li><a class="menu-link" href="{% url 'order:orders_list' %}">Orders</a></li>

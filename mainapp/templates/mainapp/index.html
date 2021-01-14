@@ -26,7 +26,7 @@
         </div>
         <div class="product-box">
             {% for product in featured_products %}
-            <div class="product-img" style="background-image: url('/media/{{ product.image }}')">
+            <div class="product-img" style="background-image: url('{{MEDIA_URL}}{{ product.image }}')">
                 <div class="img-text">
                     <a href={% url 'products:product' product.pk %}>
                         <div class="button-arrow"></div>
@@ -41,7 +41,7 @@
     <div class="promo">
         {% for exclusive in exclusive_product %}
             <div class="promo-img-1">
-                <img class="promo-exclusive-img" src="/media/{{ exclusive.image }}"
+                <img class="promo-exclusive-img" src="{{MEDIA_URL}}{{ exclusive.image }}"
                      alt="{{ exclusive.name }}">
                 <div class="promo-text">
                     <h4 class="promo-h4">{{ exclusive.type }}</h4>
@@ -62,7 +62,7 @@
         </div>
         <div class="trending-products">
             {% for product in trending_products %}
-                <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+                <a href="{% url 'products:product' product.pk %}" ><img class="trending-products-img" src="{{MEDIA_URL}}{{ product.image }}" alt="{{ product.name }}"></a>
             {% endfor %}
         </div>
     </div>
@@ -84,7 +84,7 @@
     </div>
     <div class="exclusive padding-site">
         <div class="exclusive-product-lg">
-            <img class="exclusive-product-lg-img" src="/media/{{ exclusive_product.0.image }}"
+            <img class="exclusive-product-lg-img" src="{{MEDIA_URL}}{{ exclusive_product.0.image }}"
                  alt="{{ exclusive_product.0.name }}">
             <div class="promo-text">
                 <h4 class="promo-h4">{{ exclusive_product.0.type }}</h4>
@@ -98,7 +98,7 @@
         </div>
         <div class="exclusive-product-sm">
             {% for product in same_products %}
-                <a href="{% url 'products:product' product.pk %}" ><img class="exclusive-product" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+                <a href="{% url 'products:product' product.pk %}" ><img class="exclusive-product" src="{{MEDIA_URL}}{{ product.image }}" alt="{{ product.name }}"></a>
             {% endfor %}
         </div>
     </div>

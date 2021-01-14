@@ -12,7 +12,7 @@
     <div class="form-box padding-site">
         <div class="admin-block-p">{{ object.category.name|title }} /
             {{ object.name|title }}</div>
-        <img class="admin-img" src="/media/{{ object.image|default:'products_images/default.jpg' }}"
+        <img class="admin-img" src="{{MEDIA_URL}}{{ object.image|default:'products_images/default.jpg' }}"
              alt="{{ object.name }}">
     <div class="admin-detail-text">
             <p class="admin-detail-text-p"><b>Price: </b>{{ object.price }} &#36</p>

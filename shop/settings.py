@@ -30,9 +30,6 @@ SECRET_KEY = config.get('main', 'SECRET')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config.getboolean('main', 'DEBUG')
 
-ALLOWED_HOSTS = ['*']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -68,12 +65,27 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
-if DEBUG:
-    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
-
 # MIDDLEWARE.append('django.middleware.cache.FetchFromCacheMiddleware')  # cache sate
 
 if DEBUG:
+    ALLOWED_HOSTS = []
+    DOMAIN_NAME = 'http://localhost:8000'
+
+    INTERNAL_IPS = [
+        'localhost'
+    ]
+
+    EMAIL_HOST = config.get('smtp', 'EMAIL_HOST')
+    EMAIL_PORT = config.get('smtp', 'EMAIL_PORT')
+    EMAIL_HOST_USER = config.get('smtp', 'EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config.get('smtp', 'EMAIL_HOST_PASSWORD')
+    EMAIL_USE_SSL = config.getboolean('smtp', 'EMAIL_USE_SSL')
+
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = 'tmp/email-messages/'
+
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': lambda x: True,
     }
@@ -95,11 +107,20 @@ if DEBUG:
         'template_profiler_panel.panels.template.TemplateProfilerPanel',
     ]
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+else:
+    ALLOWED_HOSTS = ['*']
 
-INTERNAL_IPS = [
-    'localhost'
-]
+    DOMAIN_NAME = 'http://192.168.178.44'
+
+    # Email server, verify be email
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_USE_TLS = config.get('smtp_prod', 'EMAIL_USE_TLS')
+    EMAIL_PORT = config.get('smtp_prod', 'EMAIL_PORT')
+    EMAIL_HOST_USER = config.get('smtp_prod', 'EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config.get('smtp_prod', 'EMAIL_HOST_PASSWORD')
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 ROOT_URLCONF = 'shop.urls'
 
@@ -114,6 +135,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
                 'mainapp.context_processor.basket',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
@@ -130,16 +152,12 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'sqlite3': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
     'default': {
-        'NAME': 'geekshop',
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'django',
-        'PASSWORD': 'geekbrains',
-        'HOST': 'localhost'
+        'NAME': config.get('db', 'NAME'),
+        'USER': config.get('db', 'USER'),
+        'PASSWORD': config.get('db', 'PASSWORD'),
+        'HOST': config.get('db', 'HOST'),
     }
 }
 
@@ -181,28 +199,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
+MEDIA_ROOT = '/media/'
 
 AUTH_USER_MODEL = 'authapp.ShopUser'
 LOGIN_URL = '/auth/login/'
-
-DOMAIN_NAME = 'http://localhost:8000'
-
-EMAIL_HOST = config.get('smtp', 'EMAIL_HOST')
-EMAIL_PORT = config.get('smtp', 'EMAIL_PORT')
-EMAIL_HOST_USER = config.get('smtp', 'EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config.get('smtp', 'EMAIL_HOST_PASSWORD')
-EMAIL_USE_SSL = config.getboolean('smtp', 'EMAIL_USE_SSL')
-
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = 'tmp/email-messages/'
 
 # OAUTH2
 AUTHENTICATION_BACKENDS = [
@@ -239,16 +246,15 @@ SOCIAL_AUTH_PIPELINE = (
 LOGIN_ERROR_URL = '/'
 
 # CACHE
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 120
-CACHE_MIDDLEWARE_KEY_PREFIX = 'geekshop'
-
-CACHES = {
-   'default': {
-       'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-       'LOCATION': '127.0.0.1:11211',
-   }
-}
-
+# CACHE_MIDDLEWARE_ALIAS = 'default'
+# CACHE_MIDDLEWARE_SECONDS = 120
+# CACHE_MIDDLEWARE_KEY_PREFIX = 'geekshop'
+#
+# CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#        'LOCATION': '127.0.0.1:11211',
+#    }
+# }
+#
 LOW_CACHE = True
-

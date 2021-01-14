@@ -1,4 +1,7 @@
 ﻿*.pyc
 .idea
 *.sqlite3
+*.yml
 conf/
+docker/
+migrations/

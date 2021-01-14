@@ -11,7 +11,7 @@
     <div class="order-block">
        {% for item in object.orderitems.select_related %}
            <div class="order-product">
-               <img class="order-img" src="/media/{{ item.product.image}}"
+               <img class="order-img" src="{{MEDIA_URL}}{{ item.product.image}}"
                     alt="{{ item.product.short_desc }}">
                <div class="order-h2">
                    {{ item.product.category.name }}

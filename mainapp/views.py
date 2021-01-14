@@ -91,7 +91,8 @@ def get_products_in_category(pk):
         key = f'products_in_category_{pk}'
         products = cache.get(key)
         if products is None:
-            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by('price').select_related()
+            products = Product.objects.filter(category__pk=pk, is_active=True, category__is_active=True)\
+                .order_by('price').select_related('category')
             cache.set(key, products)
         return products
     else:

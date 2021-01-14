@@ -1,5 +1,4 @@
 from django.conf.urls import url
-
 import basketapp.views as basketapp
 
 app_name = 'basketapp'

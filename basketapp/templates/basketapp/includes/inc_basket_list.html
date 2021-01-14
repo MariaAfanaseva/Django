@@ -2,7 +2,7 @@
 {#{% for item in basket.0.get_items_cached %}#}
 {% for item in basket_items %}
     <div class="basket-product">
-        <img src="/media/{{ item.product.image }}"
+        <img src="{{MEDIA_URL}}{{ item.product.image }}"
              alt="{{ item.product.short_desc }}"
              class="basket-product-img">
         <div class="basket-product-info">

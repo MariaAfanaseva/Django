@@ -10,7 +10,7 @@
         {% include 'adminapp/includes/inc_menu.html' %}
     </nav>
     <div class="padding-site">
-        <a class="admin-button" href={% url 'admin_custom:product_create' category.pk %}>
+        <a class="admin-button" href="{% url 'admin_custom:product_create' category.pk %}">
             new product
         </a>
         <div class="admin-box">
@@ -18,20 +18,20 @@
                 <div class="admin-block {% if not object.is_active %}admin-not-active{% endif %}">
                     <div class="admin-img-container">
                         <img class="admin-img"
-                         src="/media/{{object.image}}"
+                         src="{{MEDIA_URL}}{{object.image}}"
                          alt="{{ object.name }}">
                     </div>
                     <h2 class="admin-block-h2">
                         {{ object.name|title }}
                     </h2>
                     <div>
-                        <a class="admin-button" href={% url 'admin_custom:product_read' object.pk %}>
+                        <a class="admin-button" href="{% url 'admin_custom:product_read' object.pk %}">
                             detail
                         </a>
-                        <a class="admin-button" href={% url 'admin_custom:product_update' object.pk %}>
+                        <a class="admin-button" href="{% url 'admin_custom:product_update' object.pk %}">
                             update
                         </a>
-                        <a class="admin-button" href={% url 'admin_custom:product_delete' object.pk %}>
+                        <a class="admin-button" href="{% url 'admin_custom:product_delete' object.pk %}">
                             delete
                         </a>
                     </div>

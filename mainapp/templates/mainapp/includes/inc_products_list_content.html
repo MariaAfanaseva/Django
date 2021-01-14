@@ -5,12 +5,12 @@
 <div class="trending-products padding-site ">
     {% for product in products %}
         <a href="{% url 'products:product' product.pk %}" >
-            <img class="trending-products-img" src="/media/{{ product.image }}" alt="{{ product.name }}"></a>
+            <img class="trending-products-img" src="{{MEDIA_URL}}{{ product.image }}" alt="{{ product.name }}"></a>
     {% endfor %}
 </div>
 <div class="products-reload">
     {#                <a href="#" class="products-reload-img">#}
-    {#                    <img src="{% static 'img/refresh.svg' %}"></a>#}
+    {#                <img src="{% static 'img/refresh.svg' %}"></a>#}
 
     <div class="paginator">
         {% if products.has_previous %}

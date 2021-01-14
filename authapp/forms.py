@@ -60,6 +60,7 @@ class ShopUserEditForm(UserChangeForm):
 class ShopUserLoginForm(AuthenticationForm):
     class Meta:
         model = ShopUser
+
         fields = ('username', 'password')
 
     def __init__(self, *args, **kwargs):
