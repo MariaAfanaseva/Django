@@ -2,6 +2,6 @@
 .idea
 *.sqlite3
 *.yml
+*.prof
 conf/
-docker/
 migrations/
