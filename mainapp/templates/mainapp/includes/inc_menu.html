@@ -1,6 +1,7 @@
 {% load custom_tags %}
+{% load static %}
 <header class="header">
-    <a class="logo" href="{% url 'index' %}"><img src="/static/img/logo.svg" alt="logo"></a>
+    <a class="logo" href="{% url 'index' %}"><img src="{% static 'img/logo.svg' %}" alt="logo"></a>
     <nav>
         <ul class="menu">
             <li><a href="{% url 'index' %}"
@@ -66,7 +67,7 @@
                 </a>
             </li>
 
-            <li><a href="#" class="menu-link"><img src="/static/img/search.svg" alt="search"></a></li>
+            <li><a href="#" class="menu-link"><img src="{% static 'img/search.svg' %}" alt="search"></a></li>
 
         </ul>
         <img class="menu-mini" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png"
