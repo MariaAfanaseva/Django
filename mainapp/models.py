@@ -1,4 +1,5 @@
 from django.db import models
+from shop.storage_backends import MediaStorage
 
 
 class ProductCategory(models.Model):
@@ -25,13 +26,11 @@ class ProductType(models.Model):
 
 
 class Product(models.Model):
-    # class Meta:
-    #     verbose_name = 'Продукт'
-    #     verbose_name_plural = 'Продукты'  # for admin in Russia
 
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='product name', max_length=128)
-    image = models.ImageField(upload_to='products_images', blank=True)
+    image = models.ImageField(upload_to='products_images',storage=MediaStorage(),
+                              blank=True)
     short_desc = models.CharField(verbose_name='product short description', max_length=60, blank=True)
     description = models.TextField(verbose_name='product description', blank=True)
     price = models.DecimalField(verbose_name='product price', max_digits=8, decimal_places=2, default=0)

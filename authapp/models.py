@@ -5,6 +5,7 @@ from datetime import timedelta
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from shop.storage_backends import MediaStorage
 
 
 def get_activation_key_time():
@@ -12,11 +13,8 @@ def get_activation_key_time():
 
 
 class ShopUser(AbstractUser):
-    # class Meta:
-    #     verbose_name = 'Пользователь'
-    #     verbose_name_plural = 'Пользователи'  # for admin
-
-    avatar = models.ImageField(upload_to='users_avatars', blank=True)
+    avatar = models.ImageField(upload_to='users_avatars', storage=MediaStorage(),
+                               blank=True)
     age = models.PositiveIntegerField(verbose_name='age', null=True)
     is_active = models.BooleanField(verbose_name='Active', default=True)
     email = models.EmailField(verbose_name='Email', unique=True)
