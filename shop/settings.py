@@ -25,7 +25,7 @@ config_path = os.path.join(local_config_folder, 'local.conf')
 config = ConfigParser()
 config.read(config_path)
 
-env_path = Path(local_config_folder) / '.env'
+env_path = Path(local_config_folder) / '.env.aws-s3'
 load_dotenv(dotenv_path=env_path)
 
 SECRET_KEY = config.get('main', 'SECRET')
@@ -166,26 +166,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
-#
-# AUTH_PASSWORD_VALIDATORS = [
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-#     },
-#     {
-#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-#     },
-# ]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -262,16 +242,6 @@ SOCIAL_AUTH_PIPELINE = (
 
 LOGIN_ERROR_URL = '/'
 
-# CACHE
-# CACHE_MIDDLEWARE_ALIAS = 'default'
-# CACHE_MIDDLEWARE_SECONDS = 120
-# CACHE_MIDDLEWARE_KEY_PREFIX = 'geekshop'
-#
-# CACHES = {
-#    'default': {
-#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#        'LOCATION': '127.0.0.1:11211',
-#    }
-# }
-#
 LOW_CACHE = True
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

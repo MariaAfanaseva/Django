@@ -29,7 +29,7 @@ class Product(models.Model):
 
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='product name', max_length=128)
-    image = models.ImageField(upload_to='products_images',storage=MediaStorage(),
+    image = models.ImageField(upload_to='products_images', storage=MediaStorage(),
                               blank=True)
     short_desc = models.CharField(verbose_name='product short description', max_length=60, blank=True)
     description = models.TextField(verbose_name='product description', blank=True)
