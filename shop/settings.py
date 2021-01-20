@@ -194,7 +194,7 @@ if USE_AWS_S3:
     # s3 public media settings
     MEDIA_LOCATION = 'media'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-    DEFAULT_FILE_STORAGE = 'shop.storage_backends.PublicMediaStorage'
+    DEFAULT_FILE_STORAGE = 'shop.storage_backends.MediaStorage'
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = '/static/'
