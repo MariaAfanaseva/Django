@@ -1,17 +1,12 @@
 window.onload = function () {
-    $('.basket-list').on('click', 'input[type="number"]', function () {
-        var t_href = event.target;
-
-        if (t_href.value > 0) {
-            $.ajax({
-                url: "/basket/edit/" + t_href.name + "/?quantity=" + t_href.value,
-
-                success: function (data) {
-                    $('.basket-total').html(data.result);
-                },
-            });
-        }
-
-        event.preventDefault();
+    $(".basket_list").on("change", "input[type='number']", function (event) {
+    // $(".basket_list input[type='number']").on("change", function (event) {
+        var target = event.target;
+        $.ajax({
+            url: "/basket/update/" + target.name + "/" + target.value + "/",
+            success: function (data) {
+                $('.basket_list').html(data.result);
+            }
+        });
     });
 };
